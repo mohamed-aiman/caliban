@@ -11,11 +11,7 @@ class Product extends Model
     use HasFactory;
     use Sluggable;
 
-    protected $fillable = [
-        'title',
-        'description',
-        'price',
-    ];
+    protected $guarded = [];
 
 
     /**

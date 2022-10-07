@@ -11,7 +11,6 @@ class ProductTest extends TestCase
     use RefreshDatabase;
     /**
      * @group products
-     * @group now
      */
     public function test_can_see_product_list()
     {
