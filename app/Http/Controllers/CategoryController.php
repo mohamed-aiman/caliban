@@ -100,8 +100,12 @@ class CategoryController extends Controller
 
     public function children($id)
     {
-        $category = $this->category->where('parent_id', $id)->get();
-        return $category;
+        return $this->category->where('parent_id', $id)->get();
+    }
+
+    public function parents()
+    {
+        return $this->category->whereNull('parent_id')->get();
     }
 
     public function index()
