@@ -91,7 +91,10 @@ class CategoryController extends Controller
 
     public function show($id)
     {
-        $category = $this->category->with('children')->find($id);
+        $category = $this->category->find($id);
+
+        $category->path = $category->path();
+
         return $category;
     }
 

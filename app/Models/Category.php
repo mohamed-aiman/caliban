@@ -21,6 +21,13 @@ class Category extends Model
         'fifth_level_category',
     ];
 
+    protected $hidden = [
+        'mtime',
+        'images',
+        'created_at',
+        'updated_at',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
@@ -70,4 +77,28 @@ class Category extends Model
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
+
+    public function path()
+    {
+        $path = $this->category_name;
+        
+        if ($this->sub_category_name) {
+            $path .= ' > ' . $this->sub_category_name;
+        }
+        
+        if ($this->third_level_category_name) {
+            $path .= ' > ' . $this->third_level_category_name;
+        }
+        
+        if ($this->fourth_level_category_name) {
+            $path .= ' > ' . $this->fourth_level_category_name;
+        }
+        
+        if ($this->fifth_level_category_name) {
+            $path .= ' > ' . $this->fifth_level_category_name;
+        }
+
+        return $path;
+    }
+
 }
