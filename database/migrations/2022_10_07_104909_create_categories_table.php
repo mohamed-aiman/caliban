@@ -15,14 +15,21 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('mtime')->nullable();
             $table->text('images')->nullable();
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->unsignedTinyInteger('level')->nullable();
             $table->unsignedBigInteger('category')->nullable();
+            $table->string('category_name')->nullable();
             $table->unsignedBigInteger('sub_category')->nullable();
+            $table->string('sub_category_name')->nullable();
             $table->unsignedBigInteger('third_level_category')->nullable();
+            $table->string('third_level_category_name')->nullable();
             $table->unsignedBigInteger('fourth_level_category')->nullable();
+            $table->string('fourth_level_category_name')->nullable();
             $table->unsignedBigInteger('fifth_level_category')->nullable();
+            $table->string('fifth_level_category_name')->nullable();
             $table->timestamps();
 
             // $table->index('category');
