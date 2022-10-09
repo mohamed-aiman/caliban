@@ -18,22 +18,9 @@
 
         @verbatim
 
-        <quill-editor theme="snow"
-          ref="quillEditor"
-          v-model:content="content"
-          :options="editorOption"
-          @ready="onEditorReady($event)"
-          v-on:textChange="textChange()"
-          >
-        </quill-editor>
-
-        <p>{{ content }}</p>
-          <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            @click="getSetText">xxxx
-          </button>
         <div class="grid grid-cols-1" v-if="selectedCategory && showCategorySelection">
           <p><span class="font-bold">Selected Category:</span> {{ selectedCategory.path }}</p>
-          <button v-if="selectedCategoryId" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          <button v-if="form.category_id" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             @click="categoryConfirmed"
             v-text="categoryConfirmButtonText"
             >
@@ -74,7 +61,7 @@
         </div>
 
         <!-- form base on the selected category -->
-        <div v-if="selectedCategoryId" class="grid grid-cols-1 w-full">
+        <div v-if="form.category_id" class="grid grid-cols-1 w-full">
         <!-- <div class="grid grid-cols-1 w-full mx-auto"> -->
           <div class="mb-6">
             <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Category</label>
@@ -82,20 +69,34 @@
           </div>
           <div class="mb-6">
             <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Title</label>
-            <input type="text" id="title" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+            <input v-model="form.title" type="text" id="title" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
           </div>
           <div class="mb-6">
             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
-            <input type="text" id="description" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+            <quill-editor 
+              theme="snow"
+              v-model:content="content"
+              :options="descriptionEditorOption"
+              @ready="onDescriptionEditorReady($event)"
+              @blur="onDescriptionEditorBlur($event)"
+              >
+            </quill-editor>
           </div>
           <div class="mb-6">
             <label for="condition" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Condition</label>
-            <select id="condition" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+            <select v-model="form.condition" id="condition" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
               <option value="new">New</option>
               <option value="used_like_new">Used Like New</option>
               <option value="used">Used</option>
               <option value="refurbished">Refurbished</option>
               <option value="damaged">Damaged</option>
+            </select>
+          </div>
+          <div class="mb-6">
+            <label for="selling_format" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Condition</label>
+            <select v-model="form.selling_format" id="selling_format" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+              <option value="classified">Classified</option>
+              <option value="buy_now">Buy Now</option>
             </select>
           </div>
           <div class="mb-6">

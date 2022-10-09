@@ -57215,19 +57215,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+ //to fix broken description editor on change event handler
+
+var content = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)('');
+var newContent = '';
+(0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(content, function (newValue) {
+  newContent = newValue;
+  console.log(newContent);
+});
 (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({
   components: {
     QuillEditor: _vueup_vue_quill__WEBPACK_IMPORTED_MODULE_2__.QuillEditor
-  },
-  computed: {
-    editor: function editor() {
-      return this.$refs.quillEditor;
-    }
   },
   data: function data() {
     var _ref;
 
     return _ref = {
+      form: {
+        title: '',
+        description: '',
+        category_id: null,
+        condition: '',
+        selling_format: ''
+      },
       showCategorySelection: true,
       level1: [],
       level2: [],
@@ -57240,13 +57250,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       level3_id: 0,
       level4_id: 0,
       level5_id: 0
-    }, _defineProperty(_ref, "level5_id", 0), _defineProperty(_ref, "selectedCategoryId", null), _defineProperty(_ref, "selectedCategory", {}), _defineProperty(_ref, "categoryConfirmButtonText", 'Confirm Category'), _defineProperty(_ref, "content", "<h1>Some initial content</h1>"), _defineProperty(_ref, "editorOption", {
+    }, _defineProperty(_ref, "level5_id", 0), _defineProperty(_ref, "selectedCategory", {}), _defineProperty(_ref, "categoryConfirmButtonText", 'Confirm Category'), _defineProperty(_ref, "descriptionQuillEditor", null), _defineProperty(_ref, "descriptionEditorOption", {
       theme: "snow",
       placeholder: "",
       modules: {
         toolbar: ["bold", "italic", "underline", "link", "clean"]
       }
-    }), _defineProperty(_ref, "quill", null), _defineProperty(_ref, "someText", ''), _ref;
+    }), _ref;
   },
   mounted: function mounted() {
     this.loadParentCategories();
@@ -57261,7 +57271,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.selectedCategoryId = null;
+                _this.form.category_id = null;
                 _context.next = 3;
                 return fetch("/parent-categories");
 
@@ -57290,7 +57300,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.selectedCategoryId = null;
+                _this2.form.category_id = null;
                 _context2.next = 3;
                 return fetch("/categories/".concat(id, "/children"));
 
@@ -57327,7 +57337,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this3.level2 = _context3.sent;
 
                 if (_this3.level2.length == 0) {
-                  _this3.selectedCategoryId = _this3.level1_id;
+                  _this3.form.category_id = _this3.level1_id;
                 }
 
               case 5:
@@ -57355,7 +57365,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this4.level3 = _context4.sent;
 
                 if (_this4.level3.length == 0) {
-                  _this4.selectedCategoryId = _this4.level2_id;
+                  _this4.form.category_id = _this4.level2_id;
                 }
 
               case 5:
@@ -57383,7 +57393,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this5.level4 = _context5.sent;
 
                 if (_this5.level4.length == 0) {
-                  _this5.selectedCategoryId = _this5.level3_id;
+                  _this5.form.category_id = _this5.level3_id;
                 }
 
               case 5:
@@ -57411,7 +57421,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this6.level5 = _context6.sent;
 
                 if (_this6.level5.length == 0) {
-                  _this6.selectedCategoryId = _this6.level4_id;
+                  _this6.form.category_id = _this6.level4_id;
                 }
 
               case 5:
@@ -57439,7 +57449,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this7.level6 = _context7.sent;
 
                 if (_this7.level6.length == 0) {
-                  _this7.selectedCategoryId = _this7.level5_id;
+                  _this7.form.category_id = _this7.level5_id;
                 }
 
               case 5:
@@ -57519,7 +57529,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 4:
                 _context8.next = 6;
-                return fetch("/categories/".concat(_this8.selectedCategoryId));
+                return fetch("/categories/".concat(_this8.form.category_id));
 
               case 6:
                 response = _context8.sent;
@@ -57539,19 +57549,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee8);
       }))();
     },
-    textChange: function textChange(delta, oldContents, source) {
-      alert('xxxccc');
-      console.log(delta, oldContents, source);
+    onDescriptionEditorReady: function onDescriptionEditorReady($event) {
+      this.descriptionQuillEditor = $event;
     },
-    onEditorReady: function onEditorReady($quill) {
-      console.log('ready.....');
-      this.quill = $quill;
-      console.log($quill);
+    onDescriptionEditorBlur: function onDescriptionEditorBlur($event) {
+      this.captureDescription();
     },
-    getSetText: function getSetText() {
-      console.log('xxxx');
-      console.log(this.quill); //    this.someText = "<div><p>this is some text</p> </div>";
-      //    this.editor.setHTML(this.someText);
+    captureDescription: function captureDescription() {
+      this.form.description = this.descriptionQuillEditor.root.innerHTML;
+      console.log(this.form);
     }
   }
 }).mount('#app');
