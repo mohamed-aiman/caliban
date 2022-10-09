@@ -57235,10 +57235,13 @@ var newContent = '';
         title: '',
         description: '',
         category_id: null,
+        //101061,//id set to 101061 for testing null default
         condition: '',
-        selling_format: ''
+        selling_format: '',
+        selling_format_details: {}
       },
       showCategorySelection: true,
+      //false,//set to false temporarily
       level1: [],
       level2: [],
       level3: [],
@@ -57250,7 +57253,7 @@ var newContent = '';
       level3_id: 0,
       level4_id: 0,
       level5_id: 0
-    }, _defineProperty(_ref, "level5_id", 0), _defineProperty(_ref, "selectedCategory", {}), _defineProperty(_ref, "categoryConfirmButtonText", 'Confirm Category'), _defineProperty(_ref, "descriptionQuillEditor", null), _defineProperty(_ref, "descriptionEditorOption", {
+    }, _defineProperty(_ref, "level5_id", 0), _defineProperty(_ref, "selectedCategory", {}), _defineProperty(_ref, "descriptionQuillEditor", null), _defineProperty(_ref, "descriptionEditorOption", {
       theme: "snow",
       placeholder: "",
       modules: {
@@ -57518,36 +57521,28 @@ var newContent = '';
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                if (_this8.showCategorySelection) {
-                  _context8.next = 4;
-                  break;
-                }
-
-                _this8.showCategorySelection = true;
-                _this8.categoryConfirmButtonText = 'Confirm Category';
-                return _context8.abrupt("return");
-
-              case 4:
-                _context8.next = 6;
+                _context8.next = 2;
                 return fetch("/categories/".concat(_this8.form.category_id));
 
-              case 6:
+              case 2:
                 response = _context8.sent;
-                _context8.next = 9;
+                _context8.next = 5;
                 return response.json();
 
-              case 9:
+              case 5:
                 _this8.selectedCategory = _context8.sent;
                 _this8.showCategorySelection = false;
-                _this8.categoryConfirmButtonText = 'Change Category';
 
-              case 12:
+              case 7:
               case "end":
                 return _context8.stop();
             }
           }
         }, _callee8);
       }))();
+    },
+    changeCategory: function changeCategory() {
+      this.showCategorySelection = true;
     },
     onDescriptionEditorReady: function onDescriptionEditorReady($event) {
       this.descriptionQuillEditor = $event;

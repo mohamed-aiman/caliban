@@ -19,11 +19,24 @@
             body {
                 font-family: 'Nunito', sans-serif;
             }
+
+            .ql-container, .ql-editor {
+                min-height:inherit;
+            }
         </style>
     </head>
     <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            @yield('body')
+        <div id="app" class="grid grid-cols-12 mx-auto w-full px-10 py-10">
+            <div class="col-span-3">
+                <p>side nav</p>
+                <p>side nav</p>
+                <p>side nav</p>
+                <p>side nav</p>
+                <p>side nav</p>
+            </div>
+            <div class="col-span-9">
+                @yield('body')
+            </div>
         </div>
     </body>
     @yield('end-script')

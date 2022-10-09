@@ -21,11 +21,12 @@ import { watch, ref, nextTick } from 'vue'
         form: {
           title: '',
           description: '',
-          category_id: null,
+          category_id: null, //101061,//id set to 101061 for testing null default
           condition: '',
           selling_format: '',
+          selling_format_details: {}
         },
-        showCategorySelection: true,
+        showCategorySelection: true, //false,//set to false temporarily
         level1: [],
         level2: [],
         level3: [],
@@ -39,7 +40,6 @@ import { watch, ref, nextTick } from 'vue'
         level5_id: 0,
         level5_id: 0,
         selectedCategory: {},
-        categoryConfirmButtonText: 'Confirm Category',
         descriptionQuillEditor: null,
         descriptionEditorOption: {
             theme: "snow",
@@ -149,15 +149,12 @@ import { watch, ref, nextTick } from 'vue'
         }
       },
       async categoryConfirmed() {
-        if (!this.showCategorySelection) {
-          this.showCategorySelection = true;
-          this.categoryConfirmButtonText = 'Confirm Category'
-          return;
-        }
         const response = await fetch(`/categories/${this.form.category_id}`)
         this.selectedCategory = await response.json()
         this.showCategorySelection = false
-        this.categoryConfirmButtonText = 'Change Category'
+      },
+      changeCategory() {
+        this.showCategorySelection = true
       },
       onDescriptionEditorReady($event) {
         this.descriptionQuillEditor = $event
