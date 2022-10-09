@@ -35,6 +35,40 @@ class ListingController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+          'title' => 'required|text',
+          'description' => 'required|text',
+          'category_id' => 'required|integer|exists:categories,id',
+          'condition' => 'required|in:new,used_like_new,used,refurbished,damaged',
+          'selling_format' => 'required|in:buy_now,classified',
+          'duration' => 'required|integer|max:60',
+          'price' => 'required|numeric',
+          'tax' => '',
+          'quantity' => '',
+        //   'islands' => 'required|array',
+        //   'islands.*' => 'required|integer|exists:islands,id',
+        ]);
+
+        if ($request->selling_format == 'buy_now') {
+            $request->validate([
+                'quantity' => 'required|integer',
+            ]);
+        } else if ($request->selling_format == 'classified') {
+            $request->validate([
+              'price' => 'required|numeric',
+            ]);
+        }
+
+        $product = $this->product->create([
+          'title' => $request->title,
+          'description' => $request->description,
+          'category_id' => $request->category_id,
+          'condition' => $request->condition,
+          'selling_format' => $request->selling_format,
+          'selling_format_details' => $request->selling_format_details,
+          'seller_id' => $request->user()->id,
+        ]);
+
+
     }
 }

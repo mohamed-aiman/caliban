@@ -24,7 +24,17 @@ import { watch, ref, nextTick } from 'vue'
           category_id: null, //101061,//id set to 101061 for testing null default
           condition: '',
           selling_format: '',
-          selling_format_details: {}
+          duration: '',
+          quantity: '',
+          price: '',
+          tax: '',
+          locations: [],
+          images: [],
+          photo1Url: null,
+          photo2Url: null,
+          photo3Url: null,
+          photo4Url: null,
+          photo5Url: null,
         },
         showCategorySelection: true, //false,//set to false temporarily
         level1: [],
@@ -47,7 +57,7 @@ import { watch, ref, nextTick } from 'vue'
             modules: {
                 toolbar: ["bold", "italic", "underline", "link", "clean"]
             },
-        }
+        },
       }
     },
     mounted() {
@@ -165,6 +175,38 @@ import { watch, ref, nextTick } from 'vue'
       captureDescription() {
         this.form.description =  this.descriptionQuillEditor.root.innerHTML;
         console.log(this.form)
+      },
+      onFileChange(e) {
+        var files = e.target.files || e.dataTransfer.files;
+        console.log(files)
+        if (!files.length)
+          return;
+        this.createImage(files[0]);
+      },
+      createImage(file) {
+        var image = new Image();
+        var reader = new FileReader();
+        var vm = this;
+
+        reader.onload = (e) => {
+          vm.image = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      },
+      removeImage: function (e) {
+        this.image = '';
+      },
+      async submit() {
+        this.captureDescription()
+        const response = await fetch(`/listings`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.form)
+        })
+        const data = await response.json()
+        console.log(data)
       }
     }
   }).mount('#app')

@@ -57238,7 +57238,17 @@ var newContent = '';
         //101061,//id set to 101061 for testing null default
         condition: '',
         selling_format: '',
-        selling_format_details: {}
+        duration: '',
+        quantity: '',
+        price: '',
+        tax: '',
+        locations: [],
+        images: [],
+        photo1Url: null,
+        photo2Url: null,
+        photo3Url: null,
+        photo4Url: null,
+        photo5Url: null
       },
       showCategorySelection: true,
       //false,//set to false temporarily
@@ -57553,6 +57563,63 @@ var newContent = '';
     captureDescription: function captureDescription() {
       this.form.description = this.descriptionQuillEditor.root.innerHTML;
       console.log(this.form);
+    },
+    onFileChange: function onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      console.log(files);
+      if (!files.length) return;
+      this.createImage(files[0]);
+    },
+    createImage: function createImage(file) {
+      var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = function (e) {
+        vm.image = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    removeImage: function removeImage(e) {
+      this.image = '';
+    },
+    submit: function submit() {
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
+        var response, data;
+        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                _this9.captureDescription();
+
+                _context9.next = 3;
+                return fetch("/listings", {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(_this9.form)
+                });
+
+              case 3:
+                response = _context9.sent;
+                _context9.next = 6;
+                return response.json();
+
+              case 6:
+                data = _context9.sent;
+                console.log(data);
+
+              case 8:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }))();
     }
   }
 }).mount('#app');
