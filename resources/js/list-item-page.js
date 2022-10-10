@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { watch, ref, nextTick } from 'vue'
+import axios from 'axios';
 
   //to fix broken description editor on change event handler
   const content = ref('')
@@ -173,28 +174,50 @@ import { watch, ref, nextTick } from 'vue'
         this.captureDescription()
       },
       captureDescription() {
-        this.form.description =  this.descriptionQuillEditor.root.innerHTML;
+        this.form.description =  this.descriptionQuillEditor.root.innerHTML
         console.log(this.form)
       },
       onFileChange(e) {
-        var files = e.target.files || e.dataTransfer.files;
-        console.log(files)
-        if (!files.length)
-          return;
-        this.createImage(files[0]);
+        let file = e.target.files[0]
+        this.readImage(file)
+        console.log(file)
+        this.uploadOriginalImage(file);
+        // var files = e.target.files || e.dataTransfer.files;
+        // console.log(files)
+        // if (!files.length)
+        //   return;
+        // this.createImage(files[0]);
+      },
+      readImage(image) {
+          let reader = new FileReader();
+          reader.readAsDataURL(image);
+      },
+      uploadOriginalImage(file) {
+          let formData = new FormData();
+          formData.append('photo', file, file.name);
+          this.$emit('uploading');
+          this.uploading = true;
+          axios.post('/listings/upload-photo', formData, {
+              onUploadProgress: progressEvent => {
+                  this.uploadProgress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+              }
+          }).then(response => {
+              this.finalImage = response.data.url;
+              this.uploading = false;
+              console.log(response);
+            }).catch(error => {
+              console.log(error);
+          });
       },
       createImage(file) {
-        var image = new Image();
-        var reader = new FileReader();
-        var vm = this;
+        // var image = new Image();
+        // var reader = new FileReader();
+        // var vm = this;
 
-        reader.onload = (e) => {
-          vm.image = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      },
-      removeImage: function (e) {
-        this.image = '';
+        // reader.onload = (e) => {
+        //   vm.image = e.target.result;
+        // };
+        // reader.readAsDataURL(file);
       },
       async submit() {
         this.captureDescription()
