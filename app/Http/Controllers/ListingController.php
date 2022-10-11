@@ -72,27 +72,7 @@ class ListingController extends Controller
 
 
     }
-
-    /**
-     * upload form photo to s3 and return url
-     */
-    public function uploadPhotox(Request $request)
-    {
-        // $request->validate([
-        //     'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        // ]);
-
-        $photo = $request->file('photo');
-
-        dd($photo, $request->all());
-        // $photoName = time().'.'.$photo->extension();
-        // $photoPath = $photo->storeAs('products', $photoName, 's3');
-
-        // return response()->json([
-        //     'url' => Storage::disk('s3')->url($photoPath),
-        // ]);
-    }
-
+    
     /**
      * upload and save the uploaded photo local and return url
      */
@@ -106,9 +86,7 @@ class ListingController extends Controller
         $photoName = time().'.'.$photo->extension();
         $photoPath = $photo->storeAs('products', $photoName, 'public');
 
+        return $photoPath;
         dd($photoPath);
-        // return response()->json([
-        //     'url' => Storage::disk('public')->url($photoPath),
-        // ]);
     }
 }

@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\ListingController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ListingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,7 @@ Route::get('categories', [CategoryController::class, 'index'])->name('categories
     Route::get('parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');
     Route::get('categories/{id}/children', [CategoryController::class, 'children'])->name('categories.children');
     Route::get('categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
-    Route::post('listings/upload-photo', [ListingController::class, 'uploadPhoto'])->name('listings.upload-photo');
+    Route::post('photos', [PhotoController::class, 'store'])->name('photos.store');
     Route::get('listings/create', [ListingController::class, 'create'])->name('listings.create');
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
 // });

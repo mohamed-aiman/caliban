@@ -57237,8 +57237,8 @@ var newContent = '';
       form: {
         title: '',
         description: '',
-        category_id: null,
-        //101061,//id set to 101061 for testing null default
+        category_id: 101061,
+        //id set to 101061 for testing null default
         condition: '',
         selling_format: '',
         duration: '',
@@ -57253,8 +57253,8 @@ var newContent = '';
         photo4Url: null,
         photo5Url: null
       },
-      showCategorySelection: true,
-      //false,//set to false temporarily
+      showCategorySelection: false,
+      //set to false temporarily
       level1: [],
       level2: [],
       level3: [],
@@ -57272,7 +57272,7 @@ var newContent = '';
       modules: {
         toolbar: ["bold", "italic", "underline", "link", "clean"]
       }
-    }), _ref;
+    }), _defineProperty(_ref, "uploadProgress", 0), _ref;
   },
   mounted: function mounted() {
     this.loadParentCategories();
@@ -57585,10 +57585,10 @@ var newContent = '';
       var _this9 = this;
 
       var formData = new FormData();
-      formData.append('photo', file, file.name);
+      formData.append('image', file, file.name);
       this.$emit('uploading');
       this.uploading = true;
-      axios__WEBPACK_IMPORTED_MODULE_4___default().post('/listings/upload-photo', formData, {
+      axios__WEBPACK_IMPORTED_MODULE_4___default().post('/photos', formData, {
         onUploadProgress: function onUploadProgress(progressEvent) {
           _this9.uploadProgress = Math.round(progressEvent.loaded * 100 / progressEvent.total);
         }

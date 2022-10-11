@@ -22,7 +22,7 @@ import axios from 'axios';
         form: {
           title: '',
           description: '',
-          category_id: null, //101061,//id set to 101061 for testing null default
+          category_id: 101061,//id set to 101061 for testing null default
           condition: '',
           selling_format: '',
           duration: '',
@@ -37,7 +37,7 @@ import axios from 'axios';
           photo4Url: null,
           photo5Url: null,
         },
-        showCategorySelection: true, //false,//set to false temporarily
+        showCategorySelection: false,//set to false temporarily
         level1: [],
         level2: [],
         level3: [],
@@ -59,6 +59,7 @@ import axios from 'axios';
                 toolbar: ["bold", "italic", "underline", "link", "clean"]
             },
         },
+        uploadProgress: 0,
       }
     },
     mounted() {
@@ -194,10 +195,10 @@ import axios from 'axios';
       },
       uploadOriginalImage(file) {
           let formData = new FormData();
-          formData.append('photo', file, file.name);
+          formData.append('image', file, file.name);
           this.$emit('uploading');
           this.uploading = true;
-          axios.post('/listings/upload-photo', formData, {
+          axios.post('/photos', formData, {
               onUploadProgress: progressEvent => {
                   this.uploadProgress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
               }

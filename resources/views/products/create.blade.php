@@ -173,6 +173,7 @@
                     </svg>
                   </div>
                 </div>
+                <p>{{ uploadProgress }}%</p>
                 <input type="file" @change="onFileChange($event)" ref="photo2" style="display: none">
                 <div @click="$refs.photo2.click()" class="mr-6 flex flex-col items-center justify-center w-20 h-20 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
                   <div class="flex flex-col items-center justify-center">
