@@ -60,6 +60,21 @@ import axios from 'axios';
             },
         },
         uploadProgress: 0,
+        images: [
+          { key: 1, photo_id: null, url: null},
+          { key: 2, photo_id: null, url: null},
+          { key: 3, photo_id: null, url: null},
+          { key: 4, photo_id: null, url: null},
+          { key: 5, photo_id: null, url: null},
+        ],
+        image1: null,
+        image2: null,
+        image3: null,
+        image4: null,
+        image1Url: null,
+        image2Url: null,
+        image3Url: null,
+        image4Url: null
       }
     },
     mounted() {
@@ -178,11 +193,12 @@ import axios from 'axios';
         this.form.description =  this.descriptionQuillEditor.root.innerHTML
         console.log(this.form)
       },
-      onFileChange(e) {
+      onFileChange(e, key) {
+        console.log(key);
         let file = e.target.files[0]
         this.readImage(file)
         console.log(file)
-        this.uploadOriginalImage(file);
+        this.uploadOriginalImage(file, key);
         // var files = e.target.files || e.dataTransfer.files;
         // console.log(files)
         // if (!files.length)
@@ -193,7 +209,7 @@ import axios from 'axios';
           let reader = new FileReader();
           reader.readAsDataURL(image);
       },
-      uploadOriginalImage(file) {
+      uploadOriginalImage(file, key) {
           let formData = new FormData();
           formData.append('image', file, file.name);
           this.$emit('uploading');
@@ -204,6 +220,16 @@ import axios from 'axios';
               }
           }).then(response => {
               this.finalImage = response.data.url;
+              this.images.forEach(element => {
+                if (element.key == key) {
+                  element.photo_id = response.data.id
+                  element.url = response.data.url
+                }
+              });
+              this.images[key] = {
+                photo_id: response.data.url,
+                url: response.data.url
+              }
               this.uploading = false;
               console.log(response);
             }).catch(error => {

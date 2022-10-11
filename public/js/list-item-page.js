@@ -57272,7 +57272,27 @@ var newContent = '';
       modules: {
         toolbar: ["bold", "italic", "underline", "link", "clean"]
       }
-    }), _defineProperty(_ref, "uploadProgress", 0), _ref;
+    }), _defineProperty(_ref, "uploadProgress", 0), _defineProperty(_ref, "images", [{
+      key: 1,
+      photo_id: null,
+      url: null
+    }, {
+      key: 2,
+      photo_id: null,
+      url: null
+    }, {
+      key: 3,
+      photo_id: null,
+      url: null
+    }, {
+      key: 4,
+      photo_id: null,
+      url: null
+    }, {
+      key: 5,
+      photo_id: null,
+      url: null
+    }]), _defineProperty(_ref, "image1", null), _defineProperty(_ref, "image2", null), _defineProperty(_ref, "image3", null), _defineProperty(_ref, "image4", null), _defineProperty(_ref, "image1Url", null), _defineProperty(_ref, "image2Url", null), _defineProperty(_ref, "image3Url", null), _defineProperty(_ref, "image4Url", null), _ref;
   },
   mounted: function mounted() {
     this.loadParentCategories();
@@ -57567,11 +57587,12 @@ var newContent = '';
       this.form.description = this.descriptionQuillEditor.root.innerHTML;
       console.log(this.form);
     },
-    onFileChange: function onFileChange(e) {
+    onFileChange: function onFileChange(e, key) {
+      console.log(key);
       var file = e.target.files[0];
       this.readImage(file);
       console.log(file);
-      this.uploadOriginalImage(file); // var files = e.target.files || e.dataTransfer.files;
+      this.uploadOriginalImage(file, key); // var files = e.target.files || e.dataTransfer.files;
       // console.log(files)
       // if (!files.length)
       //   return;
@@ -57581,7 +57602,7 @@ var newContent = '';
       var reader = new FileReader();
       reader.readAsDataURL(image);
     },
-    uploadOriginalImage: function uploadOriginalImage(file) {
+    uploadOriginalImage: function uploadOriginalImage(file, key) {
       var _this9 = this;
 
       var formData = new FormData();
@@ -57594,6 +57615,18 @@ var newContent = '';
         }
       }).then(function (response) {
         _this9.finalImage = response.data.url;
+
+        _this9.images.forEach(function (element) {
+          if (element.key == key) {
+            element.photo_id = response.data.id;
+            element.url = response.data.url;
+          }
+        });
+
+        _this9.images[key] = {
+          photo_id: response.data.url,
+          url: response.data.url
+        };
         _this9.uploading = false;
         console.log(response);
       })["catch"](function (error) {
