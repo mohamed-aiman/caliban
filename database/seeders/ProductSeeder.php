@@ -56,7 +56,7 @@ class ProductSeeder extends Seeder
                 // '' => $arr["Sku"], // ""
                 // 'url' => $arr["Product Url"], // "https://www.amazon.com/DB-Longboards-CoreFlex-Fiberglass-Longboard/dp/B07KMVJJK7"
                 // '' => $arr["Stock"], // ""
-                'details' => $arr["Product Details"], // ""
+                // 'details' => $arr["Product Details"], // ""
                 // '' => $arr["Dimensions"], // ""
                 // 'color' => $arr["Color"], // ""
                 // 'ingredients' => $arr["Ingredients"], // ""

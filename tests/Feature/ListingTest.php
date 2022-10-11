@@ -52,7 +52,6 @@ class ListingTest extends TestCase
             ],
         ]);
 
-
         $response->assertStatus(201);
         $this->assertDatabaseHas('products', [
             'title' => 'My Product',
@@ -60,11 +59,11 @@ class ListingTest extends TestCase
             'category_id' => 1,
             'condition' => 'new',
             'selling_format' => 'buy_now',
-            'duration' => 30,
+            'list_till' => now()->addDays(30),
             'price' => 100,
             'tax' => 0,
             'quantity' => 1,
-            'seller_id' => $this->user->id,
+            'seller_id' => $user->id,
         ]);
     }
 }

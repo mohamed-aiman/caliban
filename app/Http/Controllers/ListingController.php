@@ -39,7 +39,6 @@ class ListingController extends Controller
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
-            'details' => 'required|string',
             'category_id' => 'required|integer|exists:categories,id',
             'condition' => 'required|in:new,used_like_new,used,refurbished,damaged',
             'selling_format' => 'required|in:buy_now,classified',
@@ -54,16 +53,6 @@ class ListingController extends Controller
         //   'islands.*' => 'required|integer|exists:islands,id',
         ]);
 
-        if ($request->photos('photos')) {
-            $photos = [];
-            foreach ($request->photos as $photo) {
-                $photos[] = [
-                    'key' => $photo['key'],
-                    'photo_id' => $photo['photo_id'],
-                ];
-            }
-        }
-
         if ($request->selling_format == 'buy_now') {
             $request->validate([
                 'quantity' => 'required|integer',
@@ -75,15 +64,25 @@ class ListingController extends Controller
         }
 
         $product = $this->product->create([
-          'title' => $request->title,
-          'description' => $request->description,
-          'details' => $request->details,
-          'category_id' => $request->category_id,
-          'condition' => $request->condition,
-          'selling_format' => $request->selling_format,
-          'selling_format_details' => $request->selling_format_details,
-          'seller_id' => $request->user()->id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'condition' => $request->condition,
+            'selling_format' => $request->selling_format,
+            'list_till' => now()->addDays($request->duration),
+            'price' => $request->price,
+            'tax' => $request->tax,
+            'quantity' => $request->quantity,
+            'seller_id' => $request->user()->id,
         ]);
+
+        if ($request->photos && count($request->photos) > 0) {
+            foreach ($request->photos as $photo) {
+                $product->photos()->attach($photo['photo_id']);
+            }
+        }
+
+        $product->load('photos');
 
         return response()->json([
             'message' => 'Product created successfully',

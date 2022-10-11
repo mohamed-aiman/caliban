@@ -28,9 +28,17 @@ return new class extends Migration
             $table->text('technical_details')->nullable();
             $table->string('quantity')->nullable();
             $table->string('unit')->nullable();
-            $table->text('details');
             $table->text('description');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('seller_id')->nullable();
+            $table->string('condition')->nullable();
+            $table->string('selling_format')->nullable();
+            $table->datetime('list_till')->nullable();
+            $table->string('tax')->nullable();
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('seller_id')->references('id')->on('users');
         });
     }
 

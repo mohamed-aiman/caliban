@@ -32,4 +32,9 @@ class Product extends Model
     {
         return 'slug';
     }
+
+    public function photos()
+    {
+        return $this->belongsToMany(Photo::class, 'product_photo');
+    }
 }
