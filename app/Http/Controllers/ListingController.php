@@ -37,18 +37,32 @@ class ListingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-          'title' => 'required|text',
-          'description' => 'required|text',
-          'category_id' => 'required|integer|exists:categories,id',
-          'condition' => 'required|in:new,used_like_new,used,refurbished,damaged',
-          'selling_format' => 'required|in:buy_now,classified',
-          'duration' => 'required|integer|max:60',
-          'price' => 'required|numeric',
-          'tax' => '',
-          'quantity' => '',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'details' => 'required|string',
+            'category_id' => 'required|integer|exists:categories,id',
+            'condition' => 'required|in:new,used_like_new,used,refurbished,damaged',
+            'selling_format' => 'required|in:buy_now,classified',
+            'duration' => 'required|integer|max:60',
+            'price' => 'required|numeric',
+            'tax' => '',
+            'quantity' => '',
+            'photos' => 'array',
+            'photos.*.key' => 'required',
+            'photos.*.photo_id' => 'required|exists:photos,id',
         //   'islands' => 'required|array',
         //   'islands.*' => 'required|integer|exists:islands,id',
         ]);
+
+        if ($request->photos('photos')) {
+            $photos = [];
+            foreach ($request->photos as $photo) {
+                $photos[] = [
+                    'key' => $photo['key'],
+                    'photo_id' => $photo['photo_id'],
+                ];
+            }
+        }
 
         if ($request->selling_format == 'buy_now') {
             $request->validate([
@@ -63,6 +77,7 @@ class ListingController extends Controller
         $product = $this->product->create([
           'title' => $request->title,
           'description' => $request->description,
+          'details' => $request->details,
           'category_id' => $request->category_id,
           'condition' => $request->condition,
           'selling_format' => $request->selling_format,
@@ -70,7 +85,10 @@ class ListingController extends Controller
           'seller_id' => $request->user()->id,
         ]);
 
-
+        return response()->json([
+            'message' => 'Product created successfully',
+            'product' => $product,
+        ], 201);
     }
     
     /**

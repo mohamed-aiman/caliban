@@ -161,53 +161,53 @@
           </div>
 
           <div class="mb-6">
-            <label for="selling_format" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Photos</label>
+            <label for="photos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Photos</label>
+            <!-- <progress id="photo-upload-progress" :value="uploadProgress" max="100" class="w-full"> {{ uploadProgress }}% </progress> -->
             <div class="mb-6 border border-green-400 p-6">
-              <div class="flex items-center" id="upload-photos">
+              <div class="flex flex-wrap items-center" id="upload-photos">
                 <!-- put image placeholder here -->
                 <input type="file" @change="onFileChange($event,1)" ref="photo1" style="display: none">
-                <div @click="$refs.photo1.click()" class="mr-6 flex flex-col items-center justify-center w-20 h-20 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
+                <div @click="$refs.photo1.click()" class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
                   <div class="flex flex-col items-center justify-center" v-if="!images[1].url">
-                    <svg class="w-12 h-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                    <svg class="w-32 h-32 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v28a2 2 0 002 2h24a2 2 0 002-2V8a2 2 0 00-2-2H14a2 2 0 00-2 2zm0 0v6h24V8H12z"></path>
                     </svg>
                   </div>
                   <div class="flex flex-col items-center justify-center" v-if="images[1].url">
-                    <img :src="images[1].url" class="w-12 h-12 text-gray-400">
+                    <img :src="images[1].url" class="w-32 h-32 text-gray-400">
                   </div>
                 </div>
-                <p>{{ uploadProgress }}%</p>
                 <input type="file" @change="onFileChange($event,2)" ref="photo2" style="display: none">
-                <div @click="$refs.photo2.click()" class="mr-6 flex flex-col items-center justify-center w-20 h-20 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
+                <div @click="$refs.photo2.click()" class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
                   <div class="flex flex-col items-center justify-center" v-if="!images[2].url">
-                    <svg class="w-12 h-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                    <svg class="w-32 h-32 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v28a2 2 0 002 2h24a2 2 0 002-2V8a2 2 0 00-2-2H14a2 2 0 00-2 2zm0 0v6h24V8H12z"></path>
                     </svg>
                   </div>
                   <div class="flex flex-col items-center justify-center" v-if="images[2].url">
-                    <img :src="images[2].url" class="w-12 h-12 text-gray-400">
+                    <img :src="images[2].url" class="w-32 h-32 text-gray-400">
                   </div>
                 </div>
                 <input type="file" @change="onFileChange($event,3)" ref="photo3" style="display: none">
-                <div @click="$refs.photo3.click()" class="mr-6 flex flex-col items-center justify-center w-20 h-20 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
+                <div @click="$refs.photo3.click()" class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
                   <div class="flex flex-col items-center justify-center"  v-if="!images[3].url">
-                    <svg class="w-12 h-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                    <svg class="w-32 h-32 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v28a2 2 0 002 2h24a2 2 0 002-2V8a2 2 0 00-2-2H14a2 2 0 00-2 2zm0 0v6h24V8H12z"></path>
                     </svg>
                   </div>
                   <div class="flex flex-col items-center justify-center" v-if="images[3].url">
-                    <img :src="images[3].url" class="w-12 h-12 text-gray-400">
+                    <img :src="images[3].url" class="w-32 h-32 text-gray-400">
                   </div>
                 </div>
                 <input type="file" @change="onFileChange($event,4)" ref="photo4" style="display: none">
-                <div @click="$refs.photo4.click()" class="mr-6 flex flex-col items-center justify-center w-20 h-20 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
+                <div @click="$refs.photo4.click()" class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
                   <div class="flex flex-col items-center justify-center" v-if="!images[4].url">
-                    <svg class="w-12 h-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                    <svg class="w-32 h-32 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v28a2 2 0 002 2h24a2 2 0 002-2V8a2 2 0 00-2-2H14a2 2 0 00-2 2zm0 0v6h24V8H12z"></path>
                     </svg>
                   </div>
                   <div class="flex flex-col items-center justify-center" v-if="images[4].url">
-                    <img :src="images[4].url" class="w-12 h-12 text-gray-400">
+                    <img :src="images[4].url" class="w-32 h-32 text-gray-400">
                   </div>
                 </div>
                 
@@ -219,7 +219,7 @@
             <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Location</label>
             <input type="text" id="location" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
           </div>
-          <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+          <button @click="submitForm" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
         </div>
         @endverbatim
     {{-- </form> --}}

@@ -57246,12 +57246,7 @@ var newContent = '';
         price: '',
         tax: '',
         locations: [],
-        images: [],
-        photo1Url: null,
-        photo2Url: null,
-        photo3Url: null,
-        photo4Url: null,
-        photo5Url: null
+        photos: []
       },
       showCategorySelection: false,
       //set to false temporarily
@@ -57272,27 +57267,28 @@ var newContent = '';
       modules: {
         toolbar: ["bold", "italic", "underline", "link", "clean"]
       }
-    }), _defineProperty(_ref, "uploadProgress", 0), _defineProperty(_ref, "images", [{
-      key: 1,
-      photo_id: null,
-      url: null
-    }, {
-      key: 2,
-      photo_id: null,
-      url: null
-    }, {
-      key: 3,
-      photo_id: null,
-      url: null
-    }, {
-      key: 4,
-      photo_id: null,
-      url: null
-    }, {
-      key: 5,
-      photo_id: null,
-      url: null
-    }]), _defineProperty(_ref, "image1", null), _defineProperty(_ref, "image2", null), _defineProperty(_ref, "image3", null), _defineProperty(_ref, "image4", null), _defineProperty(_ref, "image1Url", null), _defineProperty(_ref, "image2Url", null), _defineProperty(_ref, "image3Url", null), _defineProperty(_ref, "image4Url", null), _ref;
+    }), _defineProperty(_ref, "uploadProgress", 0), _defineProperty(_ref, "images", {
+      1: {
+        key: 1,
+        photo_id: null,
+        url: null
+      },
+      2: {
+        key: 2,
+        photo_id: null,
+        url: null
+      },
+      3: {
+        key: 3,
+        photo_id: null,
+        url: null
+      },
+      4: {
+        key: 4,
+        photo_id: null,
+        url: null
+      }
+    }), _ref;
   },
   mounted: function mounted() {
     this.loadParentCategories();
@@ -57592,11 +57588,7 @@ var newContent = '';
       var file = e.target.files[0];
       this.readImage(file);
       console.log(file);
-      this.uploadOriginalImage(file, key); // var files = e.target.files || e.dataTransfer.files;
-      // console.log(files)
-      // if (!files.length)
-      //   return;
-      // this.createImage(files[0]);
+      this.uploadOriginalImage(file, key);
     },
     readImage: function readImage(image) {
       var reader = new FileReader();
@@ -57615,14 +57607,6 @@ var newContent = '';
         }
       }).then(function (response) {
         _this9.finalImage = response.data.url;
-
-        _this9.images.forEach(function (element) {
-          if (element.key == key) {
-            element.photo_id = response.data.id;
-            element.url = response.data.url;
-          }
-        });
-
         _this9.images[key] = {
           photo_id: response.data.url,
           url: response.data.url
@@ -57633,44 +57617,37 @@ var newContent = '';
         console.log(error);
       });
     },
-    createImage: function createImage(file) {// var image = new Image();
-      // var reader = new FileReader();
-      // var vm = this;
-      // reader.onload = (e) => {
-      //   vm.image = e.target.result;
-      // };
-      // reader.readAsDataURL(file);
+    capurePhotos: function capurePhotos() {
+      for (var key in this.images) {
+        if (this.images.hasOwnProperty(key)) {
+          if (this.images[key].photo_id != null) {
+            this.form.photos.push({
+              photo_id: this.images[key].photo_id,
+              key: key
+            });
+          }
+        }
+      }
     },
-    submit: function submit() {
+    submitForm: function submitForm() {
       var _this10 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
-        var response, data;
         return _regeneratorRuntime().wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
                 _this10.captureDescription();
 
-                _context9.next = 3;
-                return fetch("/listings", {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(_this10.form)
+                _this10.capurePhotos();
+
+                axios__WEBPACK_IMPORTED_MODULE_4___default().post('/listings', _this10.form).then(function (response) {
+                  console.log(response);
+                })["catch"](function (error) {
+                  console.log(error);
                 });
 
               case 3:
-                response = _context9.sent;
-                _context9.next = 6;
-                return response.json();
-
-              case 6:
-                data = _context9.sent;
-                console.log(data);
-
-              case 8:
               case "end":
                 return _context9.stop();
             }

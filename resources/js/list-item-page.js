@@ -30,12 +30,7 @@ import axios from 'axios';
           price: '',
           tax: '',
           locations: [],
-          images: [],
-          photo1Url: null,
-          photo2Url: null,
-          photo3Url: null,
-          photo4Url: null,
-          photo5Url: null,
+          photos: [],
         },
         showCategorySelection: false,//set to false temporarily
         level1: [],
@@ -60,21 +55,12 @@ import axios from 'axios';
             },
         },
         uploadProgress: 0,
-        images: [
-          { key: 1, photo_id: null, url: null},
-          { key: 2, photo_id: null, url: null},
-          { key: 3, photo_id: null, url: null},
-          { key: 4, photo_id: null, url: null},
-          { key: 5, photo_id: null, url: null},
-        ],
-        image1: null,
-        image2: null,
-        image3: null,
-        image4: null,
-        image1Url: null,
-        image2Url: null,
-        image3Url: null,
-        image4Url: null
+        images: {
+          1: { key: 1, photo_id: null, url: null},
+          2: { key: 2, photo_id: null, url: null},
+          3: { key: 3, photo_id: null, url: null},
+          4: { key: 4, photo_id: null, url: null},
+        },
       }
     },
     mounted() {
@@ -199,11 +185,6 @@ import axios from 'axios';
         this.readImage(file)
         console.log(file)
         this.uploadOriginalImage(file, key);
-        // var files = e.target.files || e.dataTransfer.files;
-        // console.log(files)
-        // if (!files.length)
-        //   return;
-        // this.createImage(files[0]);
       },
       readImage(image) {
           let reader = new FileReader();
@@ -220,12 +201,6 @@ import axios from 'axios';
               }
           }).then(response => {
               this.finalImage = response.data.url;
-              this.images.forEach(element => {
-                if (element.key == key) {
-                  element.photo_id = response.data.id
-                  element.url = response.data.url
-                }
-              });
               this.images[key] = {
                 photo_id: response.data.url,
                 url: response.data.url
@@ -236,27 +211,28 @@ import axios from 'axios';
               console.log(error);
           });
       },
-      createImage(file) {
-        // var image = new Image();
-        // var reader = new FileReader();
-        // var vm = this;
-
-        // reader.onload = (e) => {
-        //   vm.image = e.target.result;
-        // };
-        // reader.readAsDataURL(file);
+      capurePhotos() {
+        for (var key in this.images) {
+          if (this.images.hasOwnProperty(key)) {
+            if (this.images[key].photo_id != null) {
+              this.form.photos.push({
+                photo_id: this.images[key].photo_id,
+                key: key
+              })
+            }
+          }
+        }
       },
-      async submit() {
+      async submitForm() {
         this.captureDescription()
-        const response = await fetch(`/listings`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.form)
-        })
-        const data = await response.json()
-        console.log(data)
+        this.capurePhotos()
+        axios.post('/listings', this.form)
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            console.log(error)
+          })
       }
     }
   }).mount('#app')
