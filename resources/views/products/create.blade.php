@@ -2,7 +2,7 @@
 
 @section('body')
 
-<div>
+<div class="bg-gray-300 p-10">
     <h1>Add Listing</h1>
 
 
@@ -119,7 +119,7 @@
             <div class="flex items-center" id="classified-form">
               <label for="duration" class="mr-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 <p>Duration<span class="text-red-500">*</span></p></label>
-                <select v-model="duration" id="duration" class="mr-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+                <select v-model="form.duration" id="duration" class="mr-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                   <option value="1">1 day</option>
                   <option v-for="index in 59" :key="index" :value="index+1">{{ index+1 }} days</option>
                 </select>
@@ -127,10 +127,10 @@
                 <label for="price" class="mr-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                   <p>Price<span class="text-red-500">*</span></p>
                 </label>
-                <input v-model="price" type="number" id="price" class="mr-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                <input v-model="form.price" type="number" id="price" class="mr-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
                 
                 <label for="quantity" class="mr-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Quantity</label>
-              <input v-model="quantity" type="number" id="price" class="mr-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+              <input v-model="form.quantity" type="number" id="price" class="mr-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
             </div>
           </div>
           <div class="mb-6 border border-green-400 p-6" v-if="form.selling_format == 'buy_now'">
@@ -138,7 +138,7 @@
             <div class="" id="buy-now-form">
               <label for="duration" class="mb-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 <p>Duration<span class="text-red-500">*</span></p></label>
-              <select v-model="duration" id="duration" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+              <select v-model="form.duration" id="duration" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                 <option value="1">1 day</option>
                 <option v-for="index in 59" :key="index" :value="index+1">{{ index+1 }} days</option>
               </select>
@@ -146,17 +146,17 @@
               <label for="price" class="mb-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 <p>Price<span class="text-red-500">*</span></p>
               </label>
-              <input v-model="price" type="number" id="price" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+              <input v-model="form.price" type="number" id="price" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
 
               <label for="tax" class="mb-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 <p>Tax (<span class="text-xsm text-orange-600">Price entered should be inclusive of Tax</span>)</p></label>
-              <select v-model="tax" id="tax" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+              <select v-model="form.tax" id="tax" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                 <option value="" selected>Not Selected</option>
                 <option value="GST_6%" selected>GST 6%</option>
               </select>
 
               <label for="quantity" class="mb-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Quantity</label>
-              <input v-model="quantity" type="number" id="price" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+              <input v-model="form.quantity" type="number" id="price" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
             </div>
           </div>
 

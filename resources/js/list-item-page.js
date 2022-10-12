@@ -229,6 +229,7 @@ import axios from 'axios';
         axios.post('/listings', this.form)
           .then(response => {
             console.log(response)
+            window.location.href = '/products/' + response.data.id
           })
           .catch(error => {
             console.log(error)

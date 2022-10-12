@@ -22,6 +22,7 @@
 
             .ql-container, .ql-editor {
                 min-height:inherit;
+                background-color: white;
             }
         </style>
     </head>
