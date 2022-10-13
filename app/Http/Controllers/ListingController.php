@@ -85,7 +85,7 @@ class ListingController extends Controller
         $product->load('photos');
 
         return response()->json([
-            'message' => 'Product created successfully',
+            'message' => 'Listing created successfully',
             'product' => $product,
         ], 201);
     }

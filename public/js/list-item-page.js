@@ -57664,7 +57664,7 @@ var newContent = '';
 
                 axios__WEBPACK_IMPORTED_MODULE_4___default().post('/listings', _this10.form).then(function (response) {
                   console.log(response);
-                  window.location.href = '/products/' + response.data.id;
+                  window.location.href = '/products/' + response.data.product.slug;
                 })["catch"](function (error) {
                   if (error.response.status == 422) {
                     console.log(error.response.data);

@@ -250,7 +250,7 @@ import axios from 'axios';
         axios.post('/listings', this.form)
           .then(response => {
             console.log(response)
-            window.location.href = '/products/' + response.data.id
+            window.location.href = '/products/' + response.data.product.slug
           })
           .catch(error => {
             if (error.response.status == 422) {
