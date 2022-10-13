@@ -57237,7 +57237,7 @@ var newContent = '';
       form: {
         title: '',
         description: '',
-        category_id: 101061,
+        category_id: null,
         //id set to 101061 for testing null default
         condition: '',
         selling_format: '',
@@ -57248,7 +57248,7 @@ var newContent = '';
         locations: [],
         photos: []
       },
-      showCategorySelection: false,
+      showCategorySelection: true,
       //set to false temporarily
       level1: [],
       level2: [],
@@ -57620,7 +57620,7 @@ var newContent = '';
       }).then(function (response) {
         _this9.finalImage = response.data.url;
         _this9.images[key] = {
-          photo_id: response.data.url,
+          photo_id: response.data.id,
           url: response.data.url
         };
         _this9.uploading = false;
@@ -57669,6 +57669,21 @@ var newContent = '';
                   if (error.response.status == 422) {
                     console.log(error.response.data);
                     _this10.errors = error.response.data.errors;
+                    _this10.errors.photos = [];
+
+                    for (var i = 0; i < 4; i++) {
+                      var key = 'photos.' + i + '.photo_id';
+
+                      if (error.response.data.errors[key]) {
+                        for (var j = 0; j < error.response.data.errors[key].length; j++) {
+                          var errorText = error.response.data.errors[key][j];
+                          errorText = errorText.replace(key, 'photo ' + (i + 1));
+
+                          _this10.errors.photos.push(errorText);
+                        } // this.errors.photos[i]['photo_id'] = error.response.data.errors[key]
+
+                      }
+                    }
                   }
                 });
 

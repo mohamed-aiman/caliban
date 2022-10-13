@@ -176,7 +176,9 @@
 
           <div class="mb-6">
             <label for="photos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Photos</label>
-            <p v-if="errors.photos" class="text-red-500 text-xs italic" v-text="errors.photos[0]"></p>
+            <div v-if="errors.photos.length>0">
+              <p v-for="error in errors.photos" class="text-red-500 text-xs italic" v-text="error"></p>
+            </div>
             <!-- <progress id="photo-upload-progress" :value="uploadProgress" max="100" class="w-full"> {{ uploadProgress }}% </progress> -->
             <div class="mb-6 border border-green-400 p-6">
               <div class="flex flex-wrap items-center" id="upload-photos">

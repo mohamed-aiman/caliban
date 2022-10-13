@@ -22,7 +22,7 @@ import axios from 'axios';
         form: {
           title: '',
           description: '',
-          category_id: 101061,//id set to 101061 for testing null default
+          category_id: null,//id set to 101061 for testing null default
           condition: '',
           selling_format: '',
           duration: '',
@@ -32,7 +32,7 @@ import axios from 'axios';
           locations: [],
           photos: [],
         },
-        showCategorySelection: false,//set to false temporarily
+        showCategorySelection: true,//set to false temporarily
         level1: [],
         level2: [],
         level3: [],
@@ -215,7 +215,7 @@ import axios from 'axios';
           }).then(response => {
               this.finalImage = response.data.url;
               this.images[key] = {
-                photo_id: response.data.url,
+                photo_id: response.data.id,
                 url: response.data.url
               }
               this.uploading = false;
@@ -256,6 +256,18 @@ import axios from 'axios';
             if (error.response.status == 422) {
               console.log(error.response.data)
               this.errors = error.response.data.errors
+              this.errors.photos = [];
+              for (let i = 0; i < 4; i++) {
+                let key = 'photos.'+i+'.photo_id';
+                if (error.response.data.errors[key]) {
+                  for (let j = 0; j < error.response.data.errors[key].length; j++) {
+                    let errorText = error.response.data.errors[key][j];
+                    errorText = errorText.replace(key, 'photo '+(i+1));
+                    this.errors.photos.push(errorText)
+                  }
+                  // this.errors.photos[i]['photo_id'] = error.response.data.errors[key]
+                }
+              }
             }
           })
       }
