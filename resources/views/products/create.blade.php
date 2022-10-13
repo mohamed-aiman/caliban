@@ -81,10 +81,12 @@
           </div>
           <div class="mb-6">
             <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Title</label>
+            <p v-if="errors.title" class="text-red-500 text-xs italic" v-text="errors.title[0]"></p>
             <input v-model="form.title" type="text" id="title" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
           </div>
           <div class="mb-6">
             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
+            <p v-if="errors.description" class="text-red-500 text-xs italic" v-text="errors.description[0]"></p>
             <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               <quill-editor 
                 style="min-height:300px;" 
@@ -99,6 +101,7 @@
           </div>
           <div class="mb-6">
             <label for="condition" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Condition</label>
+            <p v-if="errors.condition" class="text-red-500 text-xs italic" v-text="errors.condition[0]"></p>
             <select v-model="form.condition" id="condition" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
               <option value="new">New</option>
               <option value="used_like_new">Used Like New</option>
@@ -109,6 +112,7 @@
           </div>
           <div class="mb-6">
             <label for="selling_format" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Selling Format</label>
+            <p v-if="errors.selling_format" class="text-red-500 text-xs italic" v-text="errors.selling_format[0]"></p>
             <select v-model="form.selling_format" id="selling_format" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
               <option value="buy_now" selected>Buy Now</option>
               <option value="classified">Classified</option>
@@ -118,18 +122,22 @@
             <p class="mb-6 font-bold font-serif">Classified</p>
             <div class="flex items-center" id="classified-form">
               <label for="duration" class="mr-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                <p>Duration<span class="text-red-500">*</span></p></label>
-                <select v-model="form.duration" id="duration" class="mr-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
-                  <option value="1">1 day</option>
-                  <option v-for="index in 59" :key="index" :value="index+1">{{ index+1 }} days</option>
-                </select>
+                <p>Duration<span class="text-red-500">*</span></p>
+              </label>
+              <p v-if="errors.duration" class="text-red-500 text-xs italic" v-text="errors.duration[0]"></p>
+              <select v-model="form.duration" id="duration" class="mr-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+                <option value="1">1 day</option>
+                <option v-for="index in 59" :key="index" :value="index+1">{{ index+1 }} days</option>
+              </select>
                 
-                <label for="price" class="mr-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  <p>Price<span class="text-red-500">*</span></p>
-                </label>
+              <label for="price" class="mr-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <p>Price<span class="text-red-500">*</span></p>
+              </label>
+                <p v-if="errors.price" class="text-red-500 text-xs italic" v-text="errors.price[0]"></p>
                 <input v-model="form.price" type="number" id="price" class="mr-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
                 
-                <label for="quantity" class="mr-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Quantity</label>
+              <label for="quantity" class="mr-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Quantity</label>
+              <p v-if="errors.quantity" class="text-red-500 text-xs italic" v-text="errors.quantity[0]"></p>
               <input v-model="form.quantity" type="number" id="price" class="mr-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
             </div>
           </div>
@@ -137,7 +145,9 @@
             <p class="mb-6 font-bold font-serif">Buy Now</p>
             <div class="" id="buy-now-form">
               <label for="duration" class="mb-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                <p>Duration<span class="text-red-500">*</span></p></label>
+                <p>Duration<span class="text-red-500">*</span></p>
+              </label>
+              <p v-if="errors.duration" class="text-red-500 text-xs italic" v-text="errors.duration[0]"></p>
               <select v-model="form.duration" id="duration" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                 <option value="1">1 day</option>
                 <option v-for="index in 59" :key="index" :value="index+1">{{ index+1 }} days</option>
@@ -146,22 +156,27 @@
               <label for="price" class="mb-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 <p>Price<span class="text-red-500">*</span></p>
               </label>
+              <p v-if="errors.price" class="text-red-500 text-xs italic" v-text="errors.price[0]"></p>
               <input v-model="form.price" type="number" id="price" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
 
               <label for="tax" class="mb-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                <p>Tax (<span class="text-xsm text-orange-600">Price entered should be inclusive of Tax</span>)</p></label>
+                <p>Tax (<span class="text-xsm text-orange-600">Price entered should be inclusive of Tax</span>)</p>
+              </label>
+              <p v-if="errors.tax" class="text-red-500 text-xs italic" v-text="errors.tax[0]"></p>
               <select v-model="form.tax" id="tax" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                 <option value="" selected>Not Selected</option>
                 <option value="GST_6%" selected>GST 6%</option>
               </select>
 
               <label for="quantity" class="mb-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Quantity</label>
+              <p v-if="errors.quantity" class="text-red-500 text-xs italic" v-text="errors.quantity[0]"></p>
               <input v-model="form.quantity" type="number" id="price" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
             </div>
           </div>
 
           <div class="mb-6">
             <label for="photos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Photos</label>
+            <p v-if="errors.photos" class="text-red-500 text-xs italic" v-text="errors.photos[0]"></p>
             <!-- <progress id="photo-upload-progress" :value="uploadProgress" max="100" class="w-full"> {{ uploadProgress }}% </progress> -->
             <div class="mb-6 border border-green-400 p-6">
               <div class="flex flex-wrap items-center" id="upload-photos">
@@ -245,7 +260,8 @@
 
           <div class="mb-6">
             <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Location</label>
-            <input type="text" id="location" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+            <p v-if="errors.location" class="text-red-500 text-xs italic" v-text="errors.location[0]"></p>
+            <input v-model="location" type="text" id="location" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
           </div>
           <button @click="submitForm" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
         </div>

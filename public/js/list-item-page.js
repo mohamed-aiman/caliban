@@ -57288,6 +57288,18 @@ var newContent = '';
         photo_id: null,
         url: null
       }
+    }), _defineProperty(_ref, "errors", {
+      title: [],
+      description: [],
+      category_id: [],
+      condition: [],
+      selling_format: [],
+      duration: [],
+      quantity: [],
+      price: [],
+      tax: [],
+      locations: [],
+      photos: []
     }), _ref;
   },
   mounted: function mounted() {
@@ -57654,7 +57666,10 @@ var newContent = '';
                   console.log(response);
                   window.location.href = '/products/' + response.data.id;
                 })["catch"](function (error) {
-                  console.log(error);
+                  if (error.response.status == 422) {
+                    console.log(error.response.data);
+                    _this10.errors = error.response.data.errors;
+                  }
                 });
 
               case 3:

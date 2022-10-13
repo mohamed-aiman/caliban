@@ -61,6 +61,19 @@ import axios from 'axios';
           3: { key: 3, photo_id: null, url: null},
           4: { key: 4, photo_id: null, url: null},
         },
+        errors: {
+          title: [],
+          description: [],
+          category_id: [],
+          condition: [],
+          selling_format: [],
+          duration: [],
+          quantity: [],
+          price: [],
+          tax: [],
+          locations: [],
+          photos: [],
+        },
       }
     },
     mounted() {
@@ -240,7 +253,10 @@ import axios from 'axios';
             window.location.href = '/products/' + response.data.id
           })
           .catch(error => {
-            console.log(error)
+            if (error.response.status == 422) {
+              console.log(error.response.data)
+              this.errors = error.response.data.errors
+            }
           })
       }
     }
