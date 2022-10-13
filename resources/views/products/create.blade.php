@@ -167,47 +167,75 @@
               <div class="flex flex-wrap items-center" id="upload-photos">
                 <!-- put image placeholder here -->
                 <input type="file" @change="onFileChange($event,1)" ref="photo1" style="display: none">
-                <div @click="$refs.photo1.click()" class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
-                  <div class="flex flex-col items-center justify-center" v-if="!images[1].url">
+                <div class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
+                  <div @click="$refs.photo1.value = null; $refs.photo1.click()" class="flex flex-col items-center justify-center" v-if="!images[1].url">
                     <svg class="w-32 h-32 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v28a2 2 0 002 2h24a2 2 0 002-2V8a2 2 0 00-2-2H14a2 2 0 00-2 2zm0 0v6h24V8H12z"></path>
                     </svg>
                   </div>
                   <div class="flex flex-col items-center justify-center" v-if="images[1].url">
-                    <img :src="images[1].url" class="w-32 h-32 text-gray-400">
+                    <div class="w-full">
+                      <button @click="deleteImage(1)" class="relative top-0 right-0 z-10 p-1 bg-red-500 rounded-full float-right">
+                      <svg class="w-4 h-4 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                      </button>
+                    </div>
+                    <img @click="$refs.photo1.value = null; $refs.photo1.click()" :src="images[1].url" class="w-32 h-32 text-gray-400">
                   </div>
                 </div>
                 <input type="file" @change="onFileChange($event,2)" ref="photo2" style="display: none">
-                <div @click="$refs.photo2.click()" class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
-                  <div class="flex flex-col items-center justify-center" v-if="!images[2].url">
+                <div class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
+                  <div  @click="$refs.photo2.value = null; $refs.photo2.click()" class="flex flex-col items-center justify-center" v-if="!images[2].url">
                     <svg class="w-32 h-32 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v28a2 2 0 002 2h24a2 2 0 002-2V8a2 2 0 00-2-2H14a2 2 0 00-2 2zm0 0v6h24V8H12z"></path>
                     </svg>
                   </div>
                   <div class="flex flex-col items-center justify-center" v-if="images[2].url">
-                    <img :src="images[2].url" class="w-32 h-32 text-gray-400">
+                    <div class="w-full">
+                      <button @click="deleteImage(2)" class="relative top-0 right-0 z-10 p-1 bg-red-500 rounded-full float-right">
+                      <svg class="w-4 h-4 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                      </button>
+                    </div>
+                    <img  @click="$refs.photo2.value = null; $refs.photo2.click()" :src="images[2].url" class="w-32 h-32 text-gray-400">
                   </div>
                 </div>
                 <input type="file" @change="onFileChange($event,3)" ref="photo3" style="display: none">
-                <div @click="$refs.photo3.click()" class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
-                  <div class="flex flex-col items-center justify-center"  v-if="!images[3].url">
+                <div class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
+                  <div @click="$refs.photo3.value = null; $refs.photo3.click()" class="flex flex-col items-center justify-center"  v-if="!images[3].url">
                     <svg class="w-32 h-32 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v28a2 2 0 002 2h24a2 2 0 002-2V8a2 2 0 00-2-2H14a2 2 0 00-2 2zm0 0v6h24V8H12z"></path>
                     </svg>
                   </div>
                   <div class="flex flex-col items-center justify-center" v-if="images[3].url">
-                    <img :src="images[3].url" class="w-32 h-32 text-gray-400">
+                    <div class="w-full">
+                      <button @click="deleteImage(3)" class="relative top-0 right-0 z-10 p-1 bg-red-500 rounded-full float-right">
+                      <svg class="w-4 h-4 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                      </button>
+                    </div>
+                    <img @click="$refs.photo3.value = null; $refs.photo3.click()" :src="images[3].url" class="w-32 h-32 text-gray-400">
                   </div>
                 </div>
                 <input type="file" @change="onFileChange($event,4)" ref="photo4" style="display: none">
-                <div @click="$refs.photo4.click()" class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
-                  <div class="flex flex-col items-center justify-center" v-if="!images[4].url">
+                <div class="mr-6 flex flex-col items-center justify-center w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg">
+                  <div @click="$refs.photo4.value = null; $refs.photo4.click()" class="flex flex-col items-center justify-center" v-if="!images[4].url">
                     <svg class="w-32 h-32 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v28a2 2 0 002 2h24a2 2 0 002-2V8a2 2 0 00-2-2H14a2 2 0 00-2 2zm0 0v6h24V8H12z"></path>
                     </svg>
                   </div>
                   <div class="flex flex-col items-center justify-center" v-if="images[4].url">
-                    <img :src="images[4].url" class="w-32 h-32 text-gray-400">
+                    <div class="w-full">
+                      <button @click="deleteImage(2)" class="relative top-0 right-0 z-10 p-1 bg-red-500 rounded-full float-right">
+                      <svg class="w-4 h-4 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                      </button>
+                    </div>
+                    <img @click="$refs.photo4.value = null; $refs.photo4.click()" :src="images[4].url" class="w-32 h-32 text-gray-400">
                   </div>
                 </div>
                 

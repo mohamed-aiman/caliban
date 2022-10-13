@@ -57617,7 +57617,16 @@ var newContent = '';
         console.log(error);
       });
     },
+    deleteImage: function deleteImage(key) {
+      this.images[key] = {
+        key: key,
+        photo_id: null,
+        url: null
+      };
+    },
     capurePhotos: function capurePhotos() {
+      this.form.photos = [];
+
       for (var key in this.images) {
         if (this.images.hasOwnProperty(key)) {
           if (this.images[key].photo_id != null) {

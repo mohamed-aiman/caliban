@@ -211,7 +211,15 @@ import axios from 'axios';
               console.log(error);
           });
       },
+      deleteImage(key) {
+        this.images[key] = {
+          key: key,
+          photo_id: null,
+          url: null
+        }
+      },
       capurePhotos() {
+        this.form.photos = []
         for (var key in this.images) {
           if (this.images.hasOwnProperty(key)) {
             if (this.images[key].photo_id != null) {
