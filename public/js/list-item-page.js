@@ -57288,7 +57288,7 @@ var newContent = '';
         photo_id: null,
         url: null
       }
-    }), _defineProperty(_ref, "errors", {
+    }), _defineProperty(_ref, "locations", []), _defineProperty(_ref, "errors", {
       title: [],
       description: [],
       category_id: [],
@@ -57304,9 +57304,10 @@ var newContent = '';
   },
   mounted: function mounted() {
     this.loadParentCategories();
+    this.loadLocations();
   },
   methods: {
-    loadParentCategories: function loadParentCategories() {
+    loadLocations: function loadLocations() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -57315,19 +57316,14 @@ var newContent = '';
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.form.category_id = null;
-                _context.next = 3;
-                return fetch("/parent-categories");
+                _context.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_4___default().get('/locations/for-select');
 
-              case 3:
+              case 2:
                 response = _context.sent;
-                _context.next = 6;
-                return response.json();
+                _this.locations = response.data;
 
-              case 6:
-                _this.level1 = _context.sent;
-
-              case 7:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -57335,7 +57331,7 @@ var newContent = '';
         }, _callee);
       }))();
     },
-    loadCategories: function loadCategories(id) {
+    loadParentCategories: function loadParentCategories() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
@@ -57346,7 +57342,7 @@ var newContent = '';
               case 0:
                 _this2.form.category_id = null;
                 _context2.next = 3;
-                return fetch("/categories/".concat(id, "/children"));
+                return fetch("/parent-categories");
 
               case 3:
                 response = _context2.sent;
@@ -57354,7 +57350,7 @@ var newContent = '';
                 return response.json();
 
               case 6:
-                return _context2.abrupt("return", _context2.sent);
+                _this2.level1 = _context2.sent;
 
               case 7:
               case "end":
@@ -57364,27 +57360,28 @@ var newContent = '';
         }, _callee2);
       }))();
     },
-    loadLevel2: function loadLevel2() {
+    loadCategories: function loadCategories(id) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var response;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this3.resetLists(1);
-
+                _this3.form.category_id = null;
                 _context3.next = 3;
-                return _this3.loadCategories(_this3.level1_id);
+                return fetch("/categories/".concat(id, "/children"));
 
               case 3:
-                _this3.level2 = _context3.sent;
+                response = _context3.sent;
+                _context3.next = 6;
+                return response.json();
 
-                if (_this3.level2.length == 0) {
-                  _this3.form.category_id = _this3.level1_id;
-                }
+              case 6:
+                return _context3.abrupt("return", _context3.sent);
 
-              case 5:
+              case 7:
               case "end":
                 return _context3.stop();
             }
@@ -57392,7 +57389,7 @@ var newContent = '';
         }, _callee3);
       }))();
     },
-    loadLevel3: function loadLevel3() {
+    loadLevel2: function loadLevel2() {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
@@ -57400,16 +57397,16 @@ var newContent = '';
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _this4.resetLists(2);
+                _this4.resetLists(1);
 
                 _context4.next = 3;
-                return _this4.loadCategories(_this4.level2_id);
+                return _this4.loadCategories(_this4.level1_id);
 
               case 3:
-                _this4.level3 = _context4.sent;
+                _this4.level2 = _context4.sent;
 
-                if (_this4.level3.length == 0) {
-                  _this4.form.category_id = _this4.level2_id;
+                if (_this4.level2.length == 0) {
+                  _this4.form.category_id = _this4.level1_id;
                 }
 
               case 5:
@@ -57420,7 +57417,7 @@ var newContent = '';
         }, _callee4);
       }))();
     },
-    loadLevel4: function loadLevel4() {
+    loadLevel3: function loadLevel3() {
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
@@ -57428,16 +57425,16 @@ var newContent = '';
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _this5.resetLists(3);
+                _this5.resetLists(2);
 
                 _context5.next = 3;
-                return _this5.loadCategories(_this5.level3_id);
+                return _this5.loadCategories(_this5.level2_id);
 
               case 3:
-                _this5.level4 = _context5.sent;
+                _this5.level3 = _context5.sent;
 
-                if (_this5.level4.length == 0) {
-                  _this5.form.category_id = _this5.level3_id;
+                if (_this5.level3.length == 0) {
+                  _this5.form.category_id = _this5.level2_id;
                 }
 
               case 5:
@@ -57448,7 +57445,7 @@ var newContent = '';
         }, _callee5);
       }))();
     },
-    loadLevel5: function loadLevel5() {
+    loadLevel4: function loadLevel4() {
       var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
@@ -57456,16 +57453,16 @@ var newContent = '';
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                _this6.resetLists(4);
+                _this6.resetLists(3);
 
                 _context6.next = 3;
-                return _this6.loadCategories(_this6.level4_id);
+                return _this6.loadCategories(_this6.level3_id);
 
               case 3:
-                _this6.level5 = _context6.sent;
+                _this6.level4 = _context6.sent;
 
-                if (_this6.level5.length == 0) {
-                  _this6.form.category_id = _this6.level4_id;
+                if (_this6.level4.length == 0) {
+                  _this6.form.category_id = _this6.level3_id;
                 }
 
               case 5:
@@ -57476,7 +57473,7 @@ var newContent = '';
         }, _callee6);
       }))();
     },
-    loadLevel6: function loadLevel6() {
+    loadLevel5: function loadLevel5() {
       var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
@@ -57484,16 +57481,16 @@ var newContent = '';
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                _this7.resetLists(5);
+                _this7.resetLists(4);
 
                 _context7.next = 3;
-                return _this7.loadCategories(_this7.level5_id);
+                return _this7.loadCategories(_this7.level4_id);
 
               case 3:
-                _this7.level6 = _context7.sent;
+                _this7.level5 = _context7.sent;
 
-                if (_this7.level6.length == 0) {
-                  _this7.form.category_id = _this7.level5_id;
+                if (_this7.level5.length == 0) {
+                  _this7.form.category_id = _this7.level4_id;
                 }
 
               case 5:
@@ -57502,6 +57499,34 @@ var newContent = '';
             }
           }
         }, _callee7);
+      }))();
+    },
+    loadLevel6: function loadLevel6() {
+      var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
+        return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                _this8.resetLists(5);
+
+                _context8.next = 3;
+                return _this8.loadCategories(_this8.level5_id);
+
+              case 3:
+                _this8.level6 = _context8.sent;
+
+                if (_this8.level6.length == 0) {
+                  _this8.form.category_id = _this8.level5_id;
+                }
+
+              case 5:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
       }))();
     },
     resetLists: function resetLists(selectedLevel) {
@@ -57554,32 +57579,32 @@ var newContent = '';
       }
     },
     categoryConfirmed: function categoryConfirmed() {
-      var _this8 = this;
+      var _this9 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
         var response;
-        return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
-                _context8.next = 2;
-                return fetch("/categories/".concat(_this8.form.category_id));
+                _context9.next = 2;
+                return fetch("/categories/".concat(_this9.form.category_id));
 
               case 2:
-                response = _context8.sent;
-                _context8.next = 5;
+                response = _context9.sent;
+                _context9.next = 5;
                 return response.json();
 
               case 5:
-                _this8.selectedCategory = _context8.sent;
-                _this8.showCategorySelection = false;
+                _this9.selectedCategory = _context9.sent;
+                _this9.showCategorySelection = false;
 
               case 7:
               case "end":
-                return _context8.stop();
+                return _context9.stop();
             }
           }
-        }, _callee8);
+        }, _callee9);
       }))();
     },
     changeCategory: function changeCategory() {
@@ -57607,7 +57632,7 @@ var newContent = '';
       reader.readAsDataURL(image);
     },
     uploadOriginalImage: function uploadOriginalImage(file, key) {
-      var _this9 = this;
+      var _this10 = this;
 
       var formData = new FormData();
       formData.append('image', file, file.name);
@@ -57615,15 +57640,15 @@ var newContent = '';
       this.uploading = true;
       axios__WEBPACK_IMPORTED_MODULE_4___default().post('/photos', formData, {
         onUploadProgress: function onUploadProgress(progressEvent) {
-          _this9.uploadProgress = Math.round(progressEvent.loaded * 100 / progressEvent.total);
+          _this10.uploadProgress = Math.round(progressEvent.loaded * 100 / progressEvent.total);
         }
       }).then(function (response) {
-        _this9.finalImage = response.data.url;
-        _this9.images[key] = {
+        _this10.finalImage = response.data.url;
+        _this10.images[key] = {
           photo_id: response.data.id,
           url: response.data.url
         };
-        _this9.uploading = false;
+        _this10.uploading = false;
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -57651,25 +57676,25 @@ var newContent = '';
       }
     },
     submitForm: function submitForm() {
-      var _this10 = this;
+      var _this11 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
-        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
+        return _regeneratorRuntime().wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
-                _this10.captureDescription();
+                _this11.captureDescription();
 
-                _this10.capurePhotos();
+                _this11.capurePhotos();
 
-                axios__WEBPACK_IMPORTED_MODULE_4___default().post('/listings', _this10.form).then(function (response) {
+                axios__WEBPACK_IMPORTED_MODULE_4___default().post('/listings', _this11.form).then(function (response) {
                   console.log(response);
                   window.location.href = '/products/' + response.data.product.slug;
                 })["catch"](function (error) {
                   if (error.response.status == 422) {
                     console.log(error.response.data);
-                    _this10.errors = error.response.data.errors;
-                    _this10.errors.photos = [];
+                    _this11.errors = error.response.data.errors;
+                    _this11.errors.photos = [];
 
                     for (var i = 0; i < 4; i++) {
                       var key = 'photos.' + i + '.photo_id';
@@ -57679,7 +57704,7 @@ var newContent = '';
                           var errorText = error.response.data.errors[key][j];
                           errorText = errorText.replace(key, 'photo ' + (i + 1));
 
-                          _this10.errors.photos.push(errorText);
+                          _this11.errors.photos.push(errorText);
                         } // this.errors.photos[i]['photo_id'] = error.response.data.errors[key]
 
                       }
@@ -57689,10 +57714,10 @@ var newContent = '';
 
               case 3:
               case "end":
-                return _context9.stop();
+                return _context10.stop();
             }
           }
-        }, _callee9);
+        }, _callee10);
       }))();
     }
   }

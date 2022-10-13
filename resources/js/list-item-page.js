@@ -61,6 +61,7 @@ import axios from 'axios';
           3: { key: 3, photo_id: null, url: null},
           4: { key: 4, photo_id: null, url: null},
         },
+        locations: [],
         errors: {
           title: [],
           description: [],
@@ -78,8 +79,13 @@ import axios from 'axios';
     },
     mounted() {
         this.loadParentCategories();
+        this.loadLocations();
     },
     methods: {
+      async loadLocations() {
+        const response = await axios.get('/locations/for-select');
+        this.locations = response.data;
+      },
       async loadParentCategories() {
         this.form.category_id = null
         const response = await fetch(`/parent-categories`)

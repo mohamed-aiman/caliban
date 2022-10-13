@@ -6,6 +6,7 @@ use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LocationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +38,5 @@ Route::get('categories', [CategoryController::class, 'index'])->name('categories
     Route::post('photos', [PhotoController::class, 'store'])->name('photos.store');
     Route::get('listings/create', [ListingController::class, 'create'])->name('listings.create');
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
+    Route::get('/locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
 // });

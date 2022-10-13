@@ -15,7 +15,7 @@ class ListingTest extends TestCase
 
     /**
      * @group products
-     * @group now
+     * @group listing
      */
     public function test_can_create_product()
     {

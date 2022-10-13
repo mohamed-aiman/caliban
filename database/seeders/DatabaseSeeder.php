@@ -22,8 +22,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
+            //does not depend on other seeders
             // UserSeeder::class,
             CategorySeeder::class,
+            LocationSeeder::class,
+            //depends on other seeders
             ProductSeeder::class,
         ]);
     }

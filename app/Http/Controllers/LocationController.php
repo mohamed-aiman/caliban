@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
@@ -9,6 +10,21 @@ class LocationController extends Controller
     public function __construct(Location $location)
     {
         $this->location = $location;
+    }
+
+    public function forSelect(Request $request)
+    {
+        $locations = $this->location->select('id', 'name', 'parent_id')
+            ->with(['parent' => function ($query) {
+                $query->select('id', 'name', 'parent_id');
+            }])
+            ->with(['children' => function ($query) {
+                $query->select('id', 'name', 'parent_id');
+            }])
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return response()->json($locations);
     }
 
     public function index(Request $request)
