@@ -47,15 +47,15 @@ class ListingController extends Controller
             'tax' => '',
             'quantity' => '',
             'photos' => 'array',
-            'photos.*.key' => 'required',
+            'photos.*.key' => '',
             'photos.*.photo_id' => 'required|exists:photos,id',
-        //   'islands' => 'required|array',
-        //   'islands.*' => 'required|integer|exists:islands,id',
+        //   'locations' => 'required|array',
+        //   'locations.*' => 'required|integer|exists:locations,id',
         ]);
 
         if ($request->selling_format == 'buy_now') {
             $request->validate([
-                'quantity' => 'required|integer',
+                'quantity' => 'required',
             ]);
         } else if ($request->selling_format == 'classified') {
             $request->validate([

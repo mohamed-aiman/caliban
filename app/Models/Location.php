@@ -2,21 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Location extends Model
 {
     use HasFactory;
-    use Sluggable;
 
     protected $guarded = [];
 
-
-    public function locations()
+    public function children()
     {
-        return $this->belongsToMany(Location::class, 'product_location', 'product_id', 'location_id');
+        return $this->hasMany(Location::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Location::class, 'parent_id');
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_location', 'location_id', 'product_id');
     }
 
     /**
@@ -36,10 +43,5 @@ class Product extends Model
     public function getRouteKeyName()
     {
         return 'slug';
-    }
-
-    public function photos()
-    {
-        return $this->belongsToMany(Photo::class, 'product_photo');
     }
 }

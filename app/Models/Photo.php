@@ -13,6 +13,6 @@ class Photo extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_photo');
+        return $this->belongsToMany(Product::class, 'product_photo', 'photo_id', 'product_id');
     }
 }
