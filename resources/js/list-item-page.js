@@ -22,7 +22,7 @@ import axios from 'axios';
         form: {
           title: '',
           description: '',
-          category_id: null,//id set to 101061 for testing null default
+          category_id: 101061,//id set to 101061 for testing null default
           condition: '',
           selling_format: '',
           duration: '',
@@ -32,7 +32,7 @@ import axios from 'axios';
           locations: [],
           photos: [],
         },
-        showCategorySelection: true,//set to false temporarily
+        showCategorySelection: false,//set to false temporarily
         level1: [],
         level2: [],
         level3: [],
@@ -62,6 +62,10 @@ import axios from 'axios';
           4: { key: 4, photo_id: null, url: null},
         },
         locations: [],
+        locationSearch: '',
+        filteredLocations: [],
+        selectedLocations: [],
+        selectedLocationId: null,
         errors: {
           title: [],
           description: [],
@@ -77,6 +81,18 @@ import axios from 'axios';
         },
       }
     },
+    watch: {
+        selectedLocationId: function(val, oldVal) {
+          if (val) {
+            this.addLocation(val)
+          }
+        },
+        locationSearch: function(val, oldVal) {
+          // if (val) {
+            this.filterLocations(val)
+          // }
+        }
+    },
     mounted() {
         this.loadParentCategories();
         this.loadLocations();
@@ -85,6 +101,25 @@ import axios from 'axios';
       async loadLocations() {
         const response = await axios.get('/locations/for-select');
         this.locations = response.data;
+        this.filteredLocations = this.locations;
+      },
+      async filterLocations() {
+        const response = await axios.get('/locations/for-select?search='+this.locationSearch);
+        this.filteredLocations = response.data.filter(location => {
+          return !this.selectedLocations.find(selectedLocation => selectedLocation.id === location.id);
+        })
+      },
+      addLocation(id) {
+          this.selectedLocations.push(this.locations.find(location => location.id == id))
+          this.selectedLocationId = null
+          //remove from filtered locations
+          this.filteredLocations = this.locations.filter(
+            location => !this.selectedLocations.find(selectedLocation => selectedLocation.id == location.id)
+          )
+      },
+      removeLocation(id) {
+        this.selectedLocations = this.selectedLocations.filter(location => location.id !== id);
+        this.filterLocations();
       },
       async loadParentCategories() {
         this.form.category_id = null

@@ -265,6 +265,28 @@
             <p v-if="errors.location" class="text-red-500 text-xs italic" v-text="errors.location[0]"></p>
             <input v-model="location" type="text" id="location" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
           </div>
+
+          <div class="mb-6">
+            <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Location</label>
+            <p v-if="errors.location" class="text-red-500 text-xs italic" v-text="errors.location[0]"></p>
+            <input v-model="locationSearch"  type="text" id="locationSearch" placeholder="Type name of the island,city to search" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+            <select v-if="filteredLocations.length>0" name="selectedLocation" :size="filteredLocations.length<9?filteredLocations.length+1 : 10"  v-model="selectedLocationId" class="form-control">
+              <option v-for="location in filteredLocations" :value="location.id">{{ location.name }}</option>
+            </select>
+            <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Selected Locations</label>
+            <div class="flex flex-wrap my-2">
+              <div v-for="location in selectedLocations" class="flex items-center justify-center px-2 py-1 m-1 text-xs font-medium leading-5 text-blue-800 bg-blue-100 rounded-full dark:bg-blue-800 dark:text-blue-100">
+                <span class="mr-2">{{ location.name }}</span>
+                <button @click="removeLocation(location.id)" type="button" class="bg-red-500 inline-flex items-center justify-center w-4 h-4 transition duration-150 ease-in-out rounded-full focus:outline-none focus:shadow-outline">
+                  <svg class="w-3 h-3 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+
+          </div>
+
+
           <button @click="submitForm" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
         </div>
         @endverbatim

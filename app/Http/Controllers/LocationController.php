@@ -14,14 +14,19 @@ class LocationController extends Controller
 
     public function forSelect(Request $request)
     {
-        $locations = $this->location->select('id', 'name', 'parent_id')
+        $query = $this->location->select('id', 'name', 'parent_id')
             ->with(['parent' => function ($query) {
                 $query->select('id', 'name', 'parent_id');
             }])
             ->with(['children' => function ($query) {
                 $query->select('id', 'name', 'parent_id');
-            }])
-            ->orderBy('name', 'asc')
+            }]);
+
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $locations = $query->orderBy('name', 'asc')
             ->get();
 
         return response()->json($locations);
