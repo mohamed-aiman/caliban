@@ -38,6 +38,7 @@ Route::get('categories', [CategoryController::class, 'index'])->name('categories
     Route::get('categories/{id}/children', [CategoryController::class, 'children'])->name('categories.children');
     Route::get('categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
     Route::post('photos', [PhotoController::class, 'store'])->name('photos.store');
+    Route::get('listings', [ListingController::class, 'index'])->name('listings.index');
     Route::get('listings/create', [ListingController::class, 'create'])->name('listings.create');
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('/locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');

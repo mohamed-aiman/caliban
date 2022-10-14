@@ -19,9 +19,18 @@ class ListingController extends Controller
     {
         $product = $this->product
             ->where('slug', $slug)
-            ->where('seller_id', $request->user()->id)
+            // ->where('seller_id', $request->user()->id) @todo uncomment this
             ->firstOrFail();
         return view('products.show', compact('product'));
+    }
+
+    public function index(Request $request)
+    {
+        $products = $this->product
+            // ->where('seller_id', $request->user()->id) @todo uncomment this
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        return view('listings.index', compact('products'));
     }
 
     public function create(Request $request)
@@ -31,7 +40,7 @@ class ListingController extends Controller
             ->orderBy('name', 'asc')
             ->get();
 
-        return view('products.create', compact('categories'));
+        return view('listings.create', compact('categories'));
     }
 
     /**

@@ -29,11 +29,9 @@
     <body class="antialiased">
         <div id="app" class="grid grid-cols-12 mx-auto w-full px-10 py-10">
             <div class="col-span-2">
-                <p>side nav</p>
-                <p>side nav</p>
-                <p>side nav</p>
-                <p>side nav</p>
-                <p>side nav</p>
+                <p><a href="{{ route('home') }}" class="font-bold text-blue-800">Dashboard</a></p>
+                <p><a href="{{ route('listings.create') }}" class="font-bold text-blue-800">New Listing</a></p>
+                <p><a href="{{ route('listings.index') }}" class="font-bold text-blue-800">My Listings</a></p>
             </div>
             <div class="col-span-10">
                 @yield('body')
