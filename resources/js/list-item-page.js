@@ -233,6 +233,12 @@ import axios from 'axios';
         this.form.description =  this.descriptionQuillEditor.root.innerHTML
         console.log(this.form)
       },
+      captureLocations() {
+        this.form.locations = []
+        this.selectedLocations.forEach(location => {
+          this.form.locations.push(location.id)
+        })
+      },
       onFileChange(e, key) {
         console.log(key);
         let file = e.target.files[0]
@@ -288,6 +294,7 @@ import axios from 'axios';
       async submitForm() {
         this.captureDescription()
         this.capurePhotos()
+        this.captureLocations()
         axios.post('/listings', this.form)
           .then(response => {
             console.log(response)

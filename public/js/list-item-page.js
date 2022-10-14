@@ -57680,6 +57680,14 @@ var newContent = '';
       this.form.description = this.descriptionQuillEditor.root.innerHTML;
       console.log(this.form);
     },
+    captureLocations: function captureLocations() {
+      var _this12 = this;
+
+      this.form.locations = [];
+      this.selectedLocations.forEach(function (location) {
+        _this12.form.locations.push(location.id);
+      });
+    },
     onFileChange: function onFileChange(e, key) {
       console.log(key);
       var file = e.target.files[0];
@@ -57692,7 +57700,7 @@ var newContent = '';
       reader.readAsDataURL(image);
     },
     uploadOriginalImage: function uploadOriginalImage(file, key) {
-      var _this12 = this;
+      var _this13 = this;
 
       var formData = new FormData();
       formData.append('image', file, file.name);
@@ -57700,15 +57708,15 @@ var newContent = '';
       this.uploading = true;
       axios__WEBPACK_IMPORTED_MODULE_4___default().post('/photos', formData, {
         onUploadProgress: function onUploadProgress(progressEvent) {
-          _this12.uploadProgress = Math.round(progressEvent.loaded * 100 / progressEvent.total);
+          _this13.uploadProgress = Math.round(progressEvent.loaded * 100 / progressEvent.total);
         }
       }).then(function (response) {
-        _this12.finalImage = response.data.url;
-        _this12.images[key] = {
+        _this13.finalImage = response.data.url;
+        _this13.images[key] = {
           photo_id: response.data.id,
           url: response.data.url
         };
-        _this12.uploading = false;
+        _this13.uploading = false;
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -57736,25 +57744,27 @@ var newContent = '';
       }
     },
     submitForm: function submitForm() {
-      var _this13 = this;
+      var _this14 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
         return _regeneratorRuntime().wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
-                _this13.captureDescription();
+                _this14.captureDescription();
 
-                _this13.capurePhotos();
+                _this14.capurePhotos();
 
-                axios__WEBPACK_IMPORTED_MODULE_4___default().post('/listings', _this13.form).then(function (response) {
+                _this14.captureLocations();
+
+                axios__WEBPACK_IMPORTED_MODULE_4___default().post('/listings', _this14.form).then(function (response) {
                   console.log(response);
                   window.location.href = '/products/' + response.data.product.slug;
                 })["catch"](function (error) {
                   if (error.response.status == 422) {
                     console.log(error.response.data);
-                    _this13.errors = error.response.data.errors;
-                    _this13.errors.photos = [];
+                    _this14.errors = error.response.data.errors;
+                    _this14.errors.photos = [];
 
                     for (var i = 0; i < 4; i++) {
                       var key = 'photos.' + i + '.photo_id';
@@ -57764,7 +57774,7 @@ var newContent = '';
                           var errorText = error.response.data.errors[key][j];
                           errorText = errorText.replace(key, 'photo ' + (i + 1));
 
-                          _this13.errors.photos.push(errorText);
+                          _this14.errors.photos.push(errorText);
                         } // this.errors.photos[i]['photo_id'] = error.response.data.errors[key]
 
                       }
@@ -57772,7 +57782,7 @@ var newContent = '';
                   }
                 });
 
-              case 3:
+              case 4:
               case "end":
                 return _context11.stop();
             }

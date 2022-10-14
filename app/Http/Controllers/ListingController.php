@@ -34,6 +34,12 @@ class ListingController extends Controller
         return view('products.create', compact('categories'));
     }
 
+    /**
+     * create a new listing
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -49,8 +55,8 @@ class ListingController extends Controller
             'photos' => 'array',
             'photos.*.key' => '',
             'photos.*.photo_id' => 'required|exists:photos,id',
-        //   'locations' => 'required|array',
-        //   'locations.*' => 'required|integer|exists:locations,id',
+            'locations' => 'required|array',
+            'locations.*' => 'required|integer|exists:locations,id',
         ]);
 
         if ($request->selling_format == 'buy_now') {
@@ -82,28 +88,17 @@ class ListingController extends Controller
             }
         }
 
-        $product->load('photos');
+        if ($request->locations && count($request->locations) > 0) {
+            foreach ($request->locations as $location) {
+                $product->locations()->attach($location);
+            }
+        }
+
+        $product->load('photos','locations');
 
         return response()->json([
             'message' => 'Listing created successfully',
             'product' => $product,
         ], 201);
-    }
-    
-    /**
-     * upload and save the uploaded photo local and return url
-     */
-    public function uploadPhoto(Request $request)
-    {
-        $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        $photo = $request->file('photo');
-        $photoName = time().'.'.$photo->extension();
-        $photoPath = $photo->storeAs('products', $photoName, 'public');
-
-        return $photoPath;
-        dd($photoPath);
     }
 }
