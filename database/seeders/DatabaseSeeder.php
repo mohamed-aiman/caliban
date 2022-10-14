@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             //does not depend on other seeders
             // UserSeeder::class,
             CategorySeeder::class,
+            CategoryPathSeeder::class,
             LocationSeeder::class,
             //depends on other seeders
             ProductSeeder::class,

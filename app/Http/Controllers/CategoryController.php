@@ -13,6 +13,65 @@ class CategoryController extends Controller
         $this->category = $category;
     }
 
+    public function forSelect(Request $request)
+    {
+        $query = $this->category->select('id', 'name', 'parent_id', 'path')
+            ->with(['parent' => function ($query) {
+                $query->select('id', 'name', 'parent_id');
+            }])
+            ->with(['children' => function ($query) {
+                $query->select('id', 'name', 'parent_id');
+            }]);
+
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $categories = $query->orderBy('name', 'asc')
+            ->get();
+
+        return response()->json($categories);
+    }
+
+    public function levels(Request $request, $id)
+    {
+        $category = $this->category->find($id);
+
+        $parents = [];
+        if ($category->parent_id) {
+            $parents[1] = $category->parent;//->toArray();
+            if ($category->parent->parent_id) {
+                $parents[2] = $category->parent->parent;//->toArray();
+                if ($category->parent->parent->parent_id) {
+                    $parents[3] = $category->parent->parent->parent;//->toArray();
+                    if ($category->parent->parent->parent->parent_id) {
+                        $parents[4] = $category->parent->parent->parent->parent;//->toArray();
+                        if ($category->parent->parent->parent->parent->parent_id) {
+                            $parents[5] = $category->parent->parent->parent->parent->parent;//->toArray();
+                        }
+                    }
+                }
+            }
+        }
+
+        $data = [
+            'level1' => null,
+            'level2' => null,
+            'level3' => null,
+            'level4' => null,
+            'level5' => null,
+        ];
+
+        foreach (array_reverse($parents) as $key => $parent) {
+            $data['level'.$key+1] = $parent;
+        }
+
+        $data['level'.$category->level] = $category;
+        $data['selected_levels_count'] = $category->level;
+
+        return response()->json($data);
+    }
+
     /**
      * onetime use
      * download category lists from shoppee API

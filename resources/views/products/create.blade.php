@@ -5,20 +5,20 @@
 <div class="bg-gray-300 p-10">
     <h1>Add Listing</h1>
 
-
-    {{-- <form action="{{ route('listings.store') }}" 
-      method="POST" enctype="multipart/form-data" 
-      @verbatim
-      @submit.prevent="onSubmit"
-      @endverbatim
-    > --}}
-
         @csrf
 
         @verbatim
 
-
         <div v-if="showCategorySelection" class="flex flex-wrap w-full">
+          
+          <div class="w-full mb-2">
+            <input v-model="categorySearch"  type="text" id="categorySearch" placeholder="Type name of the category to search" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+            <select v-model="selectedCategoryId" v-if="filteredCategories.length" :size="filteredCategories.length<5 ? filteredCategories.length+1 : 5"  id="category" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+              <option v-for="category in filteredCategories" :value="category.id" :key="category.id">{{ category.name }} {{ category.path ? ' | '+category.path : '' }}</option>
+            </select>
+          </div>
+
+
           <div class="form-group">
               <select name="level1_id" :size="level1.length+1" v-model="level1_id" class="form-control" @change="loadLevel2()">
                   <option v-for="category in level1" :value="category.id">{{ category.name }}</option>
@@ -49,9 +49,10 @@
               </select>
           </div>
           <div class="form-group" v-if="selectedCategory">
-            <button v-if="form.category_id" type="button" 
-              class="ml-3 bg-blue-500 
-              hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            <button :disabled="!form.category_id" 
+              type="button"
+              :class="{'bg-blue-500 hover:bg-blue-700 text-white': true, 'opacity-50 cursor-not-allowed': !form.category_id}"
+              class="font-bold py-2 px-4 rounded ml-2"
               @click="categoryConfirmed"
               >
               Confirm Category
@@ -64,7 +65,8 @@
         <div v-if="!showCategorySelection" class="grid grid-cols-1 w-full mx-auto min-w-md">
           <div class="mb-6">
             <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Category</label>
-            <p  v-text="selectedCategory.path" class="shadow-sm bg-gray-50 
+            <p  @click="changeCategory"
+              v-text="selectedCategory.path" class="shadow-sm bg-gray-50 
                     border border-gray-300 text-gray-900
                     text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
                     block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
@@ -72,12 +74,12 @@
                     dark:focus:border-blue-500 dark:shadow-sm-light"
               >
             </p>
-            <button type="button" 
+            <!-- <button type="button" 
               class="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               @click="changeCategory"
               >
               Change Category
-            </button>
+            </button> -->
           </div>
           <div class="mb-6">
             <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Title</label>
@@ -174,6 +176,7 @@
             </div>
           </div>
 
+          <!-- add photos -->
           <div class="mb-6">
             <label for="photos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Photos</label>
             <div v-if="errors.photos.length>0">
@@ -260,6 +263,7 @@
             </div>
           </div>
 
+          <!-- add locations -->
           <div class="mb-6">
             <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Location</label>
             <p v-if="errors.locations" class="text-red-500 text-xs italic" v-text="errors.locations[0]"></p>
@@ -284,14 +288,14 @@
                 <option v-for="location in filteredLocations" :value="location.id">{{ location.name }}</option>
               </select>
             </div>
-
           </div>
+
+          <!-- add product attributes -->
 
 
           <button @click="submitForm" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
         </div>
         @endverbatim
-    {{-- </form> --}}
 </div>
 @endsection
 

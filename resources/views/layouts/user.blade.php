@@ -28,14 +28,14 @@
     </head>
     <body class="antialiased">
         <div id="app" class="grid grid-cols-12 mx-auto w-full px-10 py-10">
-            <div class="col-span-3">
+            <div class="col-span-2">
                 <p>side nav</p>
                 <p>side nav</p>
                 <p>side nav</p>
                 <p>side nav</p>
                 <p>side nav</p>
             </div>
-            <div class="col-span-9">
+            <div class="col-span-10">
                 @yield('body')
             </div>
         </div>

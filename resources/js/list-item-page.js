@@ -68,6 +68,9 @@ import axios from 'axios';
           // {id: 1, name: "Male' City"},
         ],
         selectedLocationId: null,
+        categorySearch: '',
+        filteredCategories: [],
+        selectedCategoryId: null,
         errors: {
           title: [],
           description: [],
@@ -93,6 +96,16 @@ import axios from 'axios';
           // if (val) {
             this.filterLocations(val)
           // }
+        },
+        selectedCategoryId: function(val, oldVal) {
+          if (val) {
+            this.setSelectedCategory(val)
+          }
+        },
+        categorySearch: function(val, oldVal) {
+          if (val) {
+            this.filterCategories(val)
+          }
         }
     },
     mounted() {
@@ -122,6 +135,36 @@ import axios from 'axios';
       removeLocation(id) {
         this.selectedLocations = this.selectedLocations.filter(location => location.id !== id);
         this.filterLocations();
+      },
+      async filterCategories() {
+        console.log('filtering categories')
+        const response = await axios.get('/categories/for-select?search='+this.categorySearch);
+        this.filteredCategories = response.data;
+        console.log(response.data)
+      },
+      async setSelectedCategory(id) {
+        const response = await axios.get('/categories/'+id+'/levels');
+
+        if (response.data.level1) {
+          this.level1_id = response.data.level1.id
+          this.loadLevel2()
+        }
+        if (response.data.level2) {
+          this.level2_id = response.data.level2.id
+          this.loadLevel3()
+        }
+        if (response.data.level3) {
+          this.level3_id = response.data.level3.id
+          this.loadLevel4()
+        }
+        if (response.data.level4) {
+          this.level4_id = response.data.level4.id
+          this.loadLevel5()
+        }
+        if (response.data.level5) {
+          this.level5_id = response.data.level5.id
+          this.loadLevel6()
+        }
       },
       async loadParentCategories() {
         this.form.category_id = null

@@ -32,6 +32,8 @@ Route::get('d', [CategoryController::class, 'downloadCategoriesFromIbay'])->name
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
 
 // Route::group(['middleware' => ['auth'], function() {
+    Route::get('/categories/for-select', [CategoryController::class, 'forSelect'])->name('categories.for-select');
+    Route::get('/categories/{id}/levels', [CategoryController::class, 'levels'])->name('categories.levels');
     Route::get('parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');
     Route::get('categories/{id}/children', [CategoryController::class, 'children'])->name('categories.children');
     Route::get('categories/{id}', [CategoryController::class, 'show'])->name('categories.show');

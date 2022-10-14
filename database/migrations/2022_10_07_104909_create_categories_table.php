@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('fourth_level_category_name')->nullable();
             $table->unsignedBigInteger('fifth_level_category')->nullable();
             $table->string('fifth_level_category_name')->nullable();
+            $table->text('path')->nullable();
             $table->timestamps();
 
             // $table->index('category');
