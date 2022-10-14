@@ -22,7 +22,7 @@ import axios from 'axios';
         form: {
           title: '',
           description: '',
-          category_id: 101061,//id set to 101061 for testing null default
+          category_id: null,//id set to 101061 for testing null default
           condition: '',
           selling_format: '',
           duration: '',
@@ -32,7 +32,7 @@ import axios from 'axios';
           locations: [],
           photos: [],
         },
-        showCategorySelection: false,//set to false temporarily
+        showCategorySelection: true,//set to false temporarily
         level1: [],
         level2: [],
         level3: [],
@@ -64,7 +64,9 @@ import axios from 'axios';
         locations: [],
         locationSearch: '',
         filteredLocations: [],
-        selectedLocations: [],
+        selectedLocations: [
+          // {id: 1, name: "Male' City"},
+        ],
         selectedLocationId: null,
         errors: {
           title: [],

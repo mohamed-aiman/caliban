@@ -828,6 +828,9 @@ select {
 .w-auto {
   width: auto;
 }
+.w-72 {
+  width: 18rem;
+}
 .max-w-6xl {
   max-width: 72rem;
 }

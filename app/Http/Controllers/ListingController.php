@@ -48,7 +48,6 @@ class ListingController extends Controller
             'category_id' => 'required|integer|exists:categories,id',
             'condition' => 'required|in:new,used_like_new,used,refurbished,damaged',
             'selling_format' => 'required|in:buy_now,classified',
-            'duration' => 'required|integer|max:60',
             'price' => 'required|numeric',
             'tax' => '',
             'quantity' => '',
@@ -61,11 +60,11 @@ class ListingController extends Controller
 
         if ($request->selling_format == 'buy_now') {
             $request->validate([
-                'quantity' => 'required',
+                'duration' => 'integer',
             ]);
         } else if ($request->selling_format == 'classified') {
             $request->validate([
-              'price' => 'required|numeric',
+                'duration' => 'integer|max:60',
             ]);
         }
 

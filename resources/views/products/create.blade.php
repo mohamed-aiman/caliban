@@ -145,7 +145,7 @@
             <p class="mb-6 font-bold font-serif">Buy Now</p>
             <div class="" id="buy-now-form">
               <label for="duration" class="mb-3 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                <p>Duration<span class="text-red-500">*</span></p>
+                <p>Duration</p>
               </label>
               <p v-if="errors.duration" class="text-red-500 text-xs italic" v-text="errors.duration[0]"></p>
               <select v-model="form.duration" id="duration" class="mb-6 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
@@ -262,18 +262,8 @@
 
           <div class="mb-6">
             <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Location</label>
-            <p v-if="errors.location" class="text-red-500 text-xs italic" v-text="errors.location[0]"></p>
-            <input v-model="location" type="text" id="location" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
-          </div>
-
-          <div class="mb-6">
-            <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Location</label>
-            <p v-if="errors.location" class="text-red-500 text-xs italic" v-text="errors.location[0]"></p>
-            <input v-model="locationSearch"  type="text" id="locationSearch" placeholder="Type name of the island,city to search" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
-            <select v-if="filteredLocations.length>0" name="selectedLocation" :size="filteredLocations.length<9?filteredLocations.length+1 : 10"  v-model="selectedLocationId" class="form-control">
-              <option v-for="location in filteredLocations" :value="location.id">{{ location.name }}</option>
-            </select>
-            <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Selected Locations</label>
+            <p v-if="errors.locations" class="text-red-500 text-xs italic" v-text="errors.locations[0]"></p>
+            <label for="selected-locations" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Selected Locations</label>
             <div class="flex flex-wrap my-2">
               <div v-for="location in selectedLocations" class="flex items-center justify-center px-2 py-1 m-1 text-xs font-medium leading-5 text-blue-800 bg-blue-100 rounded-full dark:bg-blue-800 dark:text-blue-100">
                 <span class="mr-2">{{ location.name }}</span>
@@ -283,6 +273,17 @@
                   </svg>
                 </button>
               </div>
+            </div>
+            <div class="w-72">
+              <input v-model="locationSearch"  type="text" id="locationSearch" placeholder="Type name of the island,city to search" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+              <select v-if="filteredLocations.length>0" 
+                name="selectedLocation" 
+                :size="filteredLocations.length<9?filteredLocations.length+1 : 10"  
+                v-model="selectedLocationId" 
+                class="form-control w-full">
+                <option v-for="location in filteredLocations" :value="location.id">{{ location.name }}</option>
+              </select>
+            </div>
 
           </div>
 

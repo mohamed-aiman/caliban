@@ -57237,7 +57237,7 @@ var newContent = '';
       form: {
         title: '',
         description: '',
-        category_id: 101061,
+        category_id: null,
         //id set to 101061 for testing null default
         condition: '',
         selling_format: '',
@@ -57248,7 +57248,7 @@ var newContent = '';
         locations: [],
         photos: []
       },
-      showCategorySelection: false,
+      showCategorySelection: true,
       //set to false temporarily
       level1: [],
       level2: [],
@@ -57288,7 +57288,8 @@ var newContent = '';
         photo_id: null,
         url: null
       }
-    }), _defineProperty(_ref, "locations", []), _defineProperty(_ref, "locationSearch", ''), _defineProperty(_ref, "filteredLocations", []), _defineProperty(_ref, "selectedLocations", []), _defineProperty(_ref, "selectedLocationId", null), _defineProperty(_ref, "errors", {
+    }), _defineProperty(_ref, "locations", []), _defineProperty(_ref, "locationSearch", ''), _defineProperty(_ref, "filteredLocations", []), _defineProperty(_ref, "selectedLocations", [// {id: 1, name: "Male' City"},
+    ]), _defineProperty(_ref, "selectedLocationId", null), _defineProperty(_ref, "errors", {
       title: [],
       description: [],
       category_id: [],
