@@ -19,6 +19,11 @@ class Product extends Model
         return $this->belongsToMany(Location::class, 'product_location', 'product_id', 'location_id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     /**
      * Return the sluggable configuration array for this model.
      *

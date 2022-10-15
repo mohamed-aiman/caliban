@@ -15,6 +15,11 @@ class ProductController extends Controller
     public function show($slug)
     {
         $product = $this->product->where('slug', $slug)->first();
+
+        $product->load('photos', 'locations', 'category');
+
+        // dd($product->toArray());
+
         return view('products.show', compact('product'));
     }
 
@@ -26,9 +31,9 @@ class ProductController extends Controller
             $products = $products->where('title', 'like', '%' . $request->search . '%');
         }
 
-        $products = $products->with('photos','locations')->paginate(20);
+        $products = $products->with('photos','locations','category')->paginate(20);
 
-        // return $products;
-        return view('products.index', compact('products'));
+        return $products;
+        // return view('products.index', compact('products'));
     }
 }

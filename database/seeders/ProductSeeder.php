@@ -20,16 +20,18 @@ class ProductSeeder extends Seeder
         $this->faker = \Faker\Factory::create();
 
         $allCategories = Category::select('id')->get()->pluck('id')->toArray();
-        $selectableCategories = Category::whereNotIn('parent_id', $allCategories)
-            ->get()->pluck('id')
-            ->toArray();
+        // $selectableCategories = Category::whereNotIn('parent_id', $allCategories)
+        //     ->get()->pluck('id')
+        //     ->toArray();
+
+        // dd($selectableCategories, $allCategories);
 
         $photos = Photo::select('id')->get()->pluck('id')->toArray();
         $locations = Location::select('id')->get()->pluck('id')->toArray();
 
         for ($i = 0; $i < 100; $i++) {
             $product = Product::factory()->create([
-                'category_id' => $this->faker->randomElement($selectableCategories),
+                'category_id' => $this->faker->randomElement($allCategories),
             ]);
 
             if ($i != 0) {
