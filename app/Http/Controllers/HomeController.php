@@ -14,13 +14,13 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $products = $this->product;
+        $query = $this->product;
 
         if ($request->has('search')) {
-            $products = $products->where('title', 'like', '%' . $request->search . '%');
+            $query = $query->where('title', 'like', '%' . $request->search . '%');
         }
 
-        $products = $products->with('photos','locations')->paginate(20);
+        $products = $query->with('photos','locations')->paginate(20);
 
         return view('home.index', compact('products'));
     }
