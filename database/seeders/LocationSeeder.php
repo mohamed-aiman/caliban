@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Island;
 use App\Models\Location;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class LocationSeeder extends Seeder
 {
@@ -15,12 +16,13 @@ class LocationSeeder extends Seeder
      */
     public function run()
     {
-        $parents = Location::factory()->count(5)->create();
+        $islands = Island::all();
 
-        foreach ($parents as $location) {
-            //random number of children for each
-            $children = Location::factory()->count(rand(1, 4))->create([
-                'parent_id' => $location->id
+        foreach ($islands as $island) {
+            Location::create([
+                'name' => $island->full_name,
+                'type' => 'island',
+                'island_id' => $island->id,
             ]);
         }
     }

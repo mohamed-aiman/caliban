@@ -26,8 +26,9 @@ class ProductController extends Controller
             $products = $products->where('title', 'like', '%' . $request->search . '%');
         }
 
-        $products = $products->paginate(20);
+        $products = $products->with('photos','locations')->paginate(20);
 
+        // return $products;
         return view('products.index', compact('products'));
     }
 }

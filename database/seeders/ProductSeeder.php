@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Photo;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Location;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
@@ -14,15 +17,44 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        // Product::factory()->count(50)->create();
+        $this->faker = \Faker\Factory::create();
 
-        $products = $this->compileProducts();
+        $allCategories = Category::select('id')->get()->pluck('id')->toArray();
+        $selectableCategories = Category::whereNotIn('parent_id', $allCategories)
+            ->get()->pluck('id')
+            ->toArray();
 
-        $product = new Product();
-        foreach ($products as $data) {
-            $product->create($data);
+        $photos = Photo::select('id')->get()->pluck('id')->toArray();
+        $locations = Location::select('id')->get()->pluck('id')->toArray();
+
+        for ($i = 0; $i < 100; $i++) {
+            $product = Product::factory()->create([
+                'category_id' => $this->faker->randomElement($selectableCategories),
+            ]);
+
+            if ($i != 0) {
+                $product->photos()->attach(
+                    $this->faker->randomElements(
+                            $photos, $this->faker->numberBetween(1, 5)
+                        )
+                );
+            } else {
+                //using same batch of photos for first product
+                $product->photos()->attach([1,2,3]);
+            }
+            
+            $product->locations()->attach(
+                $this->faker->randomElements(
+                        $locations, $this->faker->numberBetween(1, 5)
+                    )
+            );
+
         }
+
+        // $products = Product::with('photos', 'locations')->get()->toArray();
     }
+
+
 
     public function compileProducts()
     {

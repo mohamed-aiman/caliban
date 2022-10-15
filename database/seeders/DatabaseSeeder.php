@@ -14,20 +14,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
         \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
 
         $this->call([
-            //does not depend on other seeders
-            // UserSeeder::class,
             CategorySeeder::class,
             CategoryPathSeeder::class,
+            IslandSeeder::class,
             LocationSeeder::class,
-            //depends on other seeders
+            PhotoSeeder::class,
+            //depends on multiple other seeders
             ProductSeeder::class,
         ]);
     }

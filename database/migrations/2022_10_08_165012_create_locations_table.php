@@ -18,9 +18,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('type')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
+            $table->unsignedBigInteger('island_id')->nullable();
             $table->timestamps();
 
             $table->foreign('parent_id')->references('id')->on('locations');
+            $table->foreign('island_id')->references('id')->on('islands');
         });
     }
 

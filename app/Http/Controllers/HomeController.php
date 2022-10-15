@@ -20,7 +20,7 @@ class HomeController extends Controller
             $products = $products->where('title', 'like', '%' . $request->search . '%');
         }
 
-        $products = $products->paginate(20);
+        $products = $products->with('photos','locations')->paginate(20);
 
         return view('home.index', compact('products'));
     }

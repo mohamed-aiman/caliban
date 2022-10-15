@@ -10,44 +10,41 @@
     </form>
     {{-- search bar end --}}
 
+    <div class="w-full max-w-md mt-6">
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h1 class="text-2xl font-bold mb-4">Welcome to the Marketplace</h1>
+            <p class="text-gray-700 text-base">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
+            </p>
+        </div>
+    </div>
+
+    <div class="w-full max-w-md mt-6">
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h1 class="text-2xl font-bold mb-4">Featured Listings</h1>
+            <div class="flex flex-wrap">
+                @foreach ($products as $product)
+                    <div class="w-1/3 p-4">
+                        <div class="bg-white rounded-lg shadow-lg p-4">
+                            <h2 class="text-xl font-bold">{{ $product->title }}</h2>
+                            <p class="text-gray-600">{{ $product->description }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
     {{-- product list start --}}
-    <table>
-        <tr>
-            <th class="border border-green-800">title</th>
-            {{-- <th class="border border-green-800">description</th> --}}
-            {{-- <th class="border border-green-800">brand</th> --}}
-            {{-- <th class="border border-green-800">model_number</th> --}}
-            {{-- <th class="border border-green-800">price</th> --}}
-            <th class="border border-green-800">selling_price</th>
-            {{-- <th class="border border-green-800">list_price</th> --}}
-            {{-- <th class="border border-green-800">images</th> --}}
-            {{-- <th class="border border-green-800">about</th> --}}
-            {{-- <th class="border border-green-800">specification</th> --}}
-            {{-- <th class="border border-green-800">technical_details</th> --}}
-            {{-- <th class="border border-green-800">quantity</th> --}}
-            {{-- <th class="border border-green-800">unit</th> --}}
-            {{-- <th class="border border-green-800">details</th> --}}
-        </tr>
-        </tr>
-        @foreach($products as $product)
-        <tr>
-            <td class="border border-green-800"><a href="{{ route('products.show', $product->slug) }}">{{ $product->title }}</a></td>
-            {{-- <td class="border border-green-800">{{ $product->description }}</td> --}}
-            {{-- <td class="border border-green-800">{{ $product->brand }}</td> --}}
-            {{-- <td class="border border-green-800">{{ $product->model_number }}</td> --}}
-            {{-- <td class="border border-green-800">{{ $product->price }}</td> --}}
-            <td class="border border-green-800">{{ $product->selling_price }}</td>
-            {{-- <td class="border border-green-800">{{ $product->list_price }}</td> --}}
-            {{-- <td class="border border-green-800">{{ $product->images }}</td> --}}
-            {{-- <td class="border border-green-800">{{ $product->about }}</td> --}}
-            {{-- <td class="border border-green-800">{{ $product->specification }}</td> --}}
-            {{-- <td class="border border-green-800">{{ $product->technical_details }}</td> --}}
-            {{-- <td class="border border-green-800">{{ $product->quantity }}</td> --}}
-            {{-- <td class="border border-green-800">{{ $product->unit }}</td> --}}
-            {{-- <td class="border border-green-800">{{ $product->details }}</td> --}}
-        </tr>
-        @endforeach
-    </table>
+    @foreach ($products as $product)
+        <div class="w-full max-w-md mt-6 overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <div class="px-4 py-2">
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-white">{{ $product->title }}</h1>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ $product->description }}</p>
+            </div>
+        </div>
+    @endforeach
+
     {{-- product list end --}}
 
     {{-- pagination start --}}
