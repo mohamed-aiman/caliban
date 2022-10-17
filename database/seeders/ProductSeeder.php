@@ -45,7 +45,7 @@ class ProductSeeder extends Seeder
                 );
             } else {
                 //using same batch of photos for first product
-                $product->photos()->attach([1,2,3]);
+                $product->photos()->attach([28,29,30,31]);
             }
             
             $product->locations()->attach(
