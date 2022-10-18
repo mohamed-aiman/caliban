@@ -7,6 +7,7 @@ use App\Http\Controllers\ListingController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\CategoryProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ Route::get('d', [CategoryController::class, 'downloadCategoriesFromIbay'])->name
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
 
 // Route::group(['middleware' => ['auth'], function() {
+    Route::get('/categories/{slug}/products', [CategoryProductController::class, 'index'])->name('categories.products.index');
     Route::get('/categories/for-select', [CategoryController::class, 'forSelect'])->name('categories.for-select');
     Route::get('/categories/{id}/levels', [CategoryController::class, 'levels'])->name('categories.levels');
     Route::get('parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');

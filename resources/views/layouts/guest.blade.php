@@ -22,8 +22,22 @@
         </style>
     </head>
     <body class="antialiased">
-        <div class="w-full  bg-slate-100">
-            @yield('body')
+        <div id="app" class="grid grid-cols-12 mx-auto w-full px-10 py-10">
+            <div class="col-span-2">
+                <ul>
+                    @foreach(\App\Models\Category::whereNull('parent_id')->get() as $category)
+                        <li>
+                            <a href="{{ route('categories.products.index', $category->slug) }}" class="font-bold text-blue-800">{{ $category->name }}</a>
+                            {{-- <a href="" class="font-bold text-blue-800">{{ $category->name }}</a> --}}
+                        </li>
+                    @endforeach
+                </ul>
+
+            </div>
+            <div class="col-span-10">
+                @yield('body')
+            </div>
         </div>
     </body>
 </html>
+

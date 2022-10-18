@@ -6,6 +6,7 @@
         <th class="border border-green-800">#</th>
         <th class="border border-green-800">id</th>
         <th class="border border-green-800">name</th>
+        <th class="border border-green-800">slug</th>
         {{-- <th class="border border-green-800">mtime</th> --}}
         {{-- <th class="border border-green-800">images</th> --}}
         <th class="border border-green-800">parent_id</th>
@@ -21,6 +22,7 @@
         <td class="border border-green-800">{{ $key+1 }}</td>
         <td class="border border-green-800">{{ $category->id }}</td>
         <td class="border border-green-800">{{ $category->name }}</td>
+        <td class="border border-green-800">{{ $category->slug }}</td>
         {{-- <td class="border border-green-800">{{ $category->mtime }}</td> --}}
         {{-- <td class="border border-green-800">{{ $category->images }}</td> --}}
         <td class="border border-green-800">{{ $category->parent_id }}</td>
