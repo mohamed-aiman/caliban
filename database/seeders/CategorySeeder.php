@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Item;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -87,6 +88,8 @@ class CategorySeeder extends Seeder
                 ]);
             }
         }
+
+        $this->addPathFieldToCategories();
     }
 
     public function compileCategories()
@@ -165,6 +168,16 @@ class CategorySeeder extends Seeder
         }
 
         return $categories;
+    }
+
+    public function addPathFieldToCategories()
+    {
+        $categories = Category::all();
+
+        foreach ($categories as $category) {
+            $category->path = $category->buildPath();
+            $category->save();
+        }
     }
 
 
