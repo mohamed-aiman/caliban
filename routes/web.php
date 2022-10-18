@@ -1,10 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ListingController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CategoryProductController;
@@ -24,10 +22,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/test', [HomeController::class, 'test'])->name('home.test');
-Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('d', [CategoryController::class, 'downloadCategoriesFromIbay'])->name('categories.downloadCategoriesFromIbay');
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');

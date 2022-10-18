@@ -34,7 +34,4 @@
             </main>
         </div>
     </body>
-     @if (isset($endscript))
-        {{ $endscript }}
-     @endif
 </html>
