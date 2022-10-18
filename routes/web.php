@@ -45,3 +45,10 @@ Route::get('categories', [CategoryController::class, 'index'])->name('categories
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('/locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
 // });
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+require __DIR__.'/auth.php';
