@@ -14,7 +14,7 @@ class CategoryPathSeeder extends Seeder
         $categories = Category::all();
 
         foreach ($categories as $category) {
-            $category->path = $category->path();
+            $category->path = $category->buildPath();
             $category->save();
         }
 

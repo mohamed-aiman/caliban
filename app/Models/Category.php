@@ -4,22 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Category extends Model
 {
-    use HasFactory;
+    use Sluggable, HasFactory;
 
-    protected $fillable = [
-        'id',
-        'name',
-        'mtime',
-        'images',
-        'category',
-        'sub_category',
-        'third_level_category',
-        'fourth_level_category',
-        'fifth_level_category',
-    ];
+    protected $guarded = [];
 
     protected $hidden = [
         'mtime',
@@ -78,7 +69,17 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
-    public function path()
+    public function childrenRecursive()
+    {
+        return $this->children()->with('childrenRecursive');
+    }
+
+    public function parentRecursive()
+    {
+        return $this->parent()->with('parentRecursive');
+    }
+
+    public function buildPath()
     {
         $path = $this->category_name;
         
@@ -99,6 +100,25 @@ class Category extends Model
         }
 
         return $path;
+    }
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => ['name','parent_id']
+            ]
+        ];
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
 }
