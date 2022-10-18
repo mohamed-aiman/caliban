@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('body')
-
+@section('body')              
 <div class="bg-gray-300 p-10">
     <h1>Add Listing</h1>
 
