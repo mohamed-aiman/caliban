@@ -17,8 +17,16 @@
         </style>
 
         <style>
+            [v-cloak] {
+                display: none;
+            }
             body {
                 font-family: 'Nunito', sans-serif;
+            }
+
+            .ql-container, .ql-editor {
+                min-height:inherit;
+                background-color: white;
             }
         </style>
     </head>

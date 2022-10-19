@@ -27,9 +27,9 @@ class ListingController extends Controller
     public function index(Request $request)
     {
         $products = $this->product
-            // ->where('seller_id', $request->user()->id) @todo uncomment this
+            ->where('seller_id', $request->user()->id) //@todo uncomment this
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(50);
         return view('listings.index', compact('products'));
     }
 
@@ -115,7 +115,7 @@ class ListingController extends Controller
     {
         $product = $this->product
             ->where('slug', $slug)
-            // ->where('seller_id', $request->user()->id) @todo uncomment this
+            ->where('seller_id', $request->user()->id) // @todo uncomment this
             ->firstOrFail();
 
         $product->load('photos', 'locations', 'category');
@@ -165,7 +165,7 @@ class ListingController extends Controller
 
         $product = $this->product
             ->where('slug', $slug)
-            // ->where('seller_id', $request->user()->id) @todo uncomment this
+            ->where('seller_id', $request->user()->id) //@todo uncomment this
             ->firstOrFail();
 
         $product->update([
@@ -198,11 +198,11 @@ class ListingController extends Controller
         ], 200);
     }
 
-    public function productFormData($slug)
+    public function productFormData(Request $request, $slug)
     {
         $product = $this->product
             ->where('slug', $slug)
-            // ->where('seller_id', $request->user()->id) @todo uncomment this
+            ->where('seller_id', $request->user()->id)// @todo uncomment this
             ->firstOrFail();
 
         $product->load('photos', 'locations', 'category');
