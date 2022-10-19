@@ -1,22 +1,14 @@
 import './bootstrap';
 import { createApp } from 'vue';
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { watch, ref, nextTick } from 'vue'
 import axios from 'axios';
+import Quill from "quill";
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.bubble.css";
+import "quill/dist/quill.snow.css";
 
-  //to fix broken description editor on change event handler
-  const content = ref('')
-  let newContent = ''
-  watch(content, newValue => {
-    newContent = newValue
-    console.log(newContent)
-  })
 
   createApp({
-    components: {
-        QuillEditor
-    },
     data() {
       return {
         form: {
@@ -47,14 +39,8 @@ import axios from 'axios';
         level5_id: 0,
         level5_id: 0,
         selectedCategory: {},
-        descriptionQuillEditor: null,
-        descriptionEditorOption: {
-            theme: "snow",
-            placeholder: "",
-            modules: {
-                toolbar: ["bold", "italic", "underline", "link", "clean"]
-            },
-        },
+        descriptionEditor: null,
+        descriptionEditorValue: '',
         uploadProgress: 0,
         images: {
           1: { key: 1, photo_id: null, url: null},
@@ -112,8 +98,38 @@ import axios from 'axios';
     mounted() {
         this.loadParentCategories();
         this.loadLocations();
+        this.initDescriptionEditor();
     },
     methods: {
+      initDescriptionEditor() {
+        // var _this = this;
+        this.descriptionEditor = new Quill(this.$refs.descriptionEditor, {
+          modules: {
+            toolbar: [
+              [
+                {
+                  header: [1, 2, 3, 4, false],
+                },
+              ],
+              ["bold", "italic", "underline", "link"],
+            ],
+          },
+          //theme: 'bubble',
+          theme: "snow",
+          formats: ["bold", "underline", "header", "italic", "link"],
+          placeholder: "Type something in here!",
+        });
+        // this.descriptionEditor.on("text-change", function () {
+        //   _this.descriptionEditorChanged();
+        // });
+      },
+    // descriptionEditorChanged() {
+      // console.log("descriptionEditorChanged");
+      // console.log(this.descriptionEditor.root.innerHTML);
+    // },
+      captureDescription() {
+        this.form.description =  this.descriptionEditor.root.innerHTML
+      },
       async loadLocations() {
         const response = await axios.get('/locations/for-select');
         this.locations = response.data;
@@ -274,11 +290,6 @@ import axios from 'axios';
       },
       onDescriptionEditorBlur($event) {
         this.captureDescription()
-      },
-      captureDescription() {
-        this.form.description =  this.descriptionQuillEditor.root.innerHTML
-        this.form.description_delta = JSON.stringify(this.descriptionQuillEditor.getContents());
-        console.log(this.form.description)
       },
       captureLocations() {
         this.form.locations = []

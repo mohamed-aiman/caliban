@@ -87,15 +87,11 @@
       <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
       <p v-if="errors.description" class="text-red-500 text-xs italic" v-text="errors.description[0]"></p>
       <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-        <quill-editor 
+        <div 
+          ref="descriptionEditor"
           style="min-height:300px;" 
-          theme="snow"
-          v-model:content="content"
-          :options="descriptionEditorOption"
-          @ready="onDescriptionEditorReady($event)"
-          @blur="onDescriptionEditorBlur($event)"
           >
-        </quill-editor>
+        </div>
       </div>
     </div>
     <div class="mb-6">

@@ -39,11 +39,7 @@
 
                             {{-- page content start --}}
                             <div id="app" class="grid grid-cols-12 mx-auto w-full px-10 py-10" v-cloak>
-                                <div class="col-span-2">
-                                    <p><a href="{{ route('home') }}" class="font-bold text-blue-800">Dashboard</a></p>
-                                    <p><a href="{{ route('listings.create') }}" class="font-bold text-blue-800">New Listing</a></p>
-                                    <p><a href="{{ route('listings.index') }}" class="font-bold text-blue-800">My Listings</a></p>
-                                </div>
+                                @include('layouts.sidebar')
                                 <div class="col-span-10">
                                     @yield('body')
                                 </div>
