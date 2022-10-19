@@ -24,7 +24,7 @@ class ProductFactory extends Factory
         return [
             // 'slug' => $this->faker->slug,
             'title' => $this->faker->name,
-            'description' => $this->faker->text,
+            'description' => $this->faker->randomHtml(2,2),
             'category_id' => function () {
                 return Category::factory()->create()->id;
             },

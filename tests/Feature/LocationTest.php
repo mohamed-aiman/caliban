@@ -15,7 +15,6 @@ class LocationTest extends TestCase
 
     /**
      * @group locations
-     * @group now
      */
     public function test_can_view_locations()
     {

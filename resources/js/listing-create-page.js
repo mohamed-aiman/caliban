@@ -22,6 +22,7 @@ import axios from 'axios';
         form: {
           title: '',
           description: '',
+          description_delta: '',
           category_id: null,//id set to 101061 for testing null default
           condition: '',
           selling_format: '',
@@ -276,7 +277,8 @@ import axios from 'axios';
       },
       captureDescription() {
         this.form.description =  this.descriptionQuillEditor.root.innerHTML
-        console.log(this.form)
+        this.form.description_delta = JSON.stringify(this.descriptionQuillEditor.getContents());
+        console.log(this.form.description)
       },
       captureLocations() {
         this.form.locations = []
@@ -328,10 +330,7 @@ import axios from 'axios';
         for (var key in this.images) {
           if (this.images.hasOwnProperty(key)) {
             if (this.images[key].photo_id != null) {
-              this.form.photos.push({
-                photo_id: this.images[key].photo_id,
-                key: key
-              })
+              this.form.photos.push(this.images[key].photo_id)
             }
           }
         }
@@ -349,18 +348,6 @@ import axios from 'axios';
             if (error.response.status == 422) {
               console.log(error.response.data)
               this.errors = error.response.data.errors
-              this.errors.photos = [];
-              for (let i = 0; i < 4; i++) {
-                let key = 'photos.'+i+'.photo_id';
-                if (error.response.data.errors[key]) {
-                  for (let j = 0; j < error.response.data.errors[key].length; j++) {
-                    let errorText = error.response.data.errors[key][j];
-                    errorText = errorText.replace(key, 'photo '+(i+1));
-                    this.errors.photos.push(errorText)
-                  }
-                  // this.errors.photos[i]['photo_id'] = error.response.data.errors[key]
-                }
-              }
             }
           })
       }

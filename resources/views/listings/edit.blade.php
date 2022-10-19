@@ -2,7 +2,7 @@
 
 @section('body')              
 <div class="bg-gray-300 p-10">
-    <h1>Add Listing</h1>
+    <h1>Edit Listing</h1>
 
         @csrf
 
@@ -89,15 +89,7 @@
             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
             <p v-if="errors.description" class="text-red-500 text-xs italic" v-text="errors.description[0]"></p>
             <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-              <quill-editor 
-                style="min-height:300px;" 
-                theme="snow"
-                v-model:content="content"
-                :options="descriptionEditorOption"
-                @ready="onDescriptionEditorReady($event)"
-                @blur="onDescriptionEditorBlur($event)"
-                >
-              </quill-editor>
+              <div ref="descriptionEditor"></div>
             </div>
           </div>
           <div class="mb-6">
@@ -297,5 +289,12 @@
 @endsection
 
 @section('end-script')
-<script src="{{ asset('js/listing-create-page.js') }}"></script>
+
+<script>
+  window.variables = {
+    slug: @json($slug)
+  }
+</script>
+
+<script src="{{ asset('js/listing-edit-page.js') }}"></script>
 @endsection

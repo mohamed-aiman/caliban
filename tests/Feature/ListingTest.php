@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Photo;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Location;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ListingTest extends TestCase
@@ -30,6 +31,10 @@ class ListingTest extends TestCase
         $photo3 = Photo::factory()->create([ 'user_id' => $user->id ]);
         $photo4 = Photo::factory()->create([ 'user_id' => $user->id ]);
 
+        $location1 = Location::factory()->create();
+        $location2 = Location::factory()->create();
+        $location3 = Location::factory()->create();
+
         $response = $this->post('/listings', [
             'title' => 'My Product',
             'description' => 'My Product Description',
@@ -41,19 +46,22 @@ class ListingTest extends TestCase
             'tax' => 0,
             'quantity' => 1,
             'photos' => [
-                [
-                    'key' => '1',
-                    'photo_id' => $photo1->id,
-                ],
-                [
-                    'key' => '3',
-                    'photo_id' => $photo3->id,
-                ],
+                $photo1->id,
+                $photo3->id,
+            ],
+            'locations' => [
+                $location1->id,
+                $location3->id,
             ],
         ]);
 
         $response->assertStatus(201);
+        
+        $product = $response->json()['product'];
+        $productId = $product['id'];
+
         $this->assertDatabaseHas('products', [
+            'id' => $productId,
             'title' => 'My Product',
             'description' => 'My Product Description',
             'category_id' => 1,
@@ -64,6 +72,36 @@ class ListingTest extends TestCase
             'tax' => 0,
             'quantity' => 1,
             'seller_id' => $user->id,
+        ]);
+
+        $this->assertDatabaseHas('product_photo', [
+            'product_id' => $productId,
+            'photo_id' => $photo1->id,
+        ]);
+
+        $this->assertDatabaseHas('product_photo', [
+            'product_id' => $productId,
+            'photo_id' => $photo3->id,
+        ]);
+
+        $this->assertDatabaseHas('product_location', [
+            'product_id' => $productId,
+            'location_id' => $location1->id,
+        ]);
+
+        $this->assertDatabaseHas('product_location', [
+            'product_id' => $productId,
+            'location_id' => $location3->id,
+        ]);
+
+        $this->assertDatabaseMissing('product_photo', [
+            'product_id' => $productId,
+            'photo_id' => $photo2->id,
+        ]);
+
+        $this->assertDatabaseMissing('product_location', [
+            'product_id' => $productId,
+            'location_id' => $location2->id,
         ]);
     }
 }

@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CategoryProductController;
@@ -18,9 +20,10 @@ use App\Http\Controllers\CategoryProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/test', [HomeController::class, 'test'])->name('home.test');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -39,6 +42,9 @@ Route::get('categories', [CategoryController::class, 'index'])->name('categories
     Route::post('photos', [PhotoController::class, 'store'])->name('photos.store');
     Route::get('listings', [ListingController::class, 'index'])->name('listings.index');
     Route::get('listings/create', [ListingController::class, 'create'])->name('listings.create');
+    Route::get('listings/{productSlug}/edit', [ListingController::class, 'edit'])->name('listings.edit');
+    Route::get('listings/{productSlug}/form-data', [ListingController::class, 'productFormData'])->name('listings.product-form-data');
+    Route::patch('listings/{productSlug}', [ListingController::class, 'update'])->name('listings.update');
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('/locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
 // });

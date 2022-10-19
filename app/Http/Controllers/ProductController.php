@@ -14,7 +14,7 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = $this->product->where('slug', $slug)->first();
+        $product = $this->product->where('slug', $slug)->firstOrFail();
 
         $product->load('photos', 'locations', 'category');
 
@@ -31,9 +31,16 @@ class ProductController extends Controller
             $products = $products->where('title', 'like', '%' . $request->search . '%');
         }
 
-        $products = $products->with('photos','locations','category')->paginate(20);
+        $perPage = $request->has('per_page') ? $request->per_page : 100;
 
-        return $products;
-        // return view('products.index', compact('products'));
+        if ($perPage > 100) {
+            $perPage = 100;
+        }
+
+        $products = $products->with('photos','locations','category')
+            ->paginateSimple($perPage);
+
+        // return $products;
+        return view('products.index', compact('products'));
     }
 }
