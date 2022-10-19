@@ -3,7 +3,7 @@
 @section('body')              
 <div class="bg-gray-300 p-10">
   
-  <h1 class="text-3xl font-bold mb-5">New Listing</h1>
+  <h1 class="text-3xl font-bold mb-5">Add Listing</h1>
 
   @verbatim
   <div v-show="showCategorySelection" class="flex flex-wrap w-full">
