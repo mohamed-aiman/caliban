@@ -31,9 +31,9 @@ Route::get('/dashboard', function () {
 
 Route::get('d', [CategoryController::class, 'downloadCategoriesFromIbay'])->name('categories.downloadCategoriesFromIbay');
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/{slug}/products', [CategoryProductController::class, 'index'])->name('categories.products.index');
 
-// Route::group(['middleware' => ['auth'], function() {
-    Route::get('/categories/{slug}/products', [CategoryProductController::class, 'index'])->name('categories.products.index');
+Route::group(['middleware' => ['auth']], function() {
     Route::get('/categories/for-select', [CategoryController::class, 'forSelect'])->name('categories.for-select');
     Route::get('/categories/{id}/levels', [CategoryController::class, 'levels'])->name('categories.levels');
     Route::get('parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');
@@ -47,11 +47,6 @@ Route::get('categories', [CategoryController::class, 'index'])->name('categories
     Route::patch('listings/{productSlug}', [ListingController::class, 'update'])->name('listings.update');
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('/locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
-// });
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+});
 
 require __DIR__.'/auth.php';

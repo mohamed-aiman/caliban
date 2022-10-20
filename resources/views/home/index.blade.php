@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.guest-basic')
 
 @section('body')
 
