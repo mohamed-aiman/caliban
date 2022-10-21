@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-vue')
 
 @section('body')              
-<div class="bg-gray-300 p-10">
+<div class="p-10">
   
   <h1 class="text-3xl font-bold mb-5">Add Listing</h1>
 

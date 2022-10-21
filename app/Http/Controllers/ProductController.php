@@ -18,7 +18,7 @@ class ProductController extends Controller
 
         $product->load('photos', 'locations', 'category');
 
-        // dd($product->toArray());
+        // return$product->toArray();
 
         return view('products.show', compact('product'));
     }

@@ -19,15 +19,18 @@ class ListingController extends Controller
     {
         $product = $this->product
             ->where('slug', $slug)
-            // ->where('seller_id', $request->user()->id) @todo uncomment this
+            ->where('seller_id', $request->user()->id)
             ->firstOrFail();
-        return view('products.show', compact('product'));
+
+        $product->load('photos', 'locations', 'category');
+
+        return view('listings.show', compact('product'));
     }
 
     public function index(Request $request)
     {
         $products = $this->product
-            ->where('seller_id', $request->user()->id) //@todo uncomment this
+            ->where('seller_id', $request->user()->id)
             ->orderBy('created_at', 'desc')
             ->paginate(50);
         return view('listings.index', compact('products'));
@@ -69,7 +72,7 @@ class ListingController extends Controller
 
         if ($request->selling_format == 'buy_now') {
             $request->validate([
-                'duration' => 'integer',
+                'duration' => '',
             ]);
         } else if ($request->selling_format == 'classified') {
             $request->validate([
@@ -115,7 +118,7 @@ class ListingController extends Controller
     {
         $product = $this->product
             ->where('slug', $slug)
-            ->where('seller_id', $request->user()->id) // @todo uncomment this
+            ->where('seller_id', $request->user()->id) //
             ->firstOrFail();
 
         $product->load('photos', 'locations', 'category');
@@ -165,7 +168,7 @@ class ListingController extends Controller
 
         $product = $this->product
             ->where('slug', $slug)
-            ->where('seller_id', $request->user()->id) //@todo uncomment this
+            ->where('seller_id', $request->user()->id)
             ->firstOrFail();
 
         $product->update([
@@ -202,7 +205,7 @@ class ListingController extends Controller
     {
         $product = $this->product
             ->where('slug', $slug)
-            ->where('seller_id', $request->user()->id)// @todo uncomment this
+            ->where('seller_id', $request->user()->id)//
             ->firstOrFail();
 
         $product->load('photos', 'locations', 'category');

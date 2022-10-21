@@ -2,6 +2,12 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../experiment/workcation"
+		},
+		{
+			"path": "../experiment/vue3-template"
 		}
 	],
 	"settings": {}

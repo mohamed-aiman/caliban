@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('listings/{productSlug}/form-data', [ListingController::class, 'productFormData'])->name('listings.product-form-data');
     Route::patch('listings/{productSlug}', [ListingController::class, 'update'])->name('listings.update');
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
+    Route::get('listings/{productSlug}', [ListingController::class, 'show'])->name('listings.show');
     Route::get('/locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
 });
 
