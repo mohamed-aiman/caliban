@@ -31,7 +31,7 @@ Route::get('/dashboard', function () {
 
 Route::get('d', [CategoryController::class, 'downloadCategoriesFromIbay'])->name('categories.downloadCategoriesFromIbay');
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
-Route::get('/categories/{slug}/products', [CategoryProductController::class, 'index'])->name('categories.products.index');
+Route::get('/categories/{slug}', [CategoryProductController::class, 'index'])->name('categories.products.index');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/categories/for-select', [CategoryController::class, 'forSelect'])->name('categories.for-select');

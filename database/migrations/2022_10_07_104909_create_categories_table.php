@@ -23,14 +23,19 @@ return new class extends Migration
             $table->unsignedTinyInteger('level')->nullable();
             $table->unsignedBigInteger('category')->nullable();
             $table->string('category_name')->nullable();
+            $table->string('category_slug')->nullable();
             $table->unsignedBigInteger('sub_category')->nullable();
             $table->string('sub_category_name')->nullable();
+            $table->string('sub_category_slug')->nullable();
             $table->unsignedBigInteger('third_level_category')->nullable();
             $table->string('third_level_category_name')->nullable();
+            $table->string('third_level_category_slug')->nullable();
             $table->unsignedBigInteger('fourth_level_category')->nullable();
             $table->string('fourth_level_category_name')->nullable();
+            $table->string('fourth_level_category_slug')->nullable();
             $table->unsignedBigInteger('fifth_level_category')->nullable();
             $table->string('fifth_level_category_name')->nullable();
+            $table->string('fifth_level_category_slug')->nullable();
             $table->text('path')->nullable();
             $table->timestamps();
 

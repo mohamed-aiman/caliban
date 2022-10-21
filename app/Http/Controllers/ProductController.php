@@ -18,9 +18,45 @@ class ProductController extends Controller
 
         $product->load('photos', 'locations', 'category');
 
-        // return$product->toArray();
 
-        return view('products.show', compact('product'));
+        $category = $product->category;
+
+        $links[] = [
+            'name' => $category->category_name,
+            'url' => route('categories.products.index', $category->category_slug),
+        ];
+        
+        if ($category->sub_category) {
+            $links[] = [
+                'name' => $category->sub_category_name,
+                'url' => route('categories.products.index', $category->sub_category_slug),
+            ];
+        }
+        
+        if ($category->third_level_category) {
+            $links[] = [
+                'name' => $category->third_level_category_name,
+                'url' => route('categories.products.index', $category->third_level_category_slug),
+            ];
+        }
+        
+        if ($category->fourth_level_category) {
+            $links[] = [
+                'name' => $category->fourth_level_category_name,
+                'url' => route('categories.products.index', $category->fourth_level_category_slug),
+            ];
+        }
+        
+        if ($category->fifth_level_category) {
+            $links[] = [
+                'name' => $category->fifth_level_category_name,
+                'url' => route('categories.products.index', $category->fifth_level_category_slug),
+            ];
+        }
+
+        // return $product->toArray();
+
+        return view('products.show', compact('product', 'links'));
     }
 
     public function index(Request $request)

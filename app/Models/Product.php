@@ -13,6 +13,18 @@ class Product extends Model
 
     protected $guarded = [];
 
+    protected $appends = ['price_formatted'];
+
+    public function getPriceFormattedAttribute()
+    {
+        return number_format($this->price, 2);
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo(User::class, 'seller_id');
+    }
+
 
     public function locations()
     {

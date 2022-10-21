@@ -1,9 +1,21 @@
 @extends('layouts.guest-basic')
 
 @section('body')
-
 <!-- 0 -->
 <div class="max-w-6xl mx-auto min-h-screen antialiased xl:flex xl:flex-col">
+
+    <div class="mx-3">
+        <p class="text-l font-mono font-semibold text-orange-700">
+        @foreach ($links as $key => $link)
+            @if($key != 0)
+                <span class="text-gray-600"> > </span>
+            @endif
+            <a href="{{ $link['url'] }}">{{ $link['name'] }}</a>
+        @endforeach
+        </p>
+    </div>
+
+
     <!-- 1 -->
     <div class="grid grid-cols-1 md:grid-cols-2 mx-3">
         <!-- 2 -->
@@ -40,11 +52,16 @@
         <!-- 3 -->
         <div class="">
         <!-- summary -->
-        <div class="mx-0 md:mx-3 my-3">
-            <p class="font-bold" >{{ $product->title }}</p>
-            <p class="font-semibold text-orange-700" >{{ $product->price }}</p>
+        <div class="mx-0 md:mx-3 my-3 space-y-2">
+            <p class="font-bold text-xl" >{{ $product->title }}</p>
+            <p class="font-semibold text-xl text-orange-700" ><span class="text-sm">MVR</span> {{ $product->price }}</p>
             <p class="font-semibold" >Condition: <span class="text-gray-700">{{ $product->condition }}</span></p>
             <p class="font-semibold" >Locations: <span class="text-gray-700">{{ $product->locations[0]->name }}</span></p>
+            {{-- seller details --}}
+            <div class="">
+                <p class="font-semibold" >Seller: <span class="text-gray-700">{{ $product->seller->name }}</span></p>
+            </div>
+
         </div>
         </div>
         <!-- 4 -->

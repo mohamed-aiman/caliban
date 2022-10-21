@@ -90,6 +90,7 @@ class CategorySeeder extends Seeder
         }
 
         $this->addPathFieldToCategories();
+        $this->setSlugs();
     }
 
     public function compileCategories()
@@ -175,10 +176,63 @@ class CategorySeeder extends Seeder
         $categories = Category::all();
 
         foreach ($categories as $category) {
-            $category->path = $category->buildPath();
+            $category->path = $this->buildPath($category);
             $category->save();
         }
     }
 
+    protected function buildPath($category)
+    {
+        $path = $category->category_name;
+        
+        if ($category->sub_category_name) {
+            $path .= ' > ' . $category->sub_category_name;
+        }
+        
+        if ($category->third_level_category_name) {
+            $path .= ' > ' . $category->third_level_category_name;
+        }
+        
+        if ($category->fourth_level_category_name) {
+            $path .= ' > ' . $category->fourth_level_category_name;
+        }
+        
+        if ($category->fifth_level_category_name) {
+            $path .= ' > ' . $category->fifth_level_category_name;
+        }
+
+        return $path;
+    }
+
+
+    public function setSlugs()
+    {
+        $categories = Category::all();
+
+        foreach ($categories as $category) {
+
+            if ($category->category) {
+                $category->category_slug = Category::find($category->category)->slug;
+            }
+
+            if ($category->sub_category) {
+                $category->sub_category_slug = Category::find($category->sub_category)->slug;
+            }
+            
+            if ($category->third_level_category) {
+                $category->third_level_category_slug = Category::find($category->third_level_category)->slug;
+            }
+            
+            if ($category->fourth_level_category) {
+                $category->fourth_level_category_slug = Category::find($category->fourth_level_category)->slug;
+            }
+            
+            if ($category->fifth_level_category) {
+                $category->fifth_level_category_slug = Category::find($category->fifth_level_category)->slug;
+            }
+
+            $category->save();
+        }
+    }
 
 }

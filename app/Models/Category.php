@@ -79,29 +79,6 @@ class Category extends Model
         return $this->parent()->with('parentRecursive');
     }
 
-    public function buildPath()
-    {
-        $path = $this->category_name;
-        
-        if ($this->sub_category_name) {
-            $path .= ' > ' . $this->sub_category_name;
-        }
-        
-        if ($this->third_level_category_name) {
-            $path .= ' > ' . $this->third_level_category_name;
-        }
-        
-        if ($this->fourth_level_category_name) {
-            $path .= ' > ' . $this->fourth_level_category_name;
-        }
-        
-        if ($this->fifth_level_category_name) {
-            $path .= ' > ' . $this->fifth_level_category_name;
-        }
-
-        return $path;
-    }
-
     /**
      * Return the sluggable configuration array for this model.
      *
