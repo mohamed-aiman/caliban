@@ -26,27 +26,21 @@
             <div class="max-h-200 w-full">
             <!-- <img class="mx-auto" src="https://via.placeholder.com/800"> -->
             {{-- <img class="mx-auto" :src="product.photos[0].url"> --}}
-            <img class="mx-auto" src="{{ $product->photos[0]->url }}">
+            <img id="loadedPhoto" class="mx-auto" src="{{ $product->photos[0]->url }}">
             </div>
         </div>
         <!-- 2.2 -->
         <div class="flex justify-start space-x-4 my-3">
+            @foreach($product->photos as $photo)
             <div class="max-w-12">
-            <!-- <img class="" src="https://via.placeholder.com/500"> -->
-            <img class=""src="{{ $product->photos[0]->url }}">
+                <!-- <img class="" src="https://via.placeholder.com/500"> -->
+                <img onclick="loadPhoto(event, '{{ $photo->url }}')" 
+                    class="photo-options border border-2 rounded rounded-md cursor-pointer
+                    {{ $loop->first ? 'border-teal-700' : '' }}"
+                    " 
+                    src="{{ $photo->url }}">
             </div>
-            <div class="max-w-12">
-            <!-- <img class="" src="https://via.placeholder.com/500"> -->
-            <img class=""src="{{ $product->photos[0]->url }}">
-            </div>
-            <div class="max-w-12">
-            <!-- <img class="" src="https://via.placeholder.com/500"> -->
-            <img class=""src="{{ $product->photos[0]->url }}">
-            </div>
-            <div class="max-w-12">
-            <!-- <img class="" src="https://via.placeholder.com/500"> -->
-            <img class=""src="{{ $product->photos[0]->url }}">
-            </div>
+            @endforeach
         </div>
         </div>
         <!-- 3 -->
@@ -54,12 +48,14 @@
         <!-- summary -->
         <div class="mx-0 md:mx-3 my-3 space-y-2">
             <p class="font-bold text-xl" >{{ $product->title }}</p>
-            <p class="font-semibold text-xl text-orange-700" ><span class="text-sm">MVR</span> {{ $product->price }}</p>
+            <p class="font-semibold text-xl text-orange-700" ><span class="text-sm">MVR</span> {{ $product->price_formatted }}</p>
             <p class="font-semibold" >Condition: <span class="text-gray-700">{{ $product->condition }}</span></p>
             <p class="font-semibold" >Locations: <span class="text-gray-700">{{ $product->locations[0]->name }}</span></p>
             {{-- seller details --}}
-            <div class="">
-                <p class="font-semibold" >Seller: <span class="text-gray-700">{{ $product->seller->name }}</span></p>
+            <div class="border border-gray-600 border-8">
+                <p>Seller Details</p>
+                <p class="text-gray-700">{{ $product->seller->username }}</p>
+                <p class="text-gray-700">{{ $product->seller->phone }}</p>
             </div>
 
         </div>
@@ -93,4 +89,18 @@
     <p><span class="font-bold">unit:</span> {{ $product->unit }}</p>
     <p><span class="font-bold">details:</span> {{ $product->details }}</p>
 </div> --}}
+@endsection
+
+@section('end-script')
+<script>
+    var selectedPhoto = document.getElementById('loadedPhoto');
+    var photoOptions = document.getElementsByClassName('photo-options');
+    function loadPhoto(event, photoUrl) {
+        selectedPhoto.src = event.target.src;
+        for (let i = 0; i < photoOptions.length; i++) {
+            photoOptions[i].classList.remove('border-teal-700');
+        }
+        event.target.classList.add('border-teal-700');
+    }
+</script>
 @endsection
