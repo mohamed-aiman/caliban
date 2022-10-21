@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('fifth_level_category_name')->nullable();
             $table->string('fifth_level_category_slug')->nullable();
             $table->text('path')->nullable();
+            $table->boolean('is_selectable')->default(false);
             $table->timestamps();
 
             // $table->index('category');

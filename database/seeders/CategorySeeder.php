@@ -91,6 +91,7 @@ class CategorySeeder extends Seeder
 
         $this->addPathFieldToCategories();
         $this->setSlugs();
+        $this->setIsSelectable();
     }
 
     public function compileCategories()
@@ -232,6 +233,18 @@ class CategorySeeder extends Seeder
             }
 
             $category->save();
+        }
+    }
+
+    public function setIsSelectable()
+    {
+        $categories = Category::all();
+        foreach ($categories as $category) {
+            //if has not children mark as selectable
+            if ($category->children->count() == 0) {
+                $category->is_selectable = true;
+                $category->save();
+            }
         }
     }
 

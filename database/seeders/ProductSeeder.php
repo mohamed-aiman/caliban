@@ -24,7 +24,7 @@ class ProductSeeder extends Seeder
 
         $users = User::all()->pluck('id')->toArray();
 
-        $allCategories = Category::select('id')->get()->pluck('id')->toArray();
+        $allCategories = Category::where('is_selectable', true)->select('id')->get()->pluck('id')->toArray();
         // $selectableCategories = Category::whereNotIn('parent_id', $allCategories)
         //     ->get()->pluck('id')
         //     ->toArray();

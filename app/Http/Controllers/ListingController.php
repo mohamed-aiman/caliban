@@ -80,9 +80,9 @@ class ListingController extends Controller
             ]);
         }
 
-        //if category has children return error
-        $category = $this->category->find($request->category_id);
-        if ($category->children->count() > 0) {
+        try {
+            $this->category->where('is_selectable', true)->findOrFail($request->category_id);
+        } catch(\Exception $e) {
             return response()->json([
                 'message' => 'Invalid category',
             ], 422);
@@ -174,9 +174,9 @@ class ListingController extends Controller
             ]);
         }
 
-        //if category has children return error
-        $category = $this->category->find($request->category_id);
-        if ($category->children->count() > 0) {
+        try {
+            $this->category->where('is_selectable', true)->findOrFail($request->category_id);
+        } catch(\Exception $e) {
             return response()->json([
                 'message' => 'Invalid category',
             ], 422);
