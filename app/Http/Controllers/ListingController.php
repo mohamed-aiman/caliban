@@ -80,6 +80,14 @@ class ListingController extends Controller
             ]);
         }
 
+        //if category has children return error
+        $category = $this->category->find($request->category_id);
+        if ($category->children->count() > 0) {
+            return response()->json([
+                'message' => 'Invalid category',
+            ], 422);
+        }
+
         $product = $this->product->create([
             'title' => $request->title,
             'description' => $request->description,
@@ -164,6 +172,14 @@ class ListingController extends Controller
             $request->validate([
                 'duration' => 'integer|max:60',
             ]);
+        }
+
+        //if category has children return error
+        $category = $this->category->find($request->category_id);
+        if ($category->children->count() > 0) {
+            return response()->json([
+                'message' => 'Invalid category',
+            ], 422);
         }
 
         $product = $this->product
