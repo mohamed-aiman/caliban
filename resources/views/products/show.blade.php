@@ -4,7 +4,7 @@
 <!-- 0 -->
 <div class="max-w-6xl mx-auto min-h-screen antialiased xl:flex xl:flex-col">
 
-    <div class="mx-3">
+    <div class="mx-3 p-3">
         <p class="text-l font-mono font-semibold text-orange-700">
         @foreach ($links as $key => $link)
             @if($key != 0)
