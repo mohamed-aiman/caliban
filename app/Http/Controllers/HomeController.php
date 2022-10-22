@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,8 +22,14 @@ class HomeController extends Controller
         }
 
         $products = $query->with('photos','locations')->paginate(20);
+        $parentCategories = Category::whereNull('parent_id')->get();
 
-        return view('home.index', compact('products'));
+        $data = [
+            'products' => $products,
+            'parent_categories' => $parentCategories,
+        ];
+
+        return view('pages.home', compact('data'));
     }
 
     public function test()

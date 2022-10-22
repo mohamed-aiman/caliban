@@ -12,6 +12,29 @@ class CategoryController extends Controller
     {
         $this->category = $category;
     }
+    
+    public function show($id)
+    {
+        return $this->category->find($id);
+    }
+
+    public function children($id)
+    {
+        return $this->category->where('parent_id', $id)->get();
+    }
+
+    public function parents()
+    {
+        return $this->category->whereNull('parent_id')->get();
+    }
+
+    public function index()
+    {
+        $categories = $this->category->orderBy('level','asc')->get();
+        // return $categories;
+        return view('categories.index', compact('categories'));
+
+    }
 
     public function forSelect(Request $request)
     {
@@ -145,29 +168,6 @@ class CategoryController extends Controller
         $error = curl_error($ch); 
         curl_close ($ch);
         return  $webcontent;
-
-    }
-
-    public function show($id)
-    {
-        return $this->category->find($id);
-    }
-
-    public function children($id)
-    {
-        return $this->category->where('parent_id', $id)->get();
-    }
-
-    public function parents()
-    {
-        return $this->category->whereNull('parent_id')->get();
-    }
-
-    public function index()
-    {
-        $categories = $this->category->orderBy('level','asc')->get();
-        // return $categories;
-        return view('categories.index', compact('categories'));
 
     }
 }

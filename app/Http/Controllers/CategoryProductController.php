@@ -34,6 +34,14 @@ class CategoryProductController extends Controller
 
         $products = $query->with('photos','locations')->paginate(20);
 
-        return view('home.index', compact('products'));
+        $parentCategories = Category::whereNull('parent_id')->get();
+        
+        $data = [
+            'products' => $products,
+            'parent_categories' => $parentCategories,
+            'selected_category' => $category,
+        ];
+
+        return view('pages.home', compact('data'));
     }
 }
