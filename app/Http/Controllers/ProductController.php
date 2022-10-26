@@ -67,10 +67,12 @@ class ProductController extends Controller
             $products = $products->where('title', 'like', '%' . $request->search . '%');
         }
 
-        $perPage = $request->has('per_page') ? $request->per_page : 100;
+        $max = 20;
 
-        if ($perPage > 100) {
-            $perPage = 100;
+        $perPage = $request->has('per_page') ? $request->per_page : $max;
+
+        if ($perPage > $max) {
+            $perPage = $max;
         }
 
         $products = $products->with('photos','locations','category')
