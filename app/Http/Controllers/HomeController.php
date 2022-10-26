@@ -17,8 +17,8 @@ class HomeController extends Controller
     {
         $query = $this->product;
 
-        if ($request->has('search')) {
-            $query = $query->where('title', 'like', '%' . $request->search . '%');
+        if ($request->has('q')) {
+            $query = $query->where('title', 'like', '%' . $request->q . '%');
         }
 
         $products = $query->with('photos','locations')->paginate(20);
@@ -31,6 +31,26 @@ class HomeController extends Controller
 
         return view('pages.home', compact('data'));
     }
+
+    public function search(Request $request)
+    {
+        $query = $this->product;
+
+        if ($request->has('q')) {
+            $query = $query->where('title', 'like', '%' . $request->q . '%');
+        }
+
+        $products = $query->with('photos','locations')->paginate(20);
+        $parentCategories = Category::whereNull('parent_id')->get();
+
+        $data = [
+            'products' => $products,
+            'parent_categories' => $parentCategories,
+        ];
+
+        return view('pages.home', compact('data'));
+    }
+
 
     public function test()
     {

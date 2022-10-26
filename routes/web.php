@@ -20,10 +20,13 @@ use App\Http\Controllers\CategoryProductController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/test', [HomeController::class, 'test'])->name('home.test');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -31,12 +34,11 @@ Route::get('/dashboard', function () {
 
 Route::get('d', [CategoryController::class, 'downloadCategoriesFromIbay'])->name('categories.downloadCategoriesFromIbay');
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
-Route::get('/categories/{slug}', [CategoryProductController::class, 'index'])->name('categories.products.index');
+Route::get('/categories/{slug}/products', [CategoryProductController::class, 'index'])->name('categories.products.index');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/categories/for-select', [CategoryController::class, 'forSelect'])->name('categories.for-select');
     Route::get('/categories/{id}/levels', [CategoryController::class, 'levels'])->name('categories.levels');
-    Route::get('parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');
     Route::get('categories/{id}/children', [CategoryController::class, 'children'])->name('categories.children');
     Route::get('categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
     Route::post('photos', [PhotoController::class, 'store'])->name('photos.store');
@@ -51,3 +53,5 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 require __DIR__.'/auth.php';
+
+Route::view('/{any}', 'spa')->where('any', '.*');

@@ -4,10 +4,10 @@
 			"path": "."
 		},
 		{
-			"path": "../experiment/workcation"
+			"path": "../experiment/vue3-template"
 		},
 		{
-			"path": "../experiment/vue3-template"
+			"path": "../anole"
 		}
 	],
 	"settings": {}

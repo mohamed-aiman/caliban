@@ -74,9 +74,9 @@ class ProductController extends Controller
         }
 
         $products = $products->with('photos','locations','category')
-            ->paginateSimple($perPage);
+            ->simplePaginate($perPage);
 
-        // return $products;
-        return view('products.index', compact('products'));
+        return $products;
+        // return view('products.index', compact('products'));
     }
 }
