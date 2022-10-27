@@ -4,7 +4,7 @@ export class Http {
   constructor (status) {
 
     this.instance = axios.create({
-      baseURL: 'http://shop.local:10087'
+      // baseURL: 'http://shop.local:10087'
     })
 
     // Add a request interceptor
