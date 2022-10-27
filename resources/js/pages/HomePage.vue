@@ -1,21 +1,31 @@
 <script setup>
 
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, inject } from 'vue'
 import { useStore } from 'vuex'
 import SideCategories from '@/navigation/SideCategories.vue'
+
+// const progressBar = inject('progressBar')
+// const app = getCurrentInstance()
+// const progressBar = app.appContext.config.globalProperties.$Progress
+// progressBar.start()
 
 const store = useStore()
 const selectedCategory = computed(() => store.state.category.selectedCategory)
 // @todo: move pagination to seperate component
 const products = computed(() => store.state.product.products)
 const loadProducts = async (page) => {
+    // progressBar.start()
     await store.dispatch('product/loadProducts', page)
+    // progressBar.finish()
+    // this.$progress.finish() 
     // const response = await fetch(page)
     // const data = await response.json()
     // store.commit('product/SET_PRODUCTS', data)
 }
 
 onMounted(() => {
+    // console.log(progressBar)
+    // console.log(inject('progressBar'))
     // fetch('https://fakestoreapi.com/products')
     // fetch('/products')
     //     .then(res => res.json())

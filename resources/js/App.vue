@@ -1,6 +1,7 @@
 <template>
     <div>
         <TopNav />
+        <vue3-progress />
         <router-view>
         </router-view>
     </div>

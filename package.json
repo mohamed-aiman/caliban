@@ -40,6 +40,7 @@
         "vue": "^3.2.36",
         "vue-router": "^4.0.13",
         "vue2-editor": "^2.10.3",
+        "vue3-progress": "^0.0.1-beta4",
         "vuex": "^4.0.2"
     }
 }
