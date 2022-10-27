@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../anole"
+		},
+		{
+			"path": "../mybump/daimler/resources/js"
 		}
 	],
 	"settings": {}

@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function __construct(Product $product)
+    public function __construct(Product $product, Category $category)
     {
         $this->product = $product;
+        $this->category = $category;
     }
 
     public function index(Request $request)
@@ -22,7 +23,7 @@ class HomeController extends Controller
         }
 
         $products = $query->with('photos','locations')->paginate(20);
-        $parentCategories = Category::whereNull('parent_id')->get();
+        $parentCategories = $this->category->whereNull('parent_id')->get();
 
         $data = [
             'products' => $products,
@@ -40,16 +41,37 @@ class HomeController extends Controller
             $query = $query->where('title', 'like', '%' . $request->q . '%');
         }
 
-        $products = $query->with('photos','locations')->paginate(20);
-        $parentCategories = Category::whereNull('parent_id')->get();
+        if ($request->has('category') && $request->category != 'all') {
+            $query = $query->whereIn('category_id', $this->flattenCategoryIds($request->category));
+        }
 
-        $data = [
-            'products' => $products,
-            'parent_categories' => $parentCategories,
-        ];
+        $max = 20;
 
-        return view('pages.home', compact('data'));
+        $perPage = $request->has('per_page') ? $request->per_page : $max;
+
+        if ($perPage > $max) {
+            $perPage = $max;
+        }
+
+        $products = $query->with('photos','locations')->paginate($perPage);
+        
+        return $products;
+        // return view('pages.home', compact('data'));
     }
+
+
+    protected function flattenCategoryIds($slug)
+    {
+        $category = $this->category->where('slug', $slug)
+            ->with('childrenRecursive')->first();
+
+        $categoryIds = [$category->id];
+        $flattened = flatten_recursive($category->toArray());
+        $categoryIds = array_merge($categoryIds, array_column($flattened, 'id'));
+
+        return $categoryIds;
+    }
+
 
 
     public function test()

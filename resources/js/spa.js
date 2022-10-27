@@ -7,11 +7,11 @@ import { createApp } from 'vue';
 // import "quill/dist/quill.snow.css";
 import App from '@/App.vue'
 import router from '@/navigation/router';
-// import store from "@/store";
+import store from "@/store";
 // import Welcome from '@/Components/Welcome'
 
 const app = createApp(App)
-    // .use(store)
+    .use(store)
     .use(router);
 
 // global component registration

@@ -22,11 +22,14 @@ use App\Http\Controllers\CategoryProductController;
 
 
 // Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/api/search', [HomeController::class, 'search'])->name('search');
+// Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/test', [HomeController::class, 'test'])->name('home.test');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');
+Route::get('/api/products', [ProductController::class, 'index'])->name('products.index');
+// Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/api/parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');
+// Route::get('parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

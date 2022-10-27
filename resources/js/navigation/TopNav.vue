@@ -1,3 +1,79 @@
+<script setup>
+
+import { ref, onMounted, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
+
+const store = useStore()
+const parentCategories = computed(() => store.state.category.parentCategories)
+const loadParentCategories = async () => {
+    if (parentCategories.value.length === 0) {
+        await store.dispatch('category/loadParentCategories')
+    }
+}
+
+
+const query = ref('')
+
+const categorySlug = computed({
+    get: () => store.state.category.selectedCategory.slug,
+    set: (val) => {
+        let selectedCategory = store.state.category.parentCategories.find(c => c.slug === val)
+        if (selectedCategory) {
+            store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
+        }
+    }
+})
+
+// computed = () => {
+//     categorySlug: {
+//         get() {
+//             return store.state.category.selectedCategory.slug
+//         },
+//         set(value) {
+//             store.commit('category/SET_SELECTED_CATEGORY', value)
+//         }
+//     }
+// }
+
+// const computed =  {
+//     categorySlug: {
+//         get() {
+//             return store.state.category.selectedCategory.slug
+//         },
+//         set(value) {
+//             store.commit('category/SET_SELECTED_CATEGORY', value)
+//         }
+//     }
+// }
+
+
+// const products = computed(() => store.state.product.products)
+const search = async () => {
+    let page = '/api/search?q=' + query.value + '&category=' + store.state.category.selectedCategory.slug
+    await store.dispatch('product/loadProducts', page)
+    // const response = await fetch(page)
+    // const data = await response.json()
+
+    // let selectedCategory = store.state.category.parentCategories.find(c => c.slug === categorySlug)
+    // if (selectedCategory) {
+    //     store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
+    // }
+    // store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
+
+    // fetch('/api/search?q=' + query.value + '&category=' + category.value)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log(data['products']['data'])
+    //         products.value = data['products']['data']
+    //     })
+
+    // if (query.value.length > 0) {
+    //     window.location.href = `/search?q=${query.value}&category=${category.value}`
+    // }
+}
+</script>
+
 <template>
     <div class="flex bg-teal-600 justify-between items-baseline">
         <a href="/" class="mx-6 text-white font-bold text-2xl">
@@ -9,7 +85,7 @@
         </a>
         
         <div class="max-w-xl w-full mx-auto py-3">
-            <form method="GET" action="/search">
+            <!-- <form method="GET" action="/search"> -->
                 <label for="default-search"
                     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
                 <div class="relative">
@@ -20,7 +96,7 @@
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </div>
-                    <input type="search" id="q" name="q" placeholder="Search for listings..."
+                    <input v-model="query" type="search" id="q" name="q" placeholder="Search for listings..."
                         required="" class="block p-4 pl-10 w-full text-sm text-gray-900 
                                     bg-gray-50 rounded-lg border 
                                     border-gray-300 focus:ring-blue-500 
@@ -29,16 +105,20 @@
                                     dark:text-white dark:focus:ring-blue-500 
                                     dark:focus:border-blue-500">
                     <div class="flex items-baseline space-x-2 text-white absolute right-2.5 bottom-2.5">
-                        <select name="category" class="bg-teal-700 
+                        <select v-model="categorySlug" name="category" class="bg-teal-700 
                                     hover:bg-teal-800 focus:ring-4 focus:outline-none 
                                     focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-teal-600 
                                     dark:hover:bg-teal-700 dark:focus:ring-teal-800">
                             <option value="all">All</option>
-                            <option value="all">z</option>
-                            <option value="all">z</option>
-                            <option value="all">d</option>
+                            <option v-for="category in parentCategories" 
+                                :key="category.slug"
+                                :value="category.slug"
+                                >
+                                {{ category.name }}
+                            </option>
+                            
                         </select>
-                        <button type="submit" class="bg-blue-700 
+                        <button @click="search" type="button" class="bg-blue-700 
                                     hover:bg-blue-800 focus:ring-4 focus:outline-none 
                                     focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 
                                     dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -46,7 +126,7 @@
                         </button>
                     </div>
                 </div>
-            </form>
+            <!-- </form> -->
         </div>
 
         <div>
@@ -56,6 +136,3 @@
         </div>
     </div>
 </template>
-
-<script setup>
-</script>

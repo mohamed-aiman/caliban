@@ -1,33 +1,26 @@
 <script setup>
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useStore } from 'vuex'
 import SideCategories from '@/navigation/SideCategories.vue'
 
+const store = useStore()
+const selectedCategory = computed(() => store.state.category.selectedCategory)
 // @todo: move pagination to seperate component
-const products = ref([])
-const loadProducts = async () => {
-    const response = await fetch('/products')
-    products.value = await response.json()
+const products = computed(() => store.state.product.products)
+const loadProducts = async (page) => {
+    await store.dispatch('product/loadProducts', page)
+    // const response = await fetch(page)
+    // const data = await response.json()
+    // store.commit('product/SET_PRODUCTS', data)
 }
-
-const loadProductsPage = async (page) => {
-    // const response = await fetch(`/products?page=${page}`)
-    const response = await fetch(page)
-    products.value = await response.json()
-}
-
-// @todo: extract selected category from url 
-const selectedCategory = ref({
-    id: null,
-    name: 'All Categories'
-})
 
 onMounted(() => {
     // fetch('https://fakestoreapi.com/products')
     // fetch('/products')
     //     .then(res => res.json())
     //     .then(json => products.value = json['data'])
-    loadProducts()
+    loadProducts('/api/products')
 })
 
 const goToProduct = (slug) => {
@@ -64,7 +57,8 @@ const goToCategoryProducts = (slug) => {
     
                     <!-- product list start -->
                     <div class="">
-                        <ul role="list"
+                        <ul v-if="products['data'].length>0" 
+                            role="list"
                             class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
                             <li @click="goToProduct(product.slug)" v-for="product in products['data']" :key="product.id"
                                 class="relative bg-gray-100 shadow-lg border-2 border-gray-300 focus-within:ring-2 focus-within:ring-indigo-300 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
@@ -92,7 +86,7 @@ const goToCategoryProducts = (slug) => {
                     <div class="mt-8 mx-auto">
                         <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
                             <div class="flex justify-between flex-1 sm:hidden">
-                                <a v-if="products.prev_page_url" @click="loadProductsPage(products.prev_page_url)" 
+                                <a v-if="products.prev_page_url" @click="loadProducts(products.prev_page_url)" 
                                     class="cursor-pointer relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
                                     « Previous
                                 </a>
@@ -102,7 +96,7 @@ const goToCategoryProducts = (slug) => {
                                     « Previous
                                 </span>
 
-                                <a  v-if="products.next_page_url" @click="loadProductsPage(products.next_page_url)"
+                                <a  v-if="products.next_page_url" @click="loadProducts(products.next_page_url)"
                                     class="cursor-pointer relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
                                     Next »
                                 </a>
@@ -128,7 +122,7 @@ const goToCategoryProducts = (slug) => {
                                 <div>
                                     <span class="relative z-0 inline-flex shadow-sm rounded-md">
 
-                                        <a v-if="products.prev_page_url" @click="loadProductsPage(products.prev_page_url)"  rel="prev"
+                                        <a v-if="products.prev_page_url" @click="loadProducts(products.prev_page_url)"  rel="prev"
                                             class="cursor-pointer relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md leading-5 hover:text-gray-400 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                                             aria-label="&amp;laquo; Previous">
                                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -181,7 +175,7 @@ const goToCategoryProducts = (slug) => {
                                         </a> -->
 
 
-                                        <a v-if="products.next_page_url" @click="loadProductsPage(products.next_page_url)" rel="next"
+                                        <a v-if="products.next_page_url" @click="loadProducts(products.next_page_url)" rel="next"
                                             class="cursor-pointer relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md leading-5 hover:text-gray-400 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                                             aria-label="Next &amp;raquo;">
                                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
