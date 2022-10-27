@@ -1,13 +1,8 @@
 <script setup>
 
-import { ref, onMounted, computed, inject } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import SideCategories from '@/navigation/SideCategories.vue'
-
-// const progressBar = inject('progressBar')
-// const app = getCurrentInstance()
-// const progressBar = app.appContext.config.globalProperties.$Progress
-// progressBar.start()
 
 const store = useStore()
 const selectedCategory = computed(() => store.state.category.selectedCategory)

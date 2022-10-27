@@ -2,7 +2,6 @@
 
 import { ref, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
 
 const searchInput = ref('')
 onMounted(() => {
@@ -28,31 +27,12 @@ const categorySlug = computed({
 })
 
 const query = ref('')
-// const products = computed(() => store.state.product.products)
 const search = async () => {
-
-    let page = '/api/search?q=' + query.value + '&category=' + store.state.category.selectedCategory.slug
-    await store.dispatch('product/loadProducts', page)
+    await store.dispatch(
+        'product/loadProducts', 
+        '/api/search?q=' + query.value + '&category=' + store.state.category.selectedCategory.slug
+    )
     searchInput.value.focus()
-    // const response = await fetch(page)
-    // const data = await response.json()
-
-    // let selectedCategory = store.state.category.parentCategories.find(c => c.slug === categorySlug)
-    // if (selectedCategory) {
-    //     store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
-    // }
-    // store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
-
-    // fetch('/api/search?q=' + query.value + '&category=' + category.value)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log(data['products']['data'])
-    //         products.value = data['products']['data']
-    //     })
-
-    // if (query.value.length > 0) {
-    //     window.location.href = `/search?q=${query.value}&category=${category.value}`
-    // }
 }
 </script>
 
