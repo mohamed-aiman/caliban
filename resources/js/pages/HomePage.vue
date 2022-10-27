@@ -33,7 +33,7 @@ const goToCategoryProducts = (slug) => {
 <template>
     <!-- <div class="w-full mx-20 space-y-4"></div> -->
 
-    <div class="bg-gray-100 mx-auto min-h-screen xl:flex xl:flex-col">
+    <div class="mx-auto min-h-screen xl:flex xl:flex-col">
     
         <div class="flex flex-nowrap mx-auto p-3 w-full space-x-3">
     

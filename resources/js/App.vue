@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class=" bg-slate-300">
         <TopNav />
         <vue3-progress />
         <router-view>
