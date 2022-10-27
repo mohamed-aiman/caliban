@@ -4,6 +4,11 @@ import { ref, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 
+const searchInput = ref('')
+onMounted(() => {
+    searchInput.value.focus()
+})
+
 const store = useStore()
 const parentCategories = computed(() => store.state.category.parentCategories)
 const loadParentCategories = async () => {
@@ -11,9 +16,6 @@ const loadParentCategories = async () => {
         await store.dispatch('category/loadParentCategories')
     }
 }
-
-
-const query = ref('')
 
 const categorySlug = computed({
     get: () => store.state.category.selectedCategory.slug,
@@ -25,33 +27,13 @@ const categorySlug = computed({
     }
 })
 
-// computed = () => {
-//     categorySlug: {
-//         get() {
-//             return store.state.category.selectedCategory.slug
-//         },
-//         set(value) {
-//             store.commit('category/SET_SELECTED_CATEGORY', value)
-//         }
-//     }
-// }
-
-// const computed =  {
-//     categorySlug: {
-//         get() {
-//             return store.state.category.selectedCategory.slug
-//         },
-//         set(value) {
-//             store.commit('category/SET_SELECTED_CATEGORY', value)
-//         }
-//     }
-// }
-
-
+const query = ref('')
 // const products = computed(() => store.state.product.products)
 const search = async () => {
+
     let page = '/api/search?q=' + query.value + '&category=' + store.state.category.selectedCategory.slug
     await store.dispatch('product/loadProducts', page)
+    searchInput.value.focus()
     // const response = await fetch(page)
     // const data = await response.json()
 
@@ -96,8 +78,13 @@ const search = async () => {
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </div>
-                    <input v-model="query" type="search" id="q" name="q" placeholder="Search for listings..."
-                        required="" class="block p-4 pl-10 w-full text-sm text-gray-900 
+                    <input v-model="query" 
+                        type="search"
+                        ref="searchInput"
+                        @keydown.enter="search"
+                        placeholder="Search for listings..."
+                        required="" 
+                        class="block p-4 pl-10 w-full text-sm text-gray-900 
                                     bg-gray-50 rounded-lg border 
                                     border-gray-300 focus:ring-blue-500 
                                     focus:border-blue-500 dark:bg-gray-700 

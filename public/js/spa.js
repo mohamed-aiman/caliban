@@ -20372,6 +20372,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
+    var searchInput = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
+      searchInput.value.focus();
+    });
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_1__.useStore)();
     var parentCategories = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
       return store.state.category.parentCategories;
@@ -20404,7 +20408,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     }();
 
-    var query = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     var categorySlug = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)({
       get: function get() {
         return store.state.category.selectedCategory.slug;
@@ -20418,27 +20421,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           store.commit('category/SET_SELECTED_CATEGORY', selectedCategory);
         }
       }
-    }); // computed = () => {
-    //     categorySlug: {
-    //         get() {
-    //             return store.state.category.selectedCategory.slug
-    //         },
-    //         set(value) {
-    //             store.commit('category/SET_SELECTED_CATEGORY', value)
-    //         }
-    //     }
-    // }
-    // const computed =  {
-    //     categorySlug: {
-    //         get() {
-    //             return store.state.category.selectedCategory.slug
-    //         },
-    //         set(value) {
-    //             store.commit('category/SET_SELECTED_CATEGORY', value)
-    //         }
-    //     }
-    // }
-    // const products = computed(() => store.state.product.products)
+    });
+    var query = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(''); // const products = computed(() => store.state.product.products)
 
     var search = /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
@@ -20452,6 +20436,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return store.dispatch('product/loadProducts', page);
 
               case 3:
+                searchInput.value.focus(); // const response = await fetch(page)
+                // const data = await response.json()
+                // let selectedCategory = store.state.category.parentCategories.find(c => c.slug === categorySlug)
+                // if (selectedCategory) {
+                //     store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
+                // }
+                // store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
+                // fetch('/api/search?q=' + query.value + '&category=' + category.value)
+                //     .then(response => response.json())
+                //     .then(data => {
+                //         console.log(data['products']['data'])
+                //         products.value = data['products']['data']
+                //     })
+                // if (query.value.length > 0) {
+                //     window.location.href = `/search?q=${query.value}&category=${category.value}`
+                // }
+
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -20465,11 +20467,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }();
 
     var __returned__ = {
+      searchInput: searchInput,
       store: store,
       parentCategories: parentCategories,
       loadParentCategories: loadParentCategories,
-      query: query,
       categorySlug: categorySlug,
+      query: query,
       search: search,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
@@ -20784,19 +20787,20 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_7 = {
+var _hoisted_7 = ["onKeydown"];
+var _hoisted_8 = {
   "class": "flex items-baseline space-x-2 text-white absolute right-2.5 bottom-2.5"
 };
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "all"
 }, "All", -1
 /* HOISTED */
 );
 
-var _hoisted_9 = ["value"];
+var _hoisted_10 = ["value"];
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   href: "/dashboard",
   "class": "mx-6 text-white font-bold text-2xl"
 }, " Admin ")], -1
@@ -20809,26 +20813,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $setup.query = $event;
     }),
     type: "search",
-    id: "q",
-    name: "q",
+    ref: "searchInput",
+    onKeydown: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)($setup.search, ["enter"]),
     placeholder: "Search for listings...",
     required: "",
     "class": "block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-  }, null, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.query]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_7), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.query]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $setup.categorySlug = $event;
     }),
     name: "category",
     "class": "bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800"
-  }, [_hoisted_8, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.parentCategories, function (category) {
+  }, [_hoisted_9, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.parentCategories, function (category) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       key: category.slug,
       value: category.slug
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(category.name), 9
     /* TEXT, PROPS */
-    , _hoisted_9);
+    , _hoisted_10);
   }), 128
   /* KEYED_FRAGMENT */
   ))], 512
@@ -20837,7 +20841,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: $setup.search,
     type: "button",
     "class": "bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-  }, " Search ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </form> ")]), _hoisted_10]);
+  }, " Search ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </form> ")]), _hoisted_11]);
 }
 
 /***/ }),
