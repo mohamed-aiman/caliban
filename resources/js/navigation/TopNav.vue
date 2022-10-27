@@ -22,6 +22,12 @@ const categorySlug = computed({
         let selectedCategory = store.state.category.parentCategories.find(c => c.slug === val)
         if (selectedCategory) {
             store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
+        } else {
+            store.commit('category/SET_SELECTED_CATEGORY', {
+                id: null,
+                slug: 'all',
+                name: 'All Categories'
+            })
         }
     }
 })

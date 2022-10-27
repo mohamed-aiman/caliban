@@ -20482,6 +20482,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         if (selectedCategory) {
           store.commit('category/SET_SELECTED_CATEGORY', selectedCategory);
+        } else {
+          store.commit('category/SET_SELECTED_CATEGORY', {
+            id: null,
+            slug: 'all',
+            name: 'All Categories'
+          });
         }
       }
     });
