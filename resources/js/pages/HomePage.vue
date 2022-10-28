@@ -35,7 +35,7 @@ const goToCategoryProducts = (slug) => {
     
             <side-categories/>
     
-            <div class="w-full sm:w-9/12">
+            <div class="w-full xl:w-9/12">
                 <div class="container mx-auto">
     
                     <!-- selected category -->
@@ -49,7 +49,9 @@ const goToCategoryProducts = (slug) => {
                     <div class="">
                         <ul v-if="products['data'].length>0" 
                             role="list"
-                            class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
+                            class="grid 
+                            grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4
+                            gap-x-4 gap-y-8 sm:gap-x-6 xl:gap-x-8"
                             >
                             <product-list-item v-for="product in products['data']" :key="product.id" :product="product"/>
                         </ul>
