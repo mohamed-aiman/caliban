@@ -6,13 +6,12 @@ module.exports = {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './resources/js/**/*.{vue,js}',
     ],
 
-    safelist: [
-        {
-        pattern: /bg-(red|green|blue|teal|gray|slate)-(50|100|200|300|400|500|600)/,
-        },
-    ],
+    // safelist: [
+    //     { pattern: /bg-(red|green|blue|teal|gray|slate|orange)-(50|100|200|300|400|500|600)/,},
+    // ],
 
     theme: {
         extend: {

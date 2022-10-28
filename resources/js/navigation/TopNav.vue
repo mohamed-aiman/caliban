@@ -1,8 +1,8 @@
 <template>
     <nav class="relative flex flex-wrap items-center justify-between 
-        px-2 py-1 bg-teal-600 mb-3">
+        px-2 py-1 bg-slate-500 mb-3">
         <div class="w-full px-2 mx-auto flex flex-wrap items-center justify-between">
-            <div class="align-baseline w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+            <div class="align-baseline w-full relative flex justify-between">
 
                 <div class="hidden sm:block my-3 mr-3">
                     <a class="mx-6 text-sm font-bold leading-relaxed mr-4 py-2 whitespace-nowrap uppercase text-white"
