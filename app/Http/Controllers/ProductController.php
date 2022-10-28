@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         $product = $this->product->where('slug', $slug)->firstOrFail();
 
-        $product->load('photos', 'locations', 'category');
+        $product->load('photos', 'locations', 'category', 'seller');
 
 
         $category = $product->category;
@@ -54,9 +54,11 @@ class ProductController extends Controller
             ];
         }
 
-        // return $product->toArray();
+        $product->links = $links;
 
-        return view('products.show', compact('product', 'links'));
+        return $product->toArray();
+
+        // return view('products.show', compact('product', 'links'));
     }
 
     public function index(Request $request)

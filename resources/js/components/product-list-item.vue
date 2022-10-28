@@ -1,5 +1,10 @@
 <script setup>
 
+import { onMounted } from '@vue/runtime-core'
+import { useRouter, useRoute } from 'vue-router'
+
+const router = useRouter()
+
 const props = defineProps({
     product: {
         type: Object,
@@ -9,7 +14,8 @@ const props = defineProps({
 
 const goToProduct = (slug) => {
     console.log(slug)
-    window.location.href = `/products/${slug}`
+    // window.location.href = `/products/${slug}`
+    router.push(`/products/${slug}`)
 }
 
 </script>

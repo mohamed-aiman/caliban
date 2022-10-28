@@ -230,12 +230,6 @@ const logout = () => {
     window.location.href = '/'
 }
 
-const user = ref({})
-const searchInput = ref('')
-onMounted(() => {
-    searchInput.value.focus()
-    user.value = window.Laravel.user
-})
 
 const store = useStore()
 const parentCategories = computed(() => store.state.category.parentCategories)
@@ -244,6 +238,14 @@ const loadParentCategories = async () => {
         await store.dispatch('category/loadParentCategories')
     }
 }
+
+const user = ref({})
+const searchInput = ref('')
+onMounted(() => {
+    searchInput.value.focus()
+    user.value = window.Laravel.user
+    loadParentCategories()
+})
 
 const categorySlug = computed({
     get: () => store.state.category.selectedCategory.slug,
