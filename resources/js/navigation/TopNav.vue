@@ -132,25 +132,25 @@
 
             </div>
 
-            
+            <!-- mobile -->
             <div v-bind:class="{ 'hidden': !showMenu, 'flex': showMenu }" class="lg:flex lg:flex-grow items-center">
                 <ul class="flex flex-col lg:flex-row list-none ml-auto">
                     <li class="nav-item">
-                        <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                        <a class="px-1 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                             href="/sell">
                             <i class="fab fa-facebook-square text-lg leading-lg text-white opacity-75" /><span
                                 class="ml-2">Sell</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                        <a class="px-1 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                             href="/dashboard">
                             <i class="fab fa-twitter text-lg leading-lg text-white opacity-75" /><span
                                 class="ml-2">Account</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                        <a class="px-1 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                             href="/login">
                             <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span
                                 class="ml-2">Login</span>
