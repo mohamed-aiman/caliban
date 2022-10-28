@@ -20981,45 +20981,32 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white"
 };
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_2 = {
   "class": "aspect-w-7 aspect-h-7 bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-72"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img :src=\"product.photos[0].url\"  "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg",
-  alt: "Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green.",
-  "class": "h-full w-full object-cover object-center sm:h-full sm:w-full"
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_3 = {
+};
+var _hoisted_3 = ["src"];
+var _hoisted_4 = {
   "class": "flex flex-1 flex-col space-y-2 p-4"
 };
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
-  "class": "text-sm font-medium text-gray-900"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "aria-hidden": "true",
-  "class": "absolute inset-0"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Basic Tee 8-Pack ")])], -1
-/* HOISTED */
-);
-
 var _hoisted_5 = {
-  "class": "text-sm text-gray-500 line-clamp-3"
+  "class": "text-sm text-gray-900 line-clamp-3"
 };
 var _hoisted_6 = {
   "class": "flex flex-1 flex-col justify-end"
 };
 var _hoisted_7 = {
-  "class": "text-base font-medium text-gray-900"
+  "class": "text-base font-semibold text-slate-800"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li @click=\"goToProduct(product.slug)\"\n        class=\"relative bg-orange-500 shadow-lg border-2 \n        border-gray-300 focus-within:ring-2 focus-within:ring-indigo-300 \n        focus-within:ring-offset-2\n        focus-within:ring-offset-gray-100\n        \"\n        >\n        <div class=\"group aspect-w-7 aspect-h-7 block w-full \n        overflow-hidden bg-green-500\">\n            <img v-if=\"product.photos.length > 0\" :src=\"product.photos[0].url\" alt=\"\"\n                class=\"pointer-events-none object-cover object-center group-hover:opacity-75\" />\n            <img v-if=\"product.photos.length == 0\"\n                src=\"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg\"\n                alt=\"\" class=\"pointer-events-none object-cover group-hover:opacity-75\" />\n            <a href=\"#\" class=\"absolute inset-0 focus:outline-none\">\n                <span class=\"sr-only\">View details for title</span>\n            </a>\n        </div>\n        <div class=\"bg-blue-500\">\n            <p class=\"px-1 text-base \n                bg-red-600 pointer-events-none \n                py-2 block font-medium text-gray-800\n                line-clamp-3\n                overflow-hidden\n                \">\n                {{ product.title }}\n            </p>\n            <p class=\"px-1 py-2 text-lg \n                bg-teal-500 pointer-events-none block text-l \n                font-bold text-orange-700\">\n                <span class=\"text-xs font-thin\">MVR </span> {{ product.price_formatted }}\n            </p>\n        </div>\n    </li> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.product.title), 1
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li @click=\"goToProduct(product.slug)\"\n        class=\"relative bg-orange-500 shadow-lg border-2 \n        border-gray-300 focus-within:ring-2 focus-within:ring-indigo-300 \n        focus-within:ring-offset-2\n        focus-within:ring-offset-gray-100\n        \"\n        >\n        <div class=\"group aspect-w-7 aspect-h-7 block w-full \n        overflow-hidden bg-green-500\">\n            <img v-if=\"product.photos.length > 0\" :src=\"product.photos[0].url\" alt=\"\"\n                class=\"pointer-events-none object-cover object-center group-hover:opacity-75\" />\n            <img v-if=\"product.photos.length == 0\"\n                src=\"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg\"\n                alt=\"\" class=\"pointer-events-none object-cover group-hover:opacity-75\" />\n            <a href=\"#\" class=\"absolute inset-0 focus:outline-none\">\n                <span class=\"sr-only\">View details for title</span>\n            </a>\n        </div>\n        <div class=\"bg-blue-500\">\n            <p class=\"px-1 text-base \n                bg-red-600 pointer-events-none \n                py-2 block font-medium text-gray-800\n                line-clamp-3\n                overflow-hidden\n                \">\n                {{ product.title }}\n            </p>\n            <p class=\"px-1 py-2 text-lg \n                bg-teal-500 pointer-events-none block text-l \n                font-bold text-orange-700\">\n                <span class=\"text-xs font-thin\">MVR </span> {{ product.price_formatted }}\n            </p>\n        </div>\n    </li> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img src=\"https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: $props.product.photos[0].url,
+    alt: "Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green.",
+    "class": "h-full w-full object-cover object-center sm:h-full sm:w-full"
+  }, null, 8
+  /* PROPS */
+  , _hoisted_3)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <h3 class=\"text-sm font-medium text-gray-900\">\n                <a href=\"#\">\n                    <span aria-hidden=\"true\" class=\"absolute inset-0\"></span>\n                    Aslu Title here\n                </a>\n            </h3> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <p class=\"text-sm text-gray-500 line-clamp-3\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" aslu kuda summary here "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.product.title), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <p class=\"text-sm italic text-gray-500\">8 colors</p> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, "MVR " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.product.price_formatted), 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <p class=\"text-sm italic text-gray-500\">8 colors</p> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, "MVR " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.product.price_formatted), 1
   /* TEXT */
   )])])])], 2112
   /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */

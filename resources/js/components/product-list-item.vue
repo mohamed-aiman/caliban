@@ -53,24 +53,26 @@ const goToProduct = (slug) => {
 
     <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
         <div class="aspect-w-7 aspect-h-7 bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-72">
-            <!-- <img :src="product.photos[0].url"  -->
-            <img src="https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg"
+            <!-- <img src="https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg" -->
+            <img :src="product.photos[0].url" 
                 alt="Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green."
                 class="h-full w-full object-cover object-center sm:h-full sm:w-full">
         </div>
         <div class="flex flex-1 flex-col space-y-2 p-4">
-            <h3 class="text-sm font-medium text-gray-900">
+            <!-- <h3 class="text-sm font-medium text-gray-900">
                 <a href="#">
                     <span aria-hidden="true" class="absolute inset-0"></span>
-                    Basic Tee 8-Pack
+                    Aslu Title here
                 </a>
-            </h3>
-            <p class="text-sm text-gray-500 line-clamp-3">
+            </h3> -->
+            <!-- <p class="text-sm text-gray-500 line-clamp-3"> -->
+            <p class="text-sm text-gray-900 line-clamp-3">
+                <!-- aslu kuda summary here -->
                 {{ product.title }}
             </p>
             <div class="flex flex-1 flex-col justify-end">
                 <!-- <p class="text-sm italic text-gray-500">8 colors</p> -->
-                <p class="text-base font-medium text-gray-900">MVR&nbsp{{ product.price_formatted }}</p>
+                <p class="text-base font-semibold text-slate-800">MVR&nbsp{{ product.price_formatted }}</p>
             </div>
         </div>
     </div>
