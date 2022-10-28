@@ -53,7 +53,8 @@ const goToProduct = (slug) => {
 
     <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
         <div class="aspect-w-3 aspect-h-4 bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-96">
-            <img src="https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg"
+            <!-- <img src="https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg" -->
+            <img :src="product.photos[0].url" 
                 alt="Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green."
                 class="h-full w-full object-cover object-center sm:h-full sm:w-full">
         </div>
@@ -64,11 +65,12 @@ const goToProduct = (slug) => {
                     Basic Tee 8-Pack
                 </a>
             </h3>
-            <p class="text-sm text-gray-500">Get the full lineup of our Basic Tees. Have a fresh shirt all week, and an
-                extra for laundry day.</p>
+            <p class="text-sm text-gray-500 line-clamp-3">
+                {{ product.title }}
+            </p>
             <div class="flex flex-1 flex-col justify-end">
-                <p class="text-sm italic text-gray-500">8 colors</p>
-                <p class="text-base font-medium text-gray-900">$256</p>
+                <!-- <p class="text-sm italic text-gray-500">8 colors</p> -->
+                <p class="text-base font-medium text-gray-900">MVR&nbsp{{ product.price_formatted }}</p>
             </div>
         </div>
     </div>
