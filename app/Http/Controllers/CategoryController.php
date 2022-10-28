@@ -25,7 +25,17 @@ class CategoryController extends Controller
 
     public function parents()
     {
-        return $this->category->whereNull('parent_id')->get();
+        $categories = [
+            [
+                'id' => null,
+                'slug' => 'all',
+                'name' => 'All'
+            ]
+        ];
+
+        $parents = $this->category->whereNull('parent_id')->get()->toArray();
+
+        return array_merge($categories, $parents);
     }
 
     public function index()

@@ -15,7 +15,7 @@ onMounted(() => {
     loadParentCategories()
 })
 
-const categorySlug = computed(() => store.state.category.selectedCategory.slug)
+const storeSelectedCategory = computed(() => store.state.category.selectedCategory)
 
 const query = ref('')
 const loadCategoryProducts = async (slug) => {
@@ -38,7 +38,7 @@ const loadCategoryProducts = async (slug) => {
         <ul>
             <li v-for="category in parentCategories" @click="loadCategoryProducts(category.slug)" :key="category.id"
                 class="text-teal-700 cursor-pointer"
-                :class="category.slug === categorySlug ? 'font-bold' : 'font-normal'">
+                :class="category.slug === storeSelectedCategory.slug ? 'font-bold' : 'font-normal'">
                 {{ category.name }}
             </li>
         </ul>

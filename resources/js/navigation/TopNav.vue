@@ -44,7 +44,6 @@
                                                 hover:bg-teal-800 focus:ring-4 focus:outline-none 
                                                 focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-teal-600 
                                                 dark:hover:bg-teal-700 dark:focus:ring-teal-800">
-                                <option value="all">All</option>
                                 <option v-for="category in parentCategories" :key="category.slug" :value="category.slug">
                                     {{ category.name }}
                                 </option>
