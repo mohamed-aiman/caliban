@@ -1,7 +1,7 @@
 <template>
     <nav class="relative flex flex-wrap items-center justify-between 
         px-2 py-1 bg-teal-600 mb-3">
-        <div class="container px-2 mx-auto flex flex-wrap items-center justify-between">
+        <div class="w-full px-2 mx-auto flex flex-wrap items-center justify-between">
             <div class="align-baseline w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
 
                 <div class="hidden sm:block my-3 mr-3">
@@ -110,21 +110,21 @@
                     <ul class="h-full flex flex-nowrap items-center justify-center list-none ml-auto">
                         <li class="nav-item">
                             <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                href="#pablo">
+                                href="/sell">
                                 <i class="fab fa-facebook-square text-lg leading-lg text-white opacity-75" /><span
-                                    class="ml-2">Share</span>
+                                    class="ml-2">Sell</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                href="#pablo">
-                                <i class="fab fa-twitter text-lg leading-lg text-white opacity-75" /><span class="ml-2">Tweet</span>
+                                href="/dashoboard">
+                                <i class="fab fa-twitter text-lg leading-lg text-white opacity-75" /><span class="ml-2">Account</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                href="#pablo">
-                                <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span class="ml-2">Pin</span>
+                                href="/login">
+                                <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span class="ml-2">Login</span>
                             </a>
                         </li>
                     </ul>
@@ -137,23 +137,23 @@
                 <ul class="flex flex-col lg:flex-row list-none ml-auto">
                     <li class="nav-item">
                         <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                            href="#pablo">
+                            href="/sell">
                             <i class="fab fa-facebook-square text-lg leading-lg text-white opacity-75" /><span
-                                class="ml-2">Share</span>
+                                class="ml-2">Sell</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                            href="#pablo">
+                            href="/dashboard">
                             <i class="fab fa-twitter text-lg leading-lg text-white opacity-75" /><span
-                                class="ml-2">Tweet</span>
+                                class="ml-2">Account</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                            href="#pablo">
+                            href="/login">
                             <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span
-                                class="ml-2">Pin</span>
+                                class="ml-2">Login</span>
                         </a>
                     </li>
                 </ul>
