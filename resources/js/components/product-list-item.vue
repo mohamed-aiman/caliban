@@ -52,9 +52,9 @@ const goToProduct = (slug) => {
 
 
     <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
-        <div class="aspect-w-3 aspect-h-4 bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-96">
-            <!-- <img src="https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg" -->
-            <img :src="product.photos[0].url" 
+        <div class="aspect-w-7 aspect-h-7 bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-72">
+            <!-- <img :src="product.photos[0].url"  -->
+            <img src="https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg"
                 alt="Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green."
                 class="h-full w-full object-cover object-center sm:h-full sm:w-full">
         </div>

@@ -2346,6 +2346,10 @@ select {
     height: 100%;
   }
 
+  .sm\:h-72 {
+    height: 18rem;
+  }
+
   .sm\:w-9\/12 {
     width: 75%;
   }
