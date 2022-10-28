@@ -30,6 +30,12 @@
         <div id="app">
         </div>
 
+        <script>
+            window.Laravel = {!! json_encode([
+                'csrfToken' => csrf_token(),
+                'user' => Auth::user(),
+            ]) !!};
+        </script>
         <script src="{{ mix('js/spa.js') }}"></script>
     </body>
 </html>

@@ -5,7 +5,7 @@ export class ProductService extends BaseService {
 
   static async loadProducts (page) {
     try {
-      const response = await this.request({ auth: true }).get(page)
+      const response = await this.request({ auth: false }).get(page)
       return new ResponseWrapper(response, response.data)
     } catch (error) {
       const message = error.response.data ? error.response.data.error : error.response.statusText

@@ -107,7 +107,7 @@
                 </button>
 
                 <div class="hidden sm:block my-3">
-                    <ul class="h-full flex flex-nowrap items-center justify-center list-none ml-auto">
+                    <ul v-if="user" class="h-full flex flex-nowrap items-center justify-center list-none ml-auto">
                         <li class="nav-item">
                             <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                                 href="/sell">
@@ -117,8 +117,35 @@
                         </li>
                         <li class="nav-item">
                             <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                href="/dashoboard">
-                                <i class="fab fa-twitter text-lg leading-lg text-white opacity-75" /><span class="ml-2">Account</span>
+                                href="/watch-list">
+                                <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span class="ml-2">Watch&nbspList</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75" 
+                                href="/dashboard">
+                                <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span class="ml-2">{{ user.name }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a @click="logout" class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"
+                                >
+                                <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span class="ml-2">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul v-if="!user" class="h-full flex flex-nowrap items-center justify-center list-none ml-auto">
+                        <li class="nav-item">
+                            <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                                href="/sell">
+                                <i class="fab fa-facebook-square text-lg leading-lg text-white opacity-75" /><span class="ml-2">Sell</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                                href="/register">
+                                <i class="fab fa-twitter text-lg leading-lg text-white opacity-75" /><span class="ml-2">Register</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -128,13 +155,15 @@
                             </a>
                         </li>
                     </ul>
+
                 </div>
 
             </div>
 
             <!-- mobile -->
             <div v-bind:class="{ 'hidden': !showMenu, 'flex': showMenu }" class="lg:flex lg:flex-grow items-center">
-                <ul class="flex flex-col lg:flex-row list-none ml-auto">
+
+                <ul  v-if="user" class="flex flex-col lg:flex-row list-none ml-auto">
                     <li class="nav-item">
                         <a class="px-1 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                             href="/sell">
@@ -146,14 +175,34 @@
                         <a class="px-1 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                             href="/dashboard">
                             <i class="fab fa-twitter text-lg leading-lg text-white opacity-75" /><span
-                                class="ml-2">Account</span>
+                                class="ml-2">{{ user.name }}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a @click="logout" class="px-1 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
+                            <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span
+                                class="ml-2">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul v-if="!user" class="flex flex-col lg:flex-row list-none ml-auto">
+                    <li class="nav-item">
+                        <a class="px-1 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                            href="/sell">
+                            <i class="fab fa-facebook-square text-lg leading-lg text-white opacity-75" /><span class="ml-2">Sell</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="px-1 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                            href="/register">
+                            <i class="fab fa-twitter text-lg leading-lg text-white opacity-75" /><span class="ml-2">Register</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="px-1 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                             href="/login">
-                            <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span
-                                class="ml-2">Login</span>
+                            <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span class="ml-2">Login</span>
                         </a>
                     </li>
                 </ul>
@@ -167,16 +216,26 @@
 
 import { ref, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
+import { UserService } from '@/services/UserService'
 
 const showMenu = ref(false)
-
 const toggleNavbar = () => {
     showMenu.value = !showMenu.value
 }
 
+const logout = () => {
+    console.log('logout')
+    //send logout request
+    UserService.logout()
+    window.Laravel = null
+    window.location.href = '/'
+}
+
+const user = ref({})
 const searchInput = ref('')
 onMounted(() => {
     searchInput.value.focus()
+    user.value = window.Laravel.user
 })
 
 const store = useStore()
