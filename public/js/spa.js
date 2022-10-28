@@ -20979,33 +20979,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "group aspect-w-7 aspect-h-7 block w-full overflow-hidden bg-green-500"
+  "class": "max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
 };
-var _hoisted_2 = ["src"];
-var _hoisted_3 = {
-  key: 1,
-  src: "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-  alt: "",
-  "class": "pointer-events-none object-cover group-hover:opacity-75"
+var _hoisted_2 = {
+  href: "#"
 };
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  "class": "absolute inset-0 focus:outline-none"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "sr-only"
-}, "View details for title")], -1
-/* HOISTED */
-);
-
+var _hoisted_3 = ["src"];
+var _hoisted_4 = {
+  "class": "p-5"
+};
 var _hoisted_5 = {
-  "class": "bg-blue-500"
+  href: "#"
 };
 var _hoisted_6 = {
-  "class": "px-1 text-base bg-red-600 pointer-events-none py-2 block font-medium text-gray-800 line-clamp-3 overflow-hidden"
+  "class": "mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white"
 };
 var _hoisted_7 = {
-  "class": "px-1 py-2 text-lg bg-teal-500 pointer-events-none block text-l font-bold text-orange-700"
+  "class": "mb-3 font-normal text-gray-700 dark:text-gray-400"
 };
 
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
@@ -21014,24 +21004,37 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  "class": "inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Read more "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  "aria-hidden": "true",
+  "class": "ml-2 -mr-1 w-4 h-4",
+  fill: "currentColor",
+  viewBox: "0 0 20 20",
+  xmlns: "http://www.w3.org/2000/svg"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "fill-rule": "evenodd",
+  d: "M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z",
+  "clip-rule": "evenodd"
+})])], -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
-    onClick: _cache[0] || (_cache[0] = function ($event) {
-      return $setup.goToProduct($props.product.slug);
-    }),
-    "class": "relative bg-orange-500 shadow-lg border-2 border-gray-300 focus-within:ring-2 focus-within:ring-indigo-300 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [$props.product.photos.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
-    key: 0,
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li @click=\"goToProduct(product.slug)\"\n        class=\"relative bg-orange-500 shadow-lg border-2 \n        border-gray-300 focus-within:ring-2 focus-within:ring-indigo-300 \n        focus-within:ring-offset-2\n        focus-within:ring-offset-gray-100\n        \"\n        >\n        <div class=\"group aspect-w-7 aspect-h-7 block w-full \n        overflow-hidden bg-green-500\">\n            <img v-if=\"product.photos.length > 0\" :src=\"product.photos[0].url\" alt=\"\"\n                class=\"pointer-events-none object-cover object-center group-hover:opacity-75\" />\n            <img v-if=\"product.photos.length == 0\"\n                src=\"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg\"\n                alt=\"\" class=\"pointer-events-none object-cover group-hover:opacity-75\" />\n            <a href=\"#\" class=\"absolute inset-0 focus:outline-none\">\n                <span class=\"sr-only\">View details for title</span>\n            </a>\n        </div>\n        <div class=\"bg-blue-500\">\n            <p class=\"px-1 text-base \n                bg-red-600 pointer-events-none \n                py-2 block font-medium text-gray-800\n                line-clamp-3\n                overflow-hidden\n                \">\n                {{ product.title }}\n            </p>\n            <p class=\"px-1 py-2 text-lg \n                bg-teal-500 pointer-events-none block text-l \n                font-bold text-orange-700\">\n                <span class=\"text-xs font-thin\">MVR </span> {{ product.price_formatted }}\n            </p>\n        </div>\n    </li> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": "rounded-t-lg",
     src: $props.product.photos[0].url,
-    alt: "",
-    "class": "pointer-events-none object-cover object-center group-hover:opacity-75"
+    alt: ""
   }, null, 8
   /* PROPS */
-  , _hoisted_2)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.product.photos.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_3)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_4]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.product.title), 1
+  , _hoisted_3)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.product.title), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.product.price_formatted), 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.product.price_formatted), 1
   /* TEXT */
-  )])])]);
+  )]), _hoisted_9])])], 2112
+  /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
+  );
 }
 
 /***/ }),
