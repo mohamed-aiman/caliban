@@ -38,7 +38,13 @@ const selectedCategory = ref({})
 const descriptionEditorRef = ref('')
 const descriptionEditor = ref('')
 const descriptionEditorValue = ref('')
+const uploading = ref(false)
 const uploadProgress = ref(0)
+const finalImage = ref('')
+const photo1 = ref('')
+const photo2 = ref('')
+const photo3 = ref('')
+const photo4 = ref('')
 const images = ref({
     1: { key: 1, photo_id: null, url: null },
     2: { key: 2, photo_id: null, url: null },
@@ -69,6 +75,7 @@ const errors = ref({
   
 
 watch(selectedLocationId, (val, oldVal) => {
+    console.log('selectedLocationId', val)
     if (val) {
         addLocation(val)
     }
@@ -129,33 +136,33 @@ const initDescriptionEditor = () => {
 // }
 
 const captureDescription = () => {
-    form.description = descriptionEditor.root.innerHTML
+    form.description = descriptionEditor.value.root.innerHTML
 }
 
 const loadLocations = async () => {
     const response = await axios.get('/locations/for-select');
-    locations.value.value = response.data;
+    locations.value = response.data;
     filteredLocations.value = locations;
 }
 
 const filterLocations = async () => {
-    const response = await axios.get('/locations/for-select?search=' + locationSearch);
+    const response = await axios.get('/locations/for-select?search=' + locationSearch.value);
     filteredLocations.value = response.data.filter(location => {
-        return !selectedLocations.find(selectedLocation => selectedLocation.id === location.id);
+        return !selectedLocations.value.find(selectedLocation => selectedLocation.id === location.id);
     })
 }
 
-const addLocationr = (id) => {
-    selectedLocations.push(locations.find(location => location.id == id))
-    selectedLocationId = null
+const addLocation = (id) => {
+    selectedLocations.value.push(locations.value.find(location => location.id == id))
+    selectedLocationId.value = null
     //remove from filtered locations
-    filteredLocations.value = locations.filter(
-        location => !selectedLocations.find(selectedLocation => selectedLocation.id == location.id)
+    filteredLocations.value = locations.value.filter(
+        location => !selectedLocations.value.find(selectedLocation => selectedLocation.id == location.id)
     )
 }
 
-const removeLocationr = (id) => {
-    selectedLocations = selectedLocations.filter(location => location.id !== id);
+const removeLocation = (id) => {
+    selectedLocations.value = selectedLocations.value.filter(location => location.id !== id);
     filterLocations();
 }
 
@@ -315,7 +322,7 @@ const onDescriptionEditorBlur = ($event) => {
 
 const captureLocations = () => {
     form.locations.value = []
-    selectedLocations.forEach(location => {
+    selectedLocations.value.forEach(location => {
         form.locations.push(location.id)
     })
 }
@@ -336,19 +343,19 @@ const readImage = (image) => {
 const uploadOriginalImage = (file, key) => {
     let formData = new FormData();
     formData.append('image', file, file.name);
-    $emit('uploading');
-    uploading = true;
+    // $emit('uploading');
+    uploading.value = true;
     axios.post('/photos', formData, {
         onUploadProgress: progressEvent => {
             uploadProgress.value = Math.round((progressEvent.loaded * 100) / progressEvent.total);
         }
     }).then(response => {
         finalImage.value = response.data.url;
-        images[key] = {
+        images.value[key] = {
             photo_id: response.data.id,
             url: response.data.url
         }
-        uploading = false;
+        uploading.value = false;
         console.log(response);
     }).catch(error => {
         console.log(error);
@@ -356,7 +363,7 @@ const uploadOriginalImage = (file, key) => {
 }
 
 const deleteImage = (key) => {
-    images[key] = {
+    images.value[key] = {
         key: key,
         photo_id: null,
         url: null
@@ -365,10 +372,10 @@ const deleteImage = (key) => {
 
 const capurePhotos = () => {
     form.photos = []
-    for (var key in images) {
-        if (images.hasOwnProperty(key)) {
-            if (images[key].photo_id != null) {
-                form.photos.push(images[key].photo_id)
+    for (var key in images.value) {
+        if (images.value.hasOwnProperty(key)) {
+            if (images.value[key].photo_id != null) {
+                form.photos.push(images.value[key].photo_id)
             }
         }
     }
@@ -381,6 +388,7 @@ const submitForm = async () => {
     axios.post('/listings', form)
         .then(response => {
             console.log(response)
+            //@todo add route push here and proceed to preview before publishing
             window.location.href = '/products/' + response.data.product.slug
         })
         .catch(error => {

@@ -20304,8 +20304,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
-
 
 
 
@@ -20350,7 +20348,13 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
     var descriptionEditorRef = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     var descriptionEditor = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     var descriptionEditorValue = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var uploading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var uploadProgress = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
+    var finalImage = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var photo1 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var photo2 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var photo3 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var photo4 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     var images = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({
       1: {
         key: 1,
@@ -20395,6 +20399,8 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
       photos: []
     });
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(selectedLocationId, function (val, oldVal) {
+      console.log('selectedLocationId', val);
+
       if (val) {
         addLocation(val);
       }
@@ -20444,7 +20450,7 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
 
 
     var captureDescription = function captureDescription() {
-      form.description = descriptionEditor.root.innerHTML;
+      form.description = descriptionEditor.value.root.innerHTML;
     };
 
     var loadLocations = /*#__PURE__*/function () {
@@ -20459,7 +20465,7 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
 
               case 2:
                 response = _context.sent;
-                locations.value.value = response.data;
+                locations.value = response.data;
                 filteredLocations.value = locations;
 
               case 5:
@@ -20483,12 +20489,12 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/locations/for-select?search=' + locationSearch);
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/locations/for-select?search=' + locationSearch.value);
 
               case 2:
                 response = _context2.sent;
                 filteredLocations.value = response.data.filter(function (location) {
-                  return !selectedLocations.find(function (selectedLocation) {
+                  return !selectedLocations.value.find(function (selectedLocation) {
                     return selectedLocation.id === location.id;
                   });
                 });
@@ -20506,23 +20512,23 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
       };
     }();
 
-    var addLocationr = function addLocationr(id) {
-      selectedLocations.push(locations.find(function (location) {
+    var addLocation = function addLocation(id) {
+      selectedLocations.value.push(locations.value.find(function (location) {
         return location.id == id;
       }));
-      null, _readOnlyError("selectedLocationId"); //remove from filtered locations
+      selectedLocationId.value = null; //remove from filtered locations
 
-      filteredLocations.value = locations.filter(function (location) {
-        return !selectedLocations.find(function (selectedLocation) {
+      filteredLocations.value = locations.value.filter(function (location) {
+        return !selectedLocations.value.find(function (selectedLocation) {
           return selectedLocation.id == location.id;
         });
       });
     };
 
-    var removeLocationr = function removeLocationr(id) {
-      selectedLocations.filter(function (location) {
+    var removeLocation = function removeLocation(id) {
+      selectedLocations.value = selectedLocations.value.filter(function (location) {
         return location.id !== id;
-      }), _readOnlyError("selectedLocations");
+      });
       filterLocations();
     };
 
@@ -20918,7 +20924,7 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
 
     var captureLocations = function captureLocations() {
       form.locations.value = [];
-      selectedLocations.forEach(function (location) {
+      selectedLocations.value.forEach(function (location) {
         form.locations.push(location.id);
       });
     };
@@ -20938,20 +20944,20 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
 
     var uploadOriginalImage = function uploadOriginalImage(file, key) {
       var formData = new FormData();
-      formData.append('image', file, file.name);
-      $emit('uploading');
-      uploading = true;
+      formData.append('image', file, file.name); // $emit('uploading');
+
+      uploading.value = true;
       axios__WEBPACK_IMPORTED_MODULE_1___default().post('/photos', formData, {
         onUploadProgress: function onUploadProgress(progressEvent) {
           uploadProgress.value = Math.round(progressEvent.loaded * 100 / progressEvent.total);
         }
       }).then(function (response) {
         finalImage.value = response.data.url;
-        images[key] = {
+        images.value[key] = {
           photo_id: response.data.id,
           url: response.data.url
         };
-        uploading = false;
+        uploading.value = false;
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -20959,7 +20965,7 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
     };
 
     var deleteImage = function deleteImage(key) {
-      images[key] = {
+      images.value[key] = {
         key: key,
         photo_id: null,
         url: null
@@ -20969,10 +20975,10 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
     var capurePhotos = function capurePhotos() {
       form.photos = [];
 
-      for (var key in images) {
-        if (images.hasOwnProperty(key)) {
-          if (images[key].photo_id != null) {
-            form.photos.push(images[key].photo_id);
+      for (var key in images.value) {
+        if (images.value.hasOwnProperty(key)) {
+          if (images.value[key].photo_id != null) {
+            form.photos.push(images.value[key].photo_id);
           }
         }
       }
@@ -20988,7 +20994,8 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
                 capurePhotos();
                 captureLocations();
                 axios__WEBPACK_IMPORTED_MODULE_1___default().post('/listings', form).then(function (response) {
-                  console.log(response);
+                  console.log(response); //@todo add route push here and proceed to preview before publishing
+
                   window.location.href = '/products/' + response.data.product.slug;
                 })["catch"](function (error) {
                   if (error.response.status == 422) {
@@ -21029,7 +21036,13 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
       descriptionEditorRef: descriptionEditorRef,
       descriptionEditor: descriptionEditor,
       descriptionEditorValue: descriptionEditorValue,
+      uploading: uploading,
       uploadProgress: uploadProgress,
+      finalImage: finalImage,
+      photo1: photo1,
+      photo2: photo2,
+      photo3: photo3,
+      photo4: photo4,
       images: images,
       locations: locations,
       locationSearch: locationSearch,
@@ -21044,8 +21057,8 @@ function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-on
       captureDescription: captureDescription,
       loadLocations: loadLocations,
       filterLocations: filterLocations,
-      addLocationr: addLocationr,
-      removeLocationr: removeLocationr,
+      addLocation: addLocation,
+      removeLocation: removeLocation,
       filterCategories: filterCategories,
       setSelectedCategory: setSelectedCategory,
       loadParentCategories: loadParentCategories,
@@ -22604,9 +22617,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_84, [!$setup.images[1].url ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     key: 0,
     onClick: _cache[23] || (_cache[23] = function ($event) {
-      _ctx.photo1.value = null;
-
-      _ctx.photo1.click();
+      $setup.photo1.value = null;
+      $setup.photo1.click();
     }),
     "class": "flex flex-col items-center justify-center"
   }, _hoisted_86)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.images[1].url ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_87, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_88, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -22616,9 +22628,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "relative top-0 right-0 z-10 p-1 bg-red-500 rounded-full float-right"
   }, _hoisted_90)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     onClick: _cache[25] || (_cache[25] = function ($event) {
-      _ctx.photo1.value = null;
-
-      _ctx.photo1.click();
+      $setup.photo1.value = null;
+      $setup.photo1.click();
     }),
     src: $setup.images[1].url,
     "class": "w-32 h-32 text-gray-400"
@@ -22638,9 +22649,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_92, [!$setup.images[2].url ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     key: 0,
     onClick: _cache[27] || (_cache[27] = function ($event) {
-      _ctx.photo2.value = null;
-
-      _ctx.photo2.click();
+      $setup.photo2.value = null;
+      $setup.photo2.click();
     }),
     "class": "flex flex-col items-center justify-center"
   }, _hoisted_94)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.images[2].url ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_95, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -22650,9 +22660,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "relative top-0 right-0 z-10 p-1 bg-red-500 rounded-full float-right"
   }, _hoisted_98)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     onClick: _cache[29] || (_cache[29] = function ($event) {
-      _ctx.photo2.value = null;
-
-      _ctx.photo2.click();
+      $setup.photo2.value = null;
+      $setup.photo2.click();
     }),
     src: $setup.images[2].url,
     "class": "w-32 h-32 text-gray-400"
@@ -22672,9 +22681,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_100, [!$setup.images[3].url ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     key: 0,
     onClick: _cache[31] || (_cache[31] = function ($event) {
-      _ctx.photo3.value = null;
-
-      _ctx.photo3.click();
+      $setup.photo3.value = null;
+      $setup.photo3.click();
     }),
     "class": "flex flex-col items-center justify-center"
   }, _hoisted_102)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.images[3].url ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_103, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_104, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -22684,9 +22692,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "relative top-0 right-0 z-10 p-1 bg-red-500 rounded-full float-right"
   }, _hoisted_106)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     onClick: _cache[33] || (_cache[33] = function ($event) {
-      _ctx.photo3.value = null;
-
-      _ctx.photo3.click();
+      $setup.photo3.value = null;
+      $setup.photo3.click();
     }),
     src: $setup.images[3].url,
     "class": "w-32 h-32 text-gray-400"
@@ -22706,9 +22713,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_108, [!$setup.images[4].url ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     key: 0,
     onClick: _cache[35] || (_cache[35] = function ($event) {
-      _ctx.photo4.value = null;
-
-      _ctx.photo4.click();
+      $setup.photo4.value = null;
+      $setup.photo4.click();
     }),
     "class": "flex flex-col items-center justify-center"
   }, _hoisted_110)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.images[4].url ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_111, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_112, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -22718,9 +22724,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "relative top-0 right-0 z-10 p-1 bg-red-500 rounded-full float-right"
   }, _hoisted_114)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     onClick: _cache[37] || (_cache[37] = function ($event) {
-      _ctx.photo4.value = null;
-
-      _ctx.photo4.click();
+      $setup.photo4.value = null;
+      $setup.photo4.click();
     }),
     src: $setup.images[4].url,
     "class": "w-32 h-32 text-gray-400"
@@ -22740,7 +22745,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       onClick: function onClick($event) {
-        return _ctx.removeLocation(location.id);
+        return $setup.removeLocation(location.id);
       },
       type: "button",
       "class": "bg-red-500 inline-flex items-center justify-center w-4 h-4 transition duration-150 ease-in-out rounded-full focus:outline-none focus:shadow-outline"
