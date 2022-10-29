@@ -1,5 +1,5 @@
 <div class="col-span-2">
-    <p><a href="{{ route('home') }}" class="text-blue-500 font-semibold">Dashboard</a></p>
+    <p><a href="/" class="text-blue-500 font-semibold">Dashboard</a></p>
 
     <p class="text-gray-700 font-bold pt-6">Manage your Sales</p>
     <p><a href="{{ route('listings.create') }}" class="text-blue-500 font-semibold">New Listing</a></p>

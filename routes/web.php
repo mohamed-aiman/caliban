@@ -32,9 +32,9 @@ Route::get('/api/products', [ProductController::class, 'index'])->name('products
 Route::get('/api/parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');
 // Route::get('parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('d', [CategoryController::class, 'downloadCategoriesFromIbay'])->name('categories.downloadCategoriesFromIbay');
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
@@ -54,8 +54,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('listings/{productSlug}', [ListingController::class, 'show'])->name('listings.show');
     Route::get('/locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
+    
+    Route::view('/dashboard', 'spa-dashboard')->where('any', '.*');
+    Route::view('/dashboard/{any}', 'spa-dashboard')->where('any', '.*');
 });
 
 require __DIR__.'/auth.php';
-
 Route::view('/{any}', 'spa')->where('any', '.*');
