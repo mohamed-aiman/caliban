@@ -88,6 +88,29 @@ class ListingController extends Controller
             ], 422);
         }
 
+        $user = $request->user();
+        $stores = $user->stores();
+        if ($stores->count() == 0) {
+            // return response()->json([
+            //     'message' => 'You must have at least one store to create a listing',
+            // ], 422);
+            $store = $user->store()->create([
+                'name' => $user->name,
+                // 'owner_id' => 
+                'avatar_url' => $user->avatar_url,
+                'phone' => $user->phone,
+                'phone_2' => null,
+                'email' => $user->email,
+                'website' => null,
+            ]);
+        } else {
+            // @todo handle multiple store using user_store pivot table
+            // update user model stores() method to return stores from pivot 
+            // after doing that let user select from his stores
+            // for now one user one store
+            $store = $stores->first();
+        } 
+
         $product = $this->product->create([
             'title' => $request->title,
             'description' => $request->description,
@@ -99,7 +122,8 @@ class ListingController extends Controller
             'price' => $request->price,
             'tax' => $request->tax,
             'quantity' => $request->quantity,
-            'seller_id' => $request->user()->id,
+            'seller_id' => $store->id,
+            'user_id' => $user->id,
         ]);
 
         if ($request->photos && count($request->photos) > 0) {

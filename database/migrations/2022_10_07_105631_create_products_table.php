@@ -32,6 +32,7 @@ return new class extends Migration
             $table->text('description_delta')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('seller_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('condition')->nullable();
             $table->string('selling_format')->nullable();
             $table->unsignedInteger('duration')->nullable();//days
@@ -40,7 +41,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('seller_id')->references('id')->on('users');
+            $table->foreign('seller_id')->references('id')->on('stores');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

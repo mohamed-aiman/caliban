@@ -18,14 +18,14 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->unsignedBigInteger('owner_id');
-            $table->unsignedBigInteger('profile_picture_id')->nullable();
+            $table->text('avatar_url')->nullable();
             $table->string('phone')->nullable();
             $table->string('phone_2')->nullable();
-            $table->timestamps();
-
+            $table->string('email')->nullable();
+            $table->string('website')->nullable();
+            $table->timestamps(); 
 
             $table->foreign('owner_id')->references('id')->on('users');
-            $table->foreign('profile_picture_id')->references('id')->on('photos');
         });
     }
 

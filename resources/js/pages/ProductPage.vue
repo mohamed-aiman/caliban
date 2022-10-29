@@ -40,8 +40,6 @@ const loadPhoto = (photoUrl) => {
 <!-- 0 -->
 <div class="max-w-6xl mx-auto min-h-screen antialiased xl:flex xl:flex-col">
 
-
-
     <!-- 1 -->
     <div class="grid grid-cols-1 md:grid-cols-2 mx-3">
         <!-- 2 -->
@@ -69,28 +67,47 @@ const loadPhoto = (photoUrl) => {
         <!-- 3 -->
         <div class="">
             <!-- summary -->
-            <div class="mx-0 md:mx-3 my-3 space-y-2">
-                <p class="font-bold text-xl">{{ product.title  }}</p>
-                <p class="font-semibold text-xl text-orange-700">
-                    <span class="text-sm">MVR</span>{{product.price_formatted}}</p>
-                <p class="font-semibold">Condition: <span class="text-gray-700">{{ product.condition  }}</span></p>
-                <p class="font-semibold">Locations: 
-                    <span class="text-gray-700">{{product.locations[0].name}}</span>
-                </p>
-                <div class="border border-gray-600 border-8">
-                    <p>Seller Details</p>
-                    <p class="text-gray-700">{{ product.seller.username  }}</p>
-                    <p class="text-gray-700">{{ product.seller.phone  }}</p>
+            <div class="mx-0 md:mx-3 space-y-2">
+                <div class="bg-white p-3">
+                    <p class="font-bold text-xl">{{ product.title  }}</p>
+                </div>
+                <div class="bg-white p-3">
+                    <p class="font-semibold text-xl text-orange-700">
+                        <span class="text-sm">MVR</span>{{product.price_formatted}}
+                    </p>
+                </div>
+                <div class="bg-white p-3">
+                    <p class="font-semibold">Condition: <span class="text-gray-700">{{ product.condition  }}</span></p>
+                </div>
+                <div class="bg-white p-3">
+                    <p class="font-semibold">Locations: 
+                        <span class="text-gray-700">{{product.locations[0].name}}</span>
+                    </p>
+                </div>
+                <div class="bg-white p-3">
+                    <div class="flex items-center">
+                        <img :src="product.seller.avatar_url" class="h-12 w-12 rounded-full" alt="profile picture">
+                        <div class="ml-4">
+                            <h4 class="text-sm font-bold text-gray-900">{{ product.seller.name }}</h4>
+                            <div class="mt-1 flex items-center">
+                                {{ product.seller.phone }}
+                                <span v-if="product.seller.phone2">
+                                    ,{{ product.seller.phone2 }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
         </div>
         <!-- 4 -->
-        <div class=" md:col-span-2 my-3">
+        <div class=" md:col-span-2 my-3 bg-white p-3">
             <p class="font-bold text-xl py-3">Description</p>
             <div v-html="product.description"></div>
         </div>
     </div>
+    
 </div>
 
 </template>

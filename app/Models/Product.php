@@ -22,9 +22,13 @@ class Product extends Model
 
     public function seller()
     {
-        return $this->belongsTo(User::class, 'seller_id');
+        return $this->belongsTo(Store::class, 'seller_id');
     }
 
+    public function listedBy()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function locations()
     {

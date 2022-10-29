@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Photo;
+use App\Models\Store;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Location;
@@ -22,7 +23,7 @@ class ProductSeeder extends Seeder
 
         $this->faker = \Faker\Factory::create();
 
-        $users = User::all()->pluck('id')->toArray();
+        $stores = Store::all()->pluck('id')->toArray();
 
         $allCategories = Category::where('is_selectable', true)->select('id')->get()->pluck('id')->toArray();
         // $selectableCategories = Category::whereNotIn('parent_id', $allCategories)
@@ -41,7 +42,7 @@ class ProductSeeder extends Seeder
                 'title' => $titles[array_rand($titles)],
                 'category_id' => $this->faker->randomElement($allCategories),
                 'description' => $this->getDescription(),
-                'seller_id' => $this->faker->randomElement($users),
+                'seller_id' => $this->faker->randomElement($stores),
             ]);
 
             if ($i != 0) {

@@ -42,6 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @todo change stores to a many to many relationship
+     * using the store_user table
+     */
     public function stores()
     {
         return $this->hasMany(Store::class, 'owner_id');
