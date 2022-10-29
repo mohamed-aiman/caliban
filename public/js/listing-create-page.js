@@ -51816,8 +51816,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -51828,9 +51826,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       form: {
         title: '',
         description: '',
@@ -51858,42 +51854,56 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       level2_id: 0,
       level3_id: 0,
       level4_id: 0,
-      level5_id: 0
-    }, _defineProperty(_ref, "level5_id", 0), _defineProperty(_ref, "selectedCategory", {}), _defineProperty(_ref, "descriptionEditor", null), _defineProperty(_ref, "descriptionEditorValue", ''), _defineProperty(_ref, "uploadProgress", 0), _defineProperty(_ref, "images", {
-      1: {
-        key: 1,
-        photo_id: null,
-        url: null
+      level5_id: 0,
+      selectedCategory: {},
+      descriptionEditor: null,
+      descriptionEditorValue: '',
+      uploadProgress: 0,
+      images: {
+        1: {
+          key: 1,
+          photo_id: null,
+          url: null
+        },
+        2: {
+          key: 2,
+          photo_id: null,
+          url: null
+        },
+        3: {
+          key: 3,
+          photo_id: null,
+          url: null
+        },
+        4: {
+          key: 4,
+          photo_id: null,
+          url: null
+        }
       },
-      2: {
-        key: 2,
-        photo_id: null,
-        url: null
-      },
-      3: {
-        key: 3,
-        photo_id: null,
-        url: null
-      },
-      4: {
-        key: 4,
-        photo_id: null,
-        url: null
-      }
-    }), _defineProperty(_ref, "locations", []), _defineProperty(_ref, "locationSearch", ''), _defineProperty(_ref, "filteredLocations", []), _defineProperty(_ref, "selectedLocations", [// {id: 1, name: "Male' City"},
-    ]), _defineProperty(_ref, "selectedLocationId", null), _defineProperty(_ref, "categorySearch", ''), _defineProperty(_ref, "filteredCategories", []), _defineProperty(_ref, "selectedCategoryId", null), _defineProperty(_ref, "errors", {
-      title: [],
-      description: [],
-      category_id: [],
-      condition: [],
-      selling_format: [],
-      duration: [],
-      quantity: [],
-      price: [],
-      tax: [],
       locations: [],
-      photos: []
-    }), _ref;
+      locationSearch: '',
+      filteredLocations: [],
+      selectedLocations: [// {id: 1, name: "Male' City"},
+      ],
+      selectedLocationId: null,
+      categorySearch: '',
+      filteredCategories: [],
+      selectedCategoryId: null,
+      errors: {
+        title: [],
+        description: [],
+        category_id: [],
+        condition: [],
+        selling_format: [],
+        duration: [],
+        quantity: [],
+        price: [],
+        tax: [],
+        locations: [],
+        photos: []
+      }
+    };
   },
   watch: {
     selectedLocationId: function selectedLocationId(val, oldVal) {

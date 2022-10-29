@@ -37,7 +37,6 @@ import "quill/dist/quill.snow.css";
         level3_id: 0,
         level4_id: 0,
         level5_id: 0,
-        level5_id: 0,
         selectedCategory: {},
         descriptionEditor: null,
         descriptionEditorValue: '',
