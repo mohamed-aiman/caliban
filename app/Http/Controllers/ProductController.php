@@ -18,7 +18,6 @@ class ProductController extends Controller
 
         $product->load('photos', 'locations', 'category', 'seller');
 
-
         $category = $product->category;
 
         $links[] = [
@@ -55,6 +54,9 @@ class ProductController extends Controller
         }
 
         $product->links = $links;
+
+        $locations = $product->locations->pluck('name')->toArray();
+        $product->locations_string = implode(', ', $locations);
 
         return $product->toArray();
 

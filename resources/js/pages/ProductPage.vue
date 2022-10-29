@@ -21,8 +21,6 @@ const loadPhoto = (photoUrl) => {
     console.log('photoUrl', photoUrl)
     loadedPhoto.value = photoUrl
     console.log(loadedPhoto)
-    
-    // event.target.classList.add('border-teal-700');
 }
 
 
@@ -81,7 +79,9 @@ const loadPhoto = (photoUrl) => {
                 </div>
                 <div class="bg-white p-3">
                     <p class="font-semibold">Locations: 
-                        <span class="text-gray-700">{{product.locations[0].name}}</span>
+                        <span class="text-gray-700">
+                            {{product.locations_string}}
+                        </span>
                     </p>
                 </div>
                 <div class="bg-white p-3">
