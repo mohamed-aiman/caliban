@@ -38,6 +38,19 @@ const loadPhoto = (photoUrl) => {
 <!-- 0 -->
 <div class="max-w-6xl mx-auto min-h-screen antialiased xl:flex xl:flex-col">
 
+    <div class="m-3">
+        <p class="text-l font-mono font-semibold text-orange-600">
+            <template v-for="(link, index) in product.links" :key="index">
+                <span v-if="index != 0"> > </span>
+                <a :href="link.url" class="text-orange-600 hover:text-orange-700">
+                    {{ link.name }}
+                </a>
+            </template>
+        </p>
+    </div>
+
+
+
     <!-- 1 -->
     <div class="grid grid-cols-1 md:grid-cols-2 mx-3">
         <!-- 2 -->
