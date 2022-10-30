@@ -20718,6 +20718,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 if (levelLists.value['level' + nextLevel].length == 0) {
                   form.category_id = selectedValue;
+                } else {
+                  form.category_id = null;
                 }
 
               case 9:

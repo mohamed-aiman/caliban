@@ -66,8 +66,7 @@ const loadPhoto = (photoUrl) => {
             <!-- 2.2 -->
             <div class="flex justify-start space-x-4 my-3">
                 <div v-for="(photo, index) in product.photos" :key="index"
-                    class="max-w-12"
-                    >
+                    class="max-w-12 w-12">
                     <img @click="loadPhoto(photo.url)" 
                         class="photo-options border-2 rounded-md cursor-pointer"
                         :class="{'border-teal-700': (photo.url === loadedPhoto || (photo.url === product.photos[0].url && loadedPhoto === null))}"

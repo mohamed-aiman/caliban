@@ -239,6 +239,8 @@ const loadLevel = async (selectedLevel, selectedValue) => {
     levelLists.value['level' + nextLevel] = await loadCategories(selectedValue)
     if (levelLists.value['level' + nextLevel].length == 0) {
         form.category_id = selectedValue
+    } else {
+        form.category_id = null
     }
 }
 
