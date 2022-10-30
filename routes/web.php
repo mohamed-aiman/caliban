@@ -46,7 +46,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('categories/{id}/children', [CategoryController::class, 'children'])->name('categories.children');
     Route::get('categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
     Route::post('photos', [PhotoController::class, 'store'])->name('photos.store');
-    Route::get('listings', [ListingController::class, 'index'])->name('listings.index');
+    Route::get('/api/listings', [ListingController::class, 'index'])->name('listings.index');
     Route::get('listings/create', [ListingController::class, 'create'])->name('listings.create');
     Route::get('listings/{productSlug}/edit', [ListingController::class, 'edit'])->name('listings.edit');
     Route::get('listings/{productSlug}/form-data', [ListingController::class, 'productFormData'])->name('listings.product-form-data');

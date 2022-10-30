@@ -29,11 +29,21 @@ class ListingController extends Controller
 
     public function index(Request $request)
     {
+        $user = $request->user();
+        $stores = $user->stores;
+        // @todo handle multiple store using user_store pivot table
+        // update user model stores() method to return stores from pivot 
+        // after doing that let user select from his stores
+        // for now one user one store
+        $store = $stores->first();
+
         $products = $this->product
-            ->where('seller_id', $request->user()->id)
+            ->with('category')
+            ->where('seller_id', $store->id)
             ->orderBy('created_at', 'desc')
             ->paginate(50);
-        return view('listings.index', compact('products'));
+
+        return $products;
     }
 
     public function create(Request $request)
@@ -89,7 +99,7 @@ class ListingController extends Controller
         }
 
         $user = $request->user();
-        $stores = $user->stores();
+        $stores = $user->stores;
         if ($stores->count() == 0) {
             // return response()->json([
             //     'message' => 'You must have at least one store to create a listing',
@@ -206,9 +216,17 @@ class ListingController extends Controller
             ], 422);
         }
 
+        $user = $request->user();
+        $stores = $user->stores;
+        // @todo handle multiple store using user_store pivot table
+        // update user model stores() method to return stores from pivot 
+        // after doing that let user select from his stores
+        // for now one user one store
+        $store = $stores->firstOrFail();
+
         $product = $this->product
             ->where('slug', $slug)
-            ->where('seller_id', $request->user()->id)
+            ->where('seller_id', $store->id)
             ->firstOrFail();
 
         $product->update([
@@ -222,7 +240,7 @@ class ListingController extends Controller
             'price' => $request->price,
             'tax' => $request->tax,
             'quantity' => $request->quantity,
-            'seller_id' => $request->user()->id,
+            'seller_id' => $store->id,
         ]);
 
         if ($request->photos && count($request->photos) > 0) {
