@@ -23,19 +23,21 @@ class CategoryController extends Controller
         return $this->category->where('parent_id', $id)->get();
     }
 
-    public function parents()
+    public function parents(Request $request)
     {
-        $categories = [
+        $parents = $this->category->whereNull('parent_id')->get();
+
+        if ($request->type == 'original') {
+            return $parents;
+        }
+
+        return array_merge([
             [
                 'id' => null,
                 'slug' => 'all',
                 'name' => 'All'
             ]
-        ];
-
-        $parents = $this->category->whereNull('parent_id')->get()->toArray();
-
-        return array_merge($categories, $parents);
+        ], $parents->toArray());
     }
 
     public function index()

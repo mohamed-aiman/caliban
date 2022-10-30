@@ -20338,12 +20338,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var level4 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var level5 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var level6 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-    var level1_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
-    var level2_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
-    var level3_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
-    var level4_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
-    var level5_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
-    var level6_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
+    var level1_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var level2_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var level3_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var level4_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var level5_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var level6_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     var selectedCategory = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({});
     var descriptionEditorRef = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     var descriptionEditor = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
@@ -20398,29 +20398,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       locations: [],
       photos: []
     });
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level1_id, function (val) {
-      console.log('level1_id changed', val);
-      loadLevel2();
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level1_id, function (val, oldVal) {
+      if (val) {
+        console.log('watch level1_id changed from: ' + oldVal + ' to:' + val);
+        console.log('watch level1_id: ' + level1_id.value);
+        loadLevel2();
+      }
     });
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level2_id, function (val) {
-      console.log('level2_id changed', val);
-      loadLevel3();
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level2_id, function (val, oldVal) {
+      if (val) {
+        console.log('watch level2_id changed from: ' + oldVal + ' to:' + val);
+        console.log('watch level2_id: ' + level2_id.value);
+        loadLevel3();
+      }
     });
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level3_id, function (val) {
-      console.log('level3_id changed', val);
-      loadLevel4();
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level3_id, function (val, oldVal) {
+      if (val) {
+        console.log('watch level3_id changed from: ' + oldVal + ' to:' + val);
+        console.log('watch level3_id: ' + level3_id.value);
+        loadLevel4();
+      }
     });
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level4_id, function (val) {
-      console.log('level4_id changed', val);
-      loadLevel5();
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level4_id, function (val, oldVal) {
+      if (val) {
+        console.log('watch level4_id changed from: ' + oldVal + ' to:' + val);
+        console.log('watch level4_id: ' + level4_id.value);
+        loadLevel5();
+      }
     });
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level5_id, function (val) {
-      console.log('level5_id changed', val);
-      loadLevel6();
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level5_id, function (val, oldVal) {
+      if (val) {
+        console.log('watch level5_id changed from: ' + oldVal + ' to:' + val);
+        console.log('watch level5_id: ' + level5_id.value);
+        loadLevel6();
+      }
     });
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(selectedLocationId, function (val, oldVal) {
-      console.log('selectedLocationId', val);
-
       if (val) {
         addLocation(val);
       }
@@ -20430,6 +20443,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       filterLocations(val); // }
     });
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(selectedCategoryId, function (val, oldVal) {
+      console.log('watch selectedCategoryId changed from: ' + oldVal + ' to:' + val);
+
       if (val) {
         setSelectedCategory(val);
       }
@@ -20461,8 +20476,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //   _descriptionEditorChanged();
       // });
     }; // const descriptionEditorChanged = () => {
-    // console.log("descriptionEditorChanged");
-    // console.log(descriptionEditor.root.innerHTML);
     // }
 
 
@@ -20556,16 +20569,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log('filtering categories');
-                _context3.next = 3;
+                _context3.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/categories/for-select?search=' + categorySearch.value);
 
-              case 3:
+              case 2:
                 response = _context3.sent;
                 filteredCategories.value = response.data;
-                console.log(response.data);
 
-              case 6:
+              case 4:
               case "end":
                 return _context3.stop();
             }
@@ -20585,40 +20596,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                console.log('setSelectedCategory');
-                console.log(id);
-                _context4.next = 4;
+                console.log('setSelectedCategory id: ' + id);
+                _context4.next = 3;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/categories/' + id + '/levels');
 
-              case 4:
+              case 3:
                 response = _context4.sent;
 
                 if (response.data.level1) {
                   level1_id.value = response.data.level1.id;
-                  loadLevel2();
+                  console.log('setSelCat level1_id: ' + level1_id.value);
                 }
 
                 if (response.data.level2) {
                   level2_id.value = response.data.level2.id;
-                  loadLevel3();
+                  console.log('setSelCat level2_id: ' + level2_id.value);
                 }
 
                 if (response.data.level3) {
                   level3_id.value = response.data.level3.id;
-                  loadLevel4();
+                  console.log('setSelCat level3_id: ' + level3_id.value);
                 }
 
                 if (response.data.level4) {
                   level4_id.value = response.data.level4.id;
-                  loadLevel5();
+                  console.log('setSelCat level4_id: ' + level4_id.value);
                 }
 
                 if (response.data.level5) {
                   level5_id.value = response.data.level5.id;
-                  loadLevel6();
+                  console.log('setSelCat level5_id: ' + level5_id.value);
                 }
 
-              case 10:
+              case 9:
               case "end":
                 return _context4.stop();
             }
@@ -20640,7 +20650,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 form.category_id = null;
                 _context5.next = 3;
-                return fetch("/api/parent-categories");
+                return fetch("/api/parent-categories?type=original");
 
               case 3:
                 response = _context5.sent;
@@ -20670,21 +20680,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                console.log('loadCategories start');
                 form.category_id = null;
-                _context6.next = 4;
+                _context6.next = 3;
                 return fetch("/categories/".concat(id, "/children"));
 
-              case 4:
+              case 3:
                 response = _context6.sent;
-                console.log('loadCategories eeend');
-                _context6.next = 8;
+                _context6.next = 6;
                 return response.json();
 
-              case 8:
+              case 6:
                 return _context6.abrupt("return", _context6.sent);
 
-              case 9:
+              case 7:
               case "end":
                 return _context6.stop();
             }
@@ -20704,25 +20712,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                console.log('loadLevel2');
                 currentLevelSelectedId = level1_id.value;
-                console.log('b4 level1_id.value: ' + currentLevelSelectedId);
                 resetLists(1);
-                console.log('after resetList level1_id.value: ' + currentLevelSelectedId);
-                _context7.next = 7;
+                _context7.next = 4;
                 return loadCategories(currentLevelSelectedId);
 
-              case 7:
+              case 4:
                 level2.value = _context7.sent;
-                console.log('after loadCategories level1_id.value: ' + currentLevelSelectedId);
-                console.log(level2.value.length);
 
                 if (level2.value.length == 0) {
-                  console.log('selectable');
                   form.category_id = currentLevelSelectedId;
                 }
 
-              case 11:
+                console.log('loadLevel2');
+
+              case 7:
               case "end":
                 return _context7.stop();
             }
@@ -20742,25 +20746,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                console.log('loadLevel3');
                 currentLevelSelectedId = level2_id.value;
-                console.log('b4 level2_id.value: ' + currentLevelSelectedId);
                 resetLists(2);
-                console.log('after resetList level2_id.value: ' + currentLevelSelectedId);
-                _context8.next = 7;
+                _context8.next = 4;
                 return loadCategories(currentLevelSelectedId);
 
-              case 7:
+              case 4:
                 level3.value = _context8.sent;
-                console.log('after loadCategories level2_id.value: ' + currentLevelSelectedId);
-                console.log(level3.value.length);
 
                 if (level3.value.length == 0) {
-                  console.log('selectable');
                   form.category_id = currentLevelSelectedId;
                 }
 
-              case 11:
+                console.log('loadLevel3');
+
+              case 7:
               case "end":
                 return _context8.stop();
             }
@@ -20780,25 +20780,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
-                console.log('loadLevel4');
                 currentLevelSelectedId = level3_id.value;
-                console.log('b4 level3_id.value: ' + currentLevelSelectedId);
                 resetLists(3);
-                console.log('after resetList level3_id.value: ' + currentLevelSelectedId);
-                _context9.next = 7;
+                _context9.next = 4;
                 return loadCategories(currentLevelSelectedId);
 
-              case 7:
+              case 4:
                 level4.value = _context9.sent;
-                console.log('after loadCategories level3_id.value: ' + currentLevelSelectedId);
-                console.log(level4.value.length);
 
                 if (level4.value.length == 0) {
-                  console.log('selectable');
                   form.category_id = currentLevelSelectedId;
                 }
 
-              case 11:
+                console.log('loadLevel4');
+
+              case 7:
               case "end":
                 return _context9.stop();
             }
@@ -20818,25 +20814,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                console.log('loadLevel5');
                 currentLevelSelectedId = level4_id.value;
-                console.log('b4 level4_id.value: ' + currentLevelSelectedId);
                 resetLists(4);
-                console.log('after resetList level4_id.value: ' + currentLevelSelectedId);
-                _context10.next = 7;
+                _context10.next = 4;
                 return loadCategories(currentLevelSelectedId);
 
-              case 7:
+              case 4:
                 level5.value = _context10.sent;
-                console.log('after loadCategories level4_id.value: ' + currentLevelSelectedId);
-                console.log(level5.value.length);
 
                 if (level5.value.length == 0) {
-                  console.log('selectable');
                   form.category_id = currentLevelSelectedId;
                 }
 
-              case 11:
+                console.log('loadLevel5');
+
+              case 7:
               case "end":
                 return _context10.stop();
             }
@@ -20856,25 +20848,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
-                console.log('loadLevel6');
                 currentLevelSelectedId = level5_id.value;
-                console.log('b4 level5_id.value: ' + currentLevelSelectedId);
                 resetLists(5);
-                console.log('after resetList level5_id.value: ' + currentLevelSelectedId);
-                _context11.next = 7;
+                _context11.next = 4;
                 return loadCategories(currentLevelSelectedId);
 
-              case 7:
+              case 4:
                 level6.value = _context11.sent;
-                console.log('after loadCategories level5_id.value: ' + currentLevelSelectedId);
-                console.log(level6.value.length);
 
                 if (level6.value.length == 0) {
-                  console.log('selectable');
                   form.category_id = currentLevelSelectedId;
                 }
 
-              case 11:
+                console.log('loadLevel6');
+
+              case 7:
               case "end":
                 return _context11.stop();
             }
@@ -20989,10 +20977,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
 
     var onFileChange = function onFileChange(e, key) {
-      console.log(key);
       var file = e.target.files[0];
       readImage(file);
-      console.log(file);
       uploadOriginalImage(file, key);
     };
 
@@ -21017,10 +21003,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           url: response.data.url
         };
         uploading.value = false;
-        console.log(response);
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      })["catch"](function (error) {});
     };
 
     var deleteImage = function deleteImage(key) {
@@ -21053,12 +21036,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 capurePhotos();
                 captureLocations();
                 axios__WEBPACK_IMPORTED_MODULE_1___default().post('/listings', form).then(function (response) {
-                  console.log(response); //@todo add route push here and proceed to preview before publishing
-
+                  //@todo add route push here and proceed to preview before publishing
                   window.location.href = '/products/' + response.data.product.slug;
                 })["catch"](function (error) {
                   if (error.response.status == 422) {
-                    console.log(error.response.data);
                     errors.value = error.response.data.errors;
                   }
                 });

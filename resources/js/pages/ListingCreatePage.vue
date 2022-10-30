@@ -28,12 +28,12 @@ const level3 = ref([])
 const level4 = ref([])
 const level5 = ref([])
 const level6 = ref([])
-const level1_id = ref(0)
-const level2_id = ref(0)
-const level3_id = ref(0)
-const level4_id = ref(0)
-const level5_id = ref(0)
-const level6_id = ref(0)
+const level1_id = ref('')
+const level2_id = ref('')
+const level3_id = ref('')
+const level4_id = ref('')
+const level5_id = ref('')
+const level6_id = ref('')
 const selectedCategory = ref({})
 const descriptionEditorRef = ref('')
 const descriptionEditor = ref('')
@@ -73,29 +73,43 @@ const errors = ref({
     photos: [],
 })
 
-watch(level1_id, (val) => { 
-    console.log('level1_id changed', val)
-    loadLevel2() 
+watch(level1_id, (val, oldVal) => { 
+    if (val) {
+        console.log('watch level1_id changed from: '+ oldVal+' to:' + val)
+        console.log('watch level1_id: '+ level1_id.value)
+        loadLevel2() 
+    }
 })
-watch(level2_id, (val) => { 
-    console.log('level2_id changed', val)
-    loadLevel3() 
+watch(level2_id, (val, oldVal) => { 
+    if (val) {
+        console.log('watch level2_id changed from: '+ oldVal+' to:' + val)
+        console.log('watch level2_id: '+ level2_id.value)
+        loadLevel3() 
+    }
 })
-watch(level3_id, (val) => { 
-    console.log('level3_id changed', val)
-    loadLevel4() 
+watch(level3_id, (val, oldVal) => { 
+    if (val) {
+        console.log('watch level3_id changed from: '+ oldVal+' to:' + val)
+        console.log('watch level3_id: '+ level3_id.value)
+        loadLevel4() 
+    }
 })
-watch(level4_id, (val) => { 
-    console.log('level4_id changed', val)
-    loadLevel5() 
+watch(level4_id, (val, oldVal) => { 
+    if (val) {
+        console.log('watch level4_id changed from: '+ oldVal+' to:' + val)
+        console.log('watch level4_id: '+ level4_id.value)
+        loadLevel5() 
+    }
 })
-watch(level5_id, (val) => { 
-    console.log('level5_id changed', val)
-    loadLevel6() 
+watch(level5_id, (val, oldVal) => { 
+    if (val) {
+        console.log('watch level5_id changed from: '+ oldVal+' to:' + val)
+        console.log('watch level5_id: '+ level5_id.value)
+        loadLevel6() 
+    }
 })
 
 watch(selectedLocationId, (val, oldVal) => {
-    console.log('selectedLocationId', val)
     if (val) {
         addLocation(val)
     }
@@ -106,6 +120,7 @@ watch(locationSearch, (val, oldVal) => {
     // }
 })
 watch(selectedCategoryId, (val, oldVal) => {
+    console.log('watch selectedCategoryId changed from: ' + oldVal + ' to:' + val)
     if (val) {
         setSelectedCategory(val)
     }
@@ -146,8 +161,6 @@ const initDescriptionEditor = () => {
 }
 
 // const descriptionEditorChanged = () => {
-// console.log("descriptionEditorChanged");
-// console.log(descriptionEditor.root.innerHTML);
 // }
 
 const captureDescription = () => {
@@ -182,126 +195,96 @@ const removeLocation = (id) => {
 }
 
 const filterCategories = async () => {
-    console.log('filtering categories')
     const response = await axios.get('/categories/for-select?search=' + categorySearch.value);
     filteredCategories.value = response.data;
-    console.log(response.data)
 }
 
 const setSelectedCategory = async (id) => {
-    console.log('setSelectedCategory')
-    console.log(id)
+    console.log('setSelectedCategory id: ' + id)
     const response = await axios.get('/categories/' + id + '/levels');
 
     if (response.data.level1) {
         level1_id.value = response.data.level1.id
-        loadLevel2()
+        console.log('setSelCat level1_id: ' + level1_id.value)
     }
     if (response.data.level2) {
         level2_id.value = response.data.level2.id
-        loadLevel3()
+        console.log('setSelCat level2_id: ' + level2_id.value)
     }
     if (response.data.level3) {
         level3_id.value = response.data.level3.id
-        loadLevel4()
+        console.log('setSelCat level3_id: ' + level3_id.value)
     }
     if (response.data.level4) {
         level4_id.value = response.data.level4.id
-        loadLevel5()
+        console.log('setSelCat level4_id: ' + level4_id.value)
     }
     if (response.data.level5) {
         level5_id.value = response.data.level5.id
-        loadLevel6()
+        console.log('setSelCat level5_id: ' + level5_id.value)
     }
 }
 
 const loadParentCategories = async () => {
     form.category_id = null
-    const response = await fetch(`/api/parent-categories`)
+    const response = await fetch(`/api/parent-categories?type=original`)
     level1.value = await response.json()
 }
 
 const loadCategories = async (id) => {
-    console.log('loadCategories start')
     form.category_id = null
     const response = await fetch(`/categories/${id}/children`)
-    console.log('loadCategories eeend')
     return await response.json()
 }
 
 const loadLevel2 = async () => {
-    console.log('loadLevel2')
     const currentLevelSelectedId = level1_id.value
-    console.log('b4 level1_id.value: '+ currentLevelSelectedId)
     resetLists(1)
-    console.log('after resetList level1_id.value: ' + currentLevelSelectedId)
     level2.value = await loadCategories(currentLevelSelectedId)
-    console.log('after loadCategories level1_id.value: ' + currentLevelSelectedId)
-    console.log(level2.value.length)
     if (level2.value.length == 0) {
-        console.log('selectable')
         form.category_id = currentLevelSelectedId
     }
+    console.log('loadLevel2')
 }
 
 const loadLevel3 = async () => {
-    console.log('loadLevel3')
     const currentLevelSelectedId = level2_id.value
-    console.log('b4 level2_id.value: '+ currentLevelSelectedId)
     resetLists(2)
-    console.log('after resetList level2_id.value: ' + currentLevelSelectedId)
     level3.value = await loadCategories(currentLevelSelectedId)
-    console.log('after loadCategories level2_id.value: ' + currentLevelSelectedId)
-    console.log(level3.value.length)
     if (level3.value.length == 0) {
-        console.log('selectable')
         form.category_id = currentLevelSelectedId
     }
+    console.log('loadLevel3')
 }
 
 const loadLevel4 = async () => {
-    console.log('loadLevel4')
     const currentLevelSelectedId = level3_id.value
-    console.log('b4 level3_id.value: '+ currentLevelSelectedId)
     resetLists(3)
-    console.log('after resetList level3_id.value: ' + currentLevelSelectedId)
     level4.value = await loadCategories(currentLevelSelectedId)
-    console.log('after loadCategories level3_id.value: ' + currentLevelSelectedId)
-    console.log(level4.value.length)
     if (level4.value.length == 0) {
-        console.log('selectable')
         form.category_id = currentLevelSelectedId
     }
+    console.log('loadLevel4')
 }
 
 const loadLevel5 = async () => {
-    console.log('loadLevel5')
     const currentLevelSelectedId = level4_id.value
-    console.log('b4 level4_id.value: '+ currentLevelSelectedId)
     resetLists(4)
-    console.log('after resetList level4_id.value: ' + currentLevelSelectedId)
     level5.value = await loadCategories(currentLevelSelectedId)
-    console.log('after loadCategories level4_id.value: ' + currentLevelSelectedId)
-    console.log(level5.value.length)
     if (level5.value.length == 0) {
-        console.log('selectable')
         form.category_id = currentLevelSelectedId
     }
+    console.log('loadLevel5')
 }
 
 const loadLevel6 = async () => {
-    console.log('loadLevel6')
     const currentLevelSelectedId = level5_id.value
-    console.log('b4 level5_id.value: '+ currentLevelSelectedId)
     resetLists(5)
-    console.log('after resetList level5_id.value: ' + currentLevelSelectedId)
     level6.value = await loadCategories(currentLevelSelectedId)
-    console.log('after loadCategories level5_id.value: ' + currentLevelSelectedId)
-    console.log(level6.value.length)
     if (level6.value.length == 0) {
-        console.log('selectable')
         form.category_id = currentLevelSelectedId
     }
+    console.log('loadLevel6')
 }
 
 const resetLists = (selectedLevel) => {
@@ -380,10 +363,8 @@ const captureLocations = () => {
 }
 
 const onFileChange = (e, key) => {
-    console.log(key);
     let file = e.target.files[0]
     readImage(file)
-    console.log(file)
     uploadOriginalImage(file, key);
 }
 
@@ -408,9 +389,7 @@ const uploadOriginalImage = (file, key) => {
             url: response.data.url
         }
         uploading.value = false;
-        console.log(response);
     }).catch(error => {
-        console.log(error);
     });
 }
 
@@ -439,13 +418,11 @@ const submitForm = async () => {
     captureLocations()
     axios.post('/listings', form)
         .then(response => {
-            console.log(response)
             //@todo add route push here and proceed to preview before publishing
             window.location.href = '/products/' + response.data.product.slug
         })
         .catch(error => {
             if (error.response.status == 422) {
-                console.log(error.response.data)
                 errors.value = error.response.data.errors
             }
         })
