@@ -22,18 +22,27 @@ const form = reactive({
 })
 
 const showCategorySelection = ref(true)//set to false temporarily
-const level1 = ref([])
-const level2 = ref([])
-const level3 = ref([])
-const level4 = ref([])
-const level5 = ref([])
-const level6 = ref([])
-const level1_id = ref('')
-const level2_id = ref('')
-const level3_id = ref('')
-const level4_id = ref('')
-const level5_id = ref('')
-const level6_id = ref('')
+
+
+const selectedLevelIds = reactive({ 
+    level1: "",
+    level2: "",
+    level3: "",
+    level4: "",
+    level5: "",
+    level6: "",
+})
+
+const levelLists = ref({
+    level1: [],
+    level2: [],
+    level3: [],
+    level4: [],
+    level5: [],
+    level6: [],
+})
+
+
 const selectedCategory = ref({})
 const descriptionEditorRef = ref('')
 const descriptionEditor = ref('')
@@ -73,40 +82,18 @@ const errors = ref({
     photos: [],
 })
 
-watch(level1_id, (val, oldVal) => { 
-    if (val) {
-        console.log('watch level1_id changed from: '+ oldVal+' to:' + val)
-        console.log('watch level1_id: '+ level1_id.value)
-        loadLevel2() 
+//deep watch to preserve old and new values
+watch(() => ({ ...selectedLevelIds }), (newVal, oldVal) => {
+    console.log('selectedLevelIds changed', newVal, oldVal)
+    
+    for (var level in newVal) {
+        // console.log(key, newVal[key], oldVal[key])
+        if (newVal[level] != oldVal[level]) {
+            console.log('level changed', level, newVal[level], oldVal[level])
+            loadLevel(level, newVal[level])
+        }
     }
-})
-watch(level2_id, (val, oldVal) => { 
-    if (val) {
-        console.log('watch level2_id changed from: '+ oldVal+' to:' + val)
-        console.log('watch level2_id: '+ level2_id.value)
-        loadLevel3() 
-    }
-})
-watch(level3_id, (val, oldVal) => { 
-    if (val) {
-        console.log('watch level3_id changed from: '+ oldVal+' to:' + val)
-        console.log('watch level3_id: '+ level3_id.value)
-        loadLevel4() 
-    }
-})
-watch(level4_id, (val, oldVal) => { 
-    if (val) {
-        console.log('watch level4_id changed from: '+ oldVal+' to:' + val)
-        console.log('watch level4_id: '+ level4_id.value)
-        loadLevel5() 
-    }
-})
-watch(level5_id, (val, oldVal) => { 
-    if (val) {
-        console.log('watch level5_id changed from: '+ oldVal+' to:' + val)
-        console.log('watch level5_id: '+ level5_id.value)
-        loadLevel6() 
-    }
+
 })
 
 watch(selectedLocationId, (val, oldVal) => {
@@ -203,32 +190,38 @@ const setSelectedCategory = async (id) => {
     console.log('setSelectedCategory id: ' + id)
     const response = await axios.get('/categories/' + id + '/levels');
 
+    const selected = selectedLevelIds;
+
+    console.log('selected', selected)
+
     if (response.data.level1) {
-        level1_id.value = response.data.level1.id
-        console.log('setSelCat level1_id: ' + level1_id.value)
+        selected.level1 = response.data.level1.id
+        console.log('setSelCat level1_id: ' + selected.level1)
     }
     if (response.data.level2) {
-        level2_id.value = response.data.level2.id
-        console.log('setSelCat level2_id: ' + level2_id.value)
+        selected.level2 = response.data.level2.id
+        console.log('setSelCat level2_id: ' + selected.level2)
     }
     if (response.data.level3) {
-        level3_id.value = response.data.level3.id
-        console.log('setSelCat level3_id: ' + level3_id.value)
+        selected.level3 = response.data.level3.id
+        console.log('setSelCat level3_id: ' + selected.level3)
     }
     if (response.data.level4) {
-        level4_id.value = response.data.level4.id
-        console.log('setSelCat level4_id: ' + level4_id.value)
+        selected.level4 = response.data.level4.id
+        console.log('setSelCat level4_id: ' + selected.level4)
     }
     if (response.data.level5) {
-        level5_id.value = response.data.level5.id
-        console.log('setSelCat level5_id: ' + level5_id.value)
+        selected.level5 = response.data.level5.id
+        console.log('setSelCat level5_id: ' + selected.level5)
     }
+
+    selectedLevelIds.value = selected
 }
 
 const loadParentCategories = async () => {
     form.category_id = null
     const response = await fetch(`/api/parent-categories?type=original`)
-    level1.value = await response.json()
+    levelLists.value.level1 = await response.json()
 }
 
 const loadCategories = async (id) => {
@@ -237,103 +230,23 @@ const loadCategories = async (id) => {
     return await response.json()
 }
 
-const loadLevel2 = async () => {
-    const currentLevelSelectedId = level1_id.value
-    resetLists(1)
-    level2.value = await loadCategories(currentLevelSelectedId)
-    if (level2.value.length == 0) {
-        form.category_id = currentLevelSelectedId
+const loadLevel = async (selectedLevel, selectedValue) => {
+    console.log('loadLevel selectedLevel: ' + selectedLevel)
+    console.log('loadLevel selectedValue: ' + selectedValue)
+    const currentLevel = parseInt(selectedLevel.replace(/[^0-9]/g, ''))
+    resetLists(currentLevel)
+    const nextLevel = currentLevel + 1
+    levelLists.value['level' + nextLevel] = await loadCategories(selectedValue)
+    if (levelLists.value['level' + nextLevel].length == 0) {
+        form.category_id = selectedValue
     }
-    console.log('loadLevel2')
 }
 
-const loadLevel3 = async () => {
-    const currentLevelSelectedId = level2_id.value
-    resetLists(2)
-    level3.value = await loadCategories(currentLevelSelectedId)
-    if (level3.value.length == 0) {
-        form.category_id = currentLevelSelectedId
-    }
-    console.log('loadLevel3')
-}
-
-const loadLevel4 = async () => {
-    const currentLevelSelectedId = level3_id.value
-    resetLists(3)
-    level4.value = await loadCategories(currentLevelSelectedId)
-    if (level4.value.length == 0) {
-        form.category_id = currentLevelSelectedId
-    }
-    console.log('loadLevel4')
-}
-
-const loadLevel5 = async () => {
-    const currentLevelSelectedId = level4_id.value
-    resetLists(4)
-    level5.value = await loadCategories(currentLevelSelectedId)
-    if (level5.value.length == 0) {
-        form.category_id = currentLevelSelectedId
-    }
-    console.log('loadLevel5')
-}
-
-const loadLevel6 = async () => {
-    const currentLevelSelectedId = level5_id.value
-    resetLists(5)
-    level6.value = await loadCategories(currentLevelSelectedId)
-    if (level6.value.length == 0) {
-        form.category_id = currentLevelSelectedId
-    }
-    console.log('loadLevel6')
-}
-
-const resetLists = (selectedLevel) => {
-    if (selectedLevel == 1) {
-        level2.value = []
-        level2_id.value = 0
-        level3.value = []
-        level3_id.value = 0
-        level4.value = []
-        level4_id.value = 0
-        level5.value = []
-        level5_id.value = 0
-        level6.value = []
-        level6_id.value = 0
-    } else if (selectedLevel == 2) {
-        level3.value = []
-        level3_id.value = 0
-        level4.value = []
-        level4_id.value = 0
-        level5.value = []
-        level5_id.value = 0
-        level6.value = []
-        level6_id.value = 0
-    } else if (selectedLevel == 3) {
-        level4.value = []
-        level4_id.value = 0
-        level5.value = []
-        level5_id.value = 0
-        level6.value = []
-        level6_id.value = 0
-    } else if (selectedLevel == 4) {
-        level5.value = []
-        level5_id.value = 0
-        level6.value = []
-        level6_id.value = 0
-    } else if (selectedLevel == 5) {
-        level6.value = []
-        level6_id.value = 0
-    } else {
-        level2.value = []
-        level2_id.value = 0
-        level3.value = []
-        level3_id.value = 0
-        level4.value = []
-        level4_id.value = 0
-        level5.value = []
-        level5_id.value = 0
-        level6.value = []
-        level6_id.value = 0
+const resetLists = (currentLevel) => {
+    console.log('resetLists currentLevel: ' + currentLevel)
+    for (var i = currentLevel + 1; i <= 5; i++) {
+        console.log('reseting level: ' + i)
+        levelLists.value['level' + i] = []
     }
 }
 
@@ -452,32 +365,32 @@ const submitForm = async () => {
 
 
                 <div class="form-group">
-                    <select name="level1_id" :size="level1.length+1" v-model="level1_id" class="form-control">
-                        <option v-for="category in level1" :value="category.id" :key="category.id">{{ category.name }}</option>
+                    <select name="level1_id" :size="levelLists.level1.length+1" v-model="selectedLevelIds.level1" class="form-control">
+                        <option v-for="category in levelLists.level1" :value="category.id" :key="category.id">{{ category.name }}</option>
                     </select>
                 </div>
 
-                <div class="form-group" v-if="level2.length>0">
-                    <select name="level2_id" :size="level2.length+1" v-model="level2_id" class="form-control">
-                        <option v-for="category in level2" :value="category.id" :key="category.id">{{ category.name }}</option>
+                <div class="form-group" v-if="levelLists.level2.length>0">
+                    <select name="level2_id" :size="levelLists.level2.length+1" v-model="selectedLevelIds.level2" class="form-control">
+                        <option v-for="category in levelLists.level2" :value="category.id" :key="category.id">{{ category.name }}</option>
                     </select>
                 </div>
 
-                <div class="form-group" v-if="level3.length>0">
-                    <select name="level3_id" :size="level3.length+1" v-model="level3_id" class="form-control">
-                        <option v-for="category in level3" :value="category.id" :key="category.id">{{ category.name }}</option>
+                <div class="form-group" v-if="levelLists.level3.length>0">
+                    <select name="level3_id" :size="levelLists.level3.length+1" v-model="selectedLevelIds.level3" class="form-control">
+                        <option v-for="category in levelLists.level3" :value="category.id" :key="category.id">{{ category.name }}</option>
                     </select>
                 </div>
 
-                <div class="form-group" v-if="level4.length>0">
-                    <select name="level4_id" :size="level4.length+1" v-model="level4_id" class="form-control">
-                        <option v-for="category in level4" :value="category.id" :key="category.id">{{ category.name }}</option>
+                <div class="form-group" v-if="levelLists.level4.length>0">
+                    <select name="level4_id" :size="levelLists.level4.length+1" v-model="selectedLevelIds.level4" class="form-control">
+                        <option v-for="category in levelLists.level4" :value="category.id" :key="category.id">{{ category.name }}</option>
                     </select>
                 </div>
 
-                <div class="form-group" v-if="level5.length>0">
-                    <select name="level5_id" :size="level5.length+1" v-model="level5_id" class="form-control">
-                        <option v-for="category in level5" :value="category.id" :key="category.id">{{ category.name }}</option>
+                <div class="form-group" v-if="levelLists.level5.length>0">
+                    <select name="level5_id" :size="levelLists.level5.length+1" v-model="selectedLevelIds.level5" class="form-control">
+                        <option v-for="category in levelLists.level5" :value="category.id" :key="category.id">{{ category.name }}</option>
                     </select>
                 </div>
                 <div class="form-group" v-if="selectedCategory">

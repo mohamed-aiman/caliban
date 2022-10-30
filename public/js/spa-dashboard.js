@@ -20304,6 +20304,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -20332,18 +20338,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     });
     var showCategorySelection = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(true); //set to false temporarily
 
-    var level1 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-    var level2 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-    var level3 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-    var level4 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-    var level5 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-    var level6 = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-    var level1_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
-    var level2_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
-    var level3_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
-    var level4_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
-    var level5_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
-    var level6_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var selectedLevelIds = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
+      level1: "",
+      level2: "",
+      level3: "",
+      level4: "",
+      level5: "",
+      level6: ""
+    });
+    var levelLists = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({
+      level1: [],
+      level2: [],
+      level3: [],
+      level4: [],
+      level5: [],
+      level6: []
+    });
     var selectedCategory = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({});
     var descriptionEditorRef = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     var descriptionEditor = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
@@ -20397,40 +20407,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       tax: [],
       locations: [],
       photos: []
-    });
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level1_id, function (val, oldVal) {
-      if (val) {
-        console.log('watch level1_id changed from: ' + oldVal + ' to:' + val);
-        console.log('watch level1_id: ' + level1_id.value);
-        loadLevel2();
-      }
-    });
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level2_id, function (val, oldVal) {
-      if (val) {
-        console.log('watch level2_id changed from: ' + oldVal + ' to:' + val);
-        console.log('watch level2_id: ' + level2_id.value);
-        loadLevel3();
-      }
-    });
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level3_id, function (val, oldVal) {
-      if (val) {
-        console.log('watch level3_id changed from: ' + oldVal + ' to:' + val);
-        console.log('watch level3_id: ' + level3_id.value);
-        loadLevel4();
-      }
-    });
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level4_id, function (val, oldVal) {
-      if (val) {
-        console.log('watch level4_id changed from: ' + oldVal + ' to:' + val);
-        console.log('watch level4_id: ' + level4_id.value);
-        loadLevel5();
-      }
-    });
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(level5_id, function (val, oldVal) {
-      if (val) {
-        console.log('watch level5_id changed from: ' + oldVal + ' to:' + val);
-        console.log('watch level5_id: ' + level5_id.value);
-        loadLevel6();
+    }); //deep watch to preserve old and new values
+
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(function () {
+      return _objectSpread({}, selectedLevelIds);
+    }, function (newVal, oldVal) {
+      console.log('selectedLevelIds changed', newVal, oldVal);
+
+      for (var level in newVal) {
+        // console.log(key, newVal[key], oldVal[key])
+        if (newVal[level] != oldVal[level]) {
+          console.log('level changed', level, newVal[level], oldVal[level]);
+          loadLevel(level, newVal[level]);
+        }
       }
     });
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(selectedLocationId, function (val, oldVal) {
@@ -20591,7 +20580,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var setSelectedCategory = /*#__PURE__*/function () {
       var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(id) {
-        var response;
+        var response, selected;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
@@ -20602,33 +20591,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 response = _context4.sent;
+                selected = selectedLevelIds;
+                console.log('selected', selected);
 
                 if (response.data.level1) {
-                  level1_id.value = response.data.level1.id;
-                  console.log('setSelCat level1_id: ' + level1_id.value);
+                  selected.level1 = response.data.level1.id;
+                  console.log('setSelCat level1_id: ' + selected.level1);
                 }
 
                 if (response.data.level2) {
-                  level2_id.value = response.data.level2.id;
-                  console.log('setSelCat level2_id: ' + level2_id.value);
+                  selected.level2 = response.data.level2.id;
+                  console.log('setSelCat level2_id: ' + selected.level2);
                 }
 
                 if (response.data.level3) {
-                  level3_id.value = response.data.level3.id;
-                  console.log('setSelCat level3_id: ' + level3_id.value);
+                  selected.level3 = response.data.level3.id;
+                  console.log('setSelCat level3_id: ' + selected.level3);
                 }
 
                 if (response.data.level4) {
-                  level4_id.value = response.data.level4.id;
-                  console.log('setSelCat level4_id: ' + level4_id.value);
+                  selected.level4 = response.data.level4.id;
+                  console.log('setSelCat level4_id: ' + selected.level4);
                 }
 
                 if (response.data.level5) {
-                  level5_id.value = response.data.level5.id;
-                  console.log('setSelCat level5_id: ' + level5_id.value);
+                  selected.level5 = response.data.level5.id;
+                  console.log('setSelCat level5_id: ' + selected.level5);
                 }
 
-              case 9:
+                selectedLevelIds.value = selected;
+
+              case 12:
               case "end":
                 return _context4.stop();
             }
@@ -20658,7 +20651,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return response.json();
 
               case 6:
-                level1.value = _context5.sent;
+                levelLists.value.level1 = _context5.sent;
 
               case 7:
               case "end":
@@ -20705,28 +20698,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     }();
 
-    var loadLevel2 = /*#__PURE__*/function () {
-      var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
-        var currentLevelSelectedId;
+    var loadLevel = /*#__PURE__*/function () {
+      var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(selectedLevel, selectedValue) {
+        var currentLevel, nextLevel;
         return _regeneratorRuntime().wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                currentLevelSelectedId = level1_id.value;
-                resetLists(1);
-                _context7.next = 4;
-                return loadCategories(currentLevelSelectedId);
-
-              case 4:
-                level2.value = _context7.sent;
-
-                if (level2.value.length == 0) {
-                  form.category_id = currentLevelSelectedId;
-                }
-
-                console.log('loadLevel2');
+                console.log('loadLevel selectedLevel: ' + selectedLevel);
+                console.log('loadLevel selectedValue: ' + selectedValue);
+                currentLevel = parseInt(selectedLevel.replace(/[^0-9]/g, ''));
+                resetLists(currentLevel);
+                nextLevel = currentLevel + 1;
+                _context7.next = 7;
+                return loadCategories(selectedValue);
 
               case 7:
+                levelLists.value['level' + nextLevel] = _context7.sent;
+
+                if (levelLists.value['level' + nextLevel].length == 0) {
+                  form.category_id = selectedValue;
+                }
+
+              case 9:
               case "end":
                 return _context7.stop();
             }
@@ -20734,31 +20728,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee7);
       }));
 
-      return function loadLevel2() {
+      return function loadLevel(_x3, _x4) {
         return _ref8.apply(this, arguments);
       };
     }();
 
-    var loadLevel3 = /*#__PURE__*/function () {
+    var resetLists = function resetLists(currentLevel) {
+      console.log('resetLists currentLevel: ' + currentLevel);
+
+      for (var i = currentLevel + 1; i <= 5; i++) {
+        console.log('reseting level: ' + i);
+        levelLists.value['level' + i] = [];
+      }
+    };
+
+    var categoryConfirmed = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
-        var currentLevelSelectedId;
+        var response;
         return _regeneratorRuntime().wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                currentLevelSelectedId = level2_id.value;
-                resetLists(2);
-                _context8.next = 4;
-                return loadCategories(currentLevelSelectedId);
+                _context8.next = 2;
+                return fetch("/categories/".concat(form.category_id));
 
-              case 4:
-                level3.value = _context8.sent;
+              case 2:
+                response = _context8.sent;
+                _context8.next = 5;
+                return response.json();
 
-                if (level3.value.length == 0) {
-                  form.category_id = currentLevelSelectedId;
-                }
-
-                console.log('loadLevel3');
+              case 5:
+                selectedCategory.value = _context8.sent;
+                showCategorySelection.value = false;
 
               case 7:
               case "end":
@@ -20768,192 +20769,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee8);
       }));
 
-      return function loadLevel3() {
-        return _ref9.apply(this, arguments);
-      };
-    }();
-
-    var loadLevel4 = /*#__PURE__*/function () {
-      var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
-        var currentLevelSelectedId;
-        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-                currentLevelSelectedId = level3_id.value;
-                resetLists(3);
-                _context9.next = 4;
-                return loadCategories(currentLevelSelectedId);
-
-              case 4:
-                level4.value = _context9.sent;
-
-                if (level4.value.length == 0) {
-                  form.category_id = currentLevelSelectedId;
-                }
-
-                console.log('loadLevel4');
-
-              case 7:
-              case "end":
-                return _context9.stop();
-            }
-          }
-        }, _callee9);
-      }));
-
-      return function loadLevel4() {
-        return _ref10.apply(this, arguments);
-      };
-    }();
-
-    var loadLevel5 = /*#__PURE__*/function () {
-      var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
-        var currentLevelSelectedId;
-        return _regeneratorRuntime().wrap(function _callee10$(_context10) {
-          while (1) {
-            switch (_context10.prev = _context10.next) {
-              case 0:
-                currentLevelSelectedId = level4_id.value;
-                resetLists(4);
-                _context10.next = 4;
-                return loadCategories(currentLevelSelectedId);
-
-              case 4:
-                level5.value = _context10.sent;
-
-                if (level5.value.length == 0) {
-                  form.category_id = currentLevelSelectedId;
-                }
-
-                console.log('loadLevel5');
-
-              case 7:
-              case "end":
-                return _context10.stop();
-            }
-          }
-        }, _callee10);
-      }));
-
-      return function loadLevel5() {
-        return _ref11.apply(this, arguments);
-      };
-    }();
-
-    var loadLevel6 = /*#__PURE__*/function () {
-      var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
-        var currentLevelSelectedId;
-        return _regeneratorRuntime().wrap(function _callee11$(_context11) {
-          while (1) {
-            switch (_context11.prev = _context11.next) {
-              case 0:
-                currentLevelSelectedId = level5_id.value;
-                resetLists(5);
-                _context11.next = 4;
-                return loadCategories(currentLevelSelectedId);
-
-              case 4:
-                level6.value = _context11.sent;
-
-                if (level6.value.length == 0) {
-                  form.category_id = currentLevelSelectedId;
-                }
-
-                console.log('loadLevel6');
-
-              case 7:
-              case "end":
-                return _context11.stop();
-            }
-          }
-        }, _callee11);
-      }));
-
-      return function loadLevel6() {
-        return _ref12.apply(this, arguments);
-      };
-    }();
-
-    var resetLists = function resetLists(selectedLevel) {
-      if (selectedLevel == 1) {
-        level2.value = [];
-        level2_id.value = 0;
-        level3.value = [];
-        level3_id.value = 0;
-        level4.value = [];
-        level4_id.value = 0;
-        level5.value = [];
-        level5_id.value = 0;
-        level6.value = [];
-        level6_id.value = 0;
-      } else if (selectedLevel == 2) {
-        level3.value = [];
-        level3_id.value = 0;
-        level4.value = [];
-        level4_id.value = 0;
-        level5.value = [];
-        level5_id.value = 0;
-        level6.value = [];
-        level6_id.value = 0;
-      } else if (selectedLevel == 3) {
-        level4.value = [];
-        level4_id.value = 0;
-        level5.value = [];
-        level5_id.value = 0;
-        level6.value = [];
-        level6_id.value = 0;
-      } else if (selectedLevel == 4) {
-        level5.value = [];
-        level5_id.value = 0;
-        level6.value = [];
-        level6_id.value = 0;
-      } else if (selectedLevel == 5) {
-        level6.value = [];
-        level6_id.value = 0;
-      } else {
-        level2.value = [];
-        level2_id.value = 0;
-        level3.value = [];
-        level3_id.value = 0;
-        level4.value = [];
-        level4_id.value = 0;
-        level5.value = [];
-        level5_id.value = 0;
-        level6.value = [];
-        level6_id.value = 0;
-      }
-    };
-
-    var categoryConfirmed = /*#__PURE__*/function () {
-      var _ref13 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
-        var response;
-        return _regeneratorRuntime().wrap(function _callee12$(_context12) {
-          while (1) {
-            switch (_context12.prev = _context12.next) {
-              case 0:
-                _context12.next = 2;
-                return fetch("/categories/".concat(form.category_id));
-
-              case 2:
-                response = _context12.sent;
-                _context12.next = 5;
-                return response.json();
-
-              case 5:
-                selectedCategory.value = _context12.sent;
-                showCategorySelection.value = false;
-
-              case 7:
-              case "end":
-                return _context12.stop();
-            }
-          }
-        }, _callee12);
-      }));
-
       return function categoryConfirmed() {
-        return _ref13.apply(this, arguments);
+        return _ref9.apply(this, arguments);
       };
     }();
 
@@ -21027,10 +20844,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
 
     var submitForm = /*#__PURE__*/function () {
-      var _ref14 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
-        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+      var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
+        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context13.prev = _context13.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 captureDescription();
                 capurePhotos();
@@ -21046,32 +20863,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
               case "end":
-                return _context13.stop();
+                return _context9.stop();
             }
           }
-        }, _callee13);
+        }, _callee9);
       }));
 
       return function submitForm() {
-        return _ref14.apply(this, arguments);
+        return _ref10.apply(this, arguments);
       };
     }();
 
     var __returned__ = {
       form: form,
       showCategorySelection: showCategorySelection,
-      level1: level1,
-      level2: level2,
-      level3: level3,
-      level4: level4,
-      level5: level5,
-      level6: level6,
-      level1_id: level1_id,
-      level2_id: level2_id,
-      level3_id: level3_id,
-      level4_id: level4_id,
-      level5_id: level5_id,
-      level6_id: level6_id,
+      selectedLevelIds: selectedLevelIds,
+      levelLists: levelLists,
       selectedCategory: selectedCategory,
       descriptionEditorRef: descriptionEditorRef,
       descriptionEditor: descriptionEditor,
@@ -21103,11 +20910,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       setSelectedCategory: setSelectedCategory,
       loadParentCategories: loadParentCategories,
       loadCategories: loadCategories,
-      loadLevel2: loadLevel2,
-      loadLevel3: loadLevel3,
-      loadLevel4: loadLevel4,
-      loadLevel5: loadLevel5,
-      loadLevel6: loadLevel6,
+      loadLevel: loadLevel,
       resetLists: resetLists,
       categoryConfirmed: categoryConfirmed,
       changeCategory: changeCategory,
@@ -22338,12 +22141,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , _hoisted_6)), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selectedCategoryId]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     name: "level1_id",
-    size: $setup.level1.length + 1,
+    size: $setup.levelLists.level1.length + 1,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $setup.level1_id = $event;
+      return $setup.selectedLevelIds.level1 = $event;
     }),
     "class": "form-control"
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.level1, function (category) {
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.levelLists.level1, function (category) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: category.id,
       key: category.id
@@ -22354,14 +22157,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 8
   /* PROPS */
-  , _hoisted_9), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.level1_id]])]), $setup.level2.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  , _hoisted_9), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selectedLevelIds.level1]])]), $setup.levelLists.level2.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     name: "level2_id",
-    size: $setup.level2.length + 1,
+    size: $setup.levelLists.level2.length + 1,
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $setup.level2_id = $event;
+      return $setup.selectedLevelIds.level2 = $event;
     }),
     "class": "form-control"
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.level2, function (category) {
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.levelLists.level2, function (category) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: category.id,
       key: category.id
@@ -22372,14 +22175,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 8
   /* PROPS */
-  , _hoisted_12), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.level2_id]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.level3.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  , _hoisted_12), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selectedLevelIds.level2]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.levelLists.level3.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     name: "level3_id",
-    size: $setup.level3.length + 1,
+    size: $setup.levelLists.level3.length + 1,
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-      return $setup.level3_id = $event;
+      return $setup.selectedLevelIds.level3 = $event;
     }),
     "class": "form-control"
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.level3, function (category) {
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.levelLists.level3, function (category) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: category.id,
       key: category.id
@@ -22390,14 +22193,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 8
   /* PROPS */
-  , _hoisted_15), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.level3_id]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.level4.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  , _hoisted_15), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selectedLevelIds.level3]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.levelLists.level4.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     name: "level4_id",
-    size: $setup.level4.length + 1,
+    size: $setup.levelLists.level4.length + 1,
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-      return $setup.level4_id = $event;
+      return $setup.selectedLevelIds.level4 = $event;
     }),
     "class": "form-control"
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.level4, function (category) {
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.levelLists.level4, function (category) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: category.id,
       key: category.id
@@ -22408,14 +22211,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 8
   /* PROPS */
-  , _hoisted_18), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.level4_id]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.level5.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  , _hoisted_18), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selectedLevelIds.level4]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.levelLists.level5.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     name: "level5_id",
-    size: $setup.level5.length + 1,
+    size: $setup.levelLists.level5.length + 1,
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
-      return $setup.level5_id = $event;
+      return $setup.selectedLevelIds.level5 = $event;
     }),
     "class": "form-control"
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.level5, function (category) {
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.levelLists.level5, function (category) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: category.id,
       key: category.id
@@ -22426,7 +22229,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 8
   /* PROPS */
-  , _hoisted_21), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.level5_id]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.selectedCategory ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  , _hoisted_21), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selectedLevelIds.level5]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.selectedCategory ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     disabled: !$setup.form.category_id,
     type: "button",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
