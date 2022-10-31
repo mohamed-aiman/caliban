@@ -1,7 +1,7 @@
 import { BaseService } from '@/services/base.service'
 import { ErrorWrapper, ResponseWrapper } from '@/services/util'
 
-export class CategoryService extends BaseService {
+export class LocationService extends BaseService {
  
   static async forSelect (query) {
     try {
