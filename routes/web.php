@@ -47,13 +47,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/api/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
     Route::post('/api/photos', [PhotoController::class, 'store'])->name('photos.store');
     Route::get('/api/listings', [ListingController::class, 'index'])->name('listings.index');
-    Route::get('listings/create', [ListingController::class, 'create'])->name('listings.create');
+    // Route::get('listings/create', [ListingController::class, 'create'])->name('listings.create');
     // Route::get('listings/{productSlug}/edit', [ListingController::class, 'edit'])->name('listings.edit');
     Route::get('/api/listings/{productSlug}/form-data', [ListingController::class, 'productFormData'])->name('listings.product-form-data');
     Route::patch('/api/listings/{productSlug}', [ListingController::class, 'update'])->name('listings.update');
     Route::post('/api/listings', [ListingController::class, 'store'])->name('listings.store');
-    Route::get('listings/{productSlug}', [ListingController::class, 'show'])->name('listings.show');
-    Route::get('/locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
+    Route::get('/api/listings/{productSlug}', [ListingController::class, 'show'])->name('listings.show');
+    Route::get('/api/locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
     
     Route::view('/dashboard', 'spa-dashboard')->where('any', '.*');
     Route::view('/dashboard/{any}', 'spa-dashboard')->where('any', '.*');
