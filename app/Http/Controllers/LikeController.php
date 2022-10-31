@@ -28,4 +28,21 @@ class LikeController extends Controller
             'message' => 'success',
         ]);
     }
+    
+    protected function destroy(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|integer|exists:products,id',
+        ]);
+
+        $like = $this->like->where('user_id', $request->user()->id)
+            ->where('product_id', $request->product_id)
+            ->firstOrFail();
+
+        $like->delete();
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
 }
