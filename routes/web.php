@@ -41,10 +41,10 @@ Route::get('categories', [CategoryController::class, 'index'])->name('categories
 Route::get('/categories/{slug}/products', [CategoryProductController::class, 'index'])->name('categories.products.index');
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::get('/categories/for-select', [CategoryController::class, 'forSelect'])->name('categories.for-select');
-    Route::get('/categories/{id}/levels', [CategoryController::class, 'levels'])->name('categories.levels');
-    Route::get('categories/{id}/children', [CategoryController::class, 'children'])->name('categories.children');
-    Route::get('categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::get('/api/categories/for-select', [CategoryController::class, 'forSelect'])->name('categories.for-select');
+    Route::get('/api/categories/{id}/levels', [CategoryController::class, 'levels'])->name('categories.levels');
+    Route::get('/api/categories/{id}/children', [CategoryController::class, 'children'])->name('categories.children');
+    Route::get('/api/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
     Route::post('photos', [PhotoController::class, 'store'])->name('photos.store');
     Route::get('/api/listings', [ListingController::class, 'index'])->name('listings.index');
     Route::get('listings/create', [ListingController::class, 'create'])->name('listings.create');
