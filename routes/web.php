@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth'], 'prefix'=>'api', 'as'=>'user.'], functio
     Route::get('listings/{productSlug}', [ListingController::class, 'show'])->name('listings.show');
     Route::get('locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
     Route::post('like', [LikeController::class, 'store'])->name('likes.store');
+    Route::delete('like', [LikeController::class, 'destroy'])->name('likes.destroy');
 });
 
 //LOGGED IN USER SPA ROUTES
