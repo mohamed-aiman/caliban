@@ -8,9 +8,7 @@ import "quill/dist/quill.snow.css";
 // import { CategoryService } from '@/services/CategoryService'
 // import { LocationService } from '@/services/LocationService'
 import { useRouter, useRoute } from 'vue-router'
-
 const route = useRoute()
-
 const initDescriptionEditor = () => {
     // var _this = this;
     descriptionEditor.value = new Quill(descriptionEditorRef.value, {
@@ -33,8 +31,6 @@ const initDescriptionEditor = () => {
     //   _descriptionEditorChanged();
     // });
 }
-
-
 onMounted(() => {
     console.log('mounted hello')
     loadParentCategories();
@@ -42,8 +38,6 @@ onMounted(() => {
     initDescriptionEditor();
     loadFormData()
 })
-
-
 const form = ref({
     title: '',
     description: '',
@@ -58,10 +52,8 @@ const form = ref({
     locations: [],
     photos: [],
 })
-
-
 const loadFormData = async () => {
-    const response = await axios.get(`/listings/${route.params.slug}/form-data`);
+    const response = await axios.get(`/api/listings/${route.params.slug}/form-data`);
     const data = response.data;
     form.value = data.form;
     
@@ -70,7 +62,6 @@ const loadFormData = async () => {
     setSelectedCategory(form.value.category_id);
     console.log('after setSelectedCategory')
     selectedCategory.value = data.category;
-
     console.log('b4 location...................')
     form.value.locations.forEach(id => {
         console.log('location...................')
@@ -94,15 +85,10 @@ const loadFormData = async () => {
             }
         }
     }
-
     descriptionEditor.value.root.innerHTML = form.value.description;
-
     console.log(form);
 }
-
 const showCategorySelection = ref(true)//set to false temporarily
-
-
 const selectedLevelIds = reactive({ 
     level1: "",
     level2: "",
@@ -111,7 +97,6 @@ const selectedLevelIds = reactive({
     level5: "",
     level6: "",
 })
-
 const levelLists = ref({
     level1: [],
     level2: [],
@@ -120,8 +105,6 @@ const levelLists = ref({
     level5: [],
     level6: [],
 })
-
-
 const selectedCategory = ref({})
 const descriptionEditorRef = ref('')
 const descriptionEditor = ref('')
@@ -160,7 +143,6 @@ const errors = ref({
     locations: [],
     photos: [],
 })
-
 //deep watch to preserve old and new values
 watch(() => ({ ...selectedLevelIds }), (newVal, oldVal) => {
     console.log('selectedLevelIds changed', newVal, oldVal)
@@ -172,9 +154,7 @@ watch(() => ({ ...selectedLevelIds }), (newVal, oldVal) => {
             loadLevel(level, newVal[level])
         }
     }
-
 })
-
 watch(selectedLocationId, (val, oldVal) => {
     if (val) {
         addLocation(val)
@@ -196,30 +176,24 @@ watch(categorySearch, (val, oldVal) => {
         filterCategories(val)
     }
 })
-
-
 // const descriptionEditorChanged = () => {
 // }
-
 const captureDescription = () => {
     form.description = descriptionEditor.value.root.innerHTML
 }
-
 const loadLocations = async () => {
     // const response = LocationService.forSelect()
-    const response = await axios.get('/locations/for-select');
+    const response = await axios.get('/api/locations/for-select');
     locations.value = response.data;
     filteredLocations.value = locations;
 }
-
 const filterLocations = async () => {
     // const response = LocationService.forSelect(locationSearch.value)
-    const response = await axios.get('/locations/for-select?search=' + locationSearch.value);
+    const response = await axios.get('/api/locations/for-select?search=' + locationSearch.value);
     filteredLocations.value = response.data.filter(location => {
         return !selectedLocations.value.find(selectedLocation => selectedLocation.id === location.id);
     })
 }
-
 const addLocation = (id) => {
     console.log('addLocation', id)
     selectedLocations.value.push(locations.value.find(location => location.id == id))
@@ -230,27 +204,21 @@ const addLocation = (id) => {
     )
     console.log('addLocation end', id)
 }
-
 const removeLocation = (id) => {
     selectedLocations.value = selectedLocations.value.filter(location => location.id !== id);
     filterLocations();
 }
-
 const filterCategories = async () => {
     // const response = CategoryService.forSelect(categorySearch.value)
-    const response = await axios.get('/categories/for-select?search=' + categorySearch.value);
+    const response = await axios.get('/api/categories/for-select?search=' + categorySearch.value);
     filteredCategories.value = response.data;
 }
-
 const setSelectedCategory = async (id) => {
     console.log('setSelectedCategory id: ' + id)
     // const response = CategoryService.levels(id)
-    const response = await axios.get('/categories/' + id + '/levels');
-
+    const response = await axios.get('/api/categories/' + id + '/levels');
     const selected = selectedLevelIds;
-
     console.log('selected', selected)
-
     if (response.data.level1) {
         selected.level1 = response.data.level1.id
         console.log('setSelCat level1_id: ' + selected.level1)
@@ -271,24 +239,20 @@ const setSelectedCategory = async (id) => {
         selected.level5 = response.data.level5.id
         console.log('setSelCat level5_id: ' + selected.level5)
     }
-
     selectedLevelIds.value = selected
 }
-
 const loadParentCategories = async () => {
     form.category_id = null
     // const response = CategoryService.parents(`original`)
     const response = await fetch(`/api/parent-categories?type=original`)
     levelLists.value.level1 = await response.json()
 }
-
 const loadCategories = async (id) => {
     form.category_id = null
     // const response = CategoryService.children(id)
-    const response = await fetch(`/categories/${id}/children`)
+    const response = await fetch(`/api/categories/${id}/children`)
     return await response.json()
 }
-
 const loadLevel = async (selectedLevel, selectedValue) => {
     console.log('loadLevel selectedLevel: ' + selectedLevel)
     console.log('loadLevel selectedValue: ' + selectedValue)
@@ -302,7 +266,6 @@ const loadLevel = async (selectedLevel, selectedValue) => {
         form.category_id = null
     }
 }
-
 const resetLists = (currentLevel) => {
     console.log('resetLists currentLevel: ' + currentLevel)
     for (var i = currentLevel + 1; i <= 5; i++) {
@@ -310,50 +273,42 @@ const resetLists = (currentLevel) => {
         levelLists.value['level' + i] = []
     }
 }
-
 const categoryConfirmed = async () => {
     // const response = CategoryService.item(form.category_id)
-    const response = await fetch(`/categories/${form.category_id}`)
+    const response = await fetch(`/api/categories/${form.category_id}`)
     selectedCategory.value = await response.json()
     showCategorySelection.value = false
 }
-
 const changeCategory = () => {
     showCategorySelection.value = true
 }
-
 const onDescriptionEditorReady = ($event) => {
     descriptionQuillEditor.value = $event
 }
-
 const onDescriptionEditorBlur = ($event) => {
     captureDescription()
 }
-
 const captureLocations = () => {
     form.value.locations = []
     selectedLocations.value.forEach(location => {
         form.value.locations.push(location.id)
     })
 }
-
 const onFileChange = (e, key) => {
     let file = e.target.files[0]
     readImage(file)
     uploadOriginalImage(file, key);
 }
-
 const readImage = (image) => {
     let reader = new FileReader();
     reader.readAsDataURL(image);
 }
-
 const uploadOriginalImage = (file, key) => {
     let formData = new FormData();
     formData.append('image', file, file.name);
     // $emit('uploading');
     uploading.value = true;
-    axios.post('/photos', formData, {
+    axios.post('/api/photos', formData, {
         onUploadProgress: progressEvent => {
             uploadProgress.value = Math.round((progressEvent.loaded * 100) / progressEvent.total);
         }
@@ -367,7 +322,6 @@ const uploadOriginalImage = (file, key) => {
     }).catch(error => {
     });
 }
-
 const deleteImage = (key) => {
     images.value[key] = {
         key: key,
@@ -375,7 +329,6 @@ const deleteImage = (key) => {
         url: null
     }
 }
-
 const capurePhotos = () => {
     form.photos = []
     for (var key in images.value) {
@@ -386,7 +339,6 @@ const capurePhotos = () => {
         }
     }
 }
-
 const submitForm = async () => {
     console.log('submitForm start')
     console.log('captureDescription')
@@ -398,20 +350,18 @@ const submitForm = async () => {
     console.log(form)
     console.log(form.value)
     // axios.post('/listings', form.value)
-    axios.patch(`/listings/${route.params.slug}`, form.value)
+    axios.patch(`/api/listings/${route.params.slug}`, form.value)
         .then(response => {
             //@todo add route push here and proceed to preview before publishing
             window.location.href = '/products/' + response.data.product.slug
         })
         .catch(error => {
             console.log(error)
-
             if (error.response.status == 422) {
                 errors.value = error.response.data.errors
             }
         })
 }
-
 </script>
 
 <template>
