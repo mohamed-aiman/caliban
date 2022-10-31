@@ -3,7 +3,7 @@ import { ErrorWrapper, ResponseWrapper } from '@/services/util'
 
 export class CategoryService extends BaseService {
 
-  static async parents (id) {
+  static async item (id) {
     try {
       const response = await this.request({ auth: false }).get(`/categories/${id}`)
       return new ResponseWrapper(response, response.data)
