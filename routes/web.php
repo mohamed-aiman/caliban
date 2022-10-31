@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth'], 'prefix'=>'api', 'as'=>'user.'], functio
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('listings/{productSlug}', [ListingController::class, 'show'])->name('listings.show');
     Route::get('locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
+    Route::post('products/{slug}/like', [ProductController::class, 'like'])->name('products.like');
 });
 
 //LOGGED IN USER SPA ROUTES
