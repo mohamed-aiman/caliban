@@ -5,6 +5,8 @@ import Quill from "quill";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.bubble.css";
 import "quill/dist/quill.snow.css";
+import { CategoryService } from '@/services/CategoryService'
+import { LocationService } from '@/services/LocationService'
 
 const form = reactive({
     title: '',
@@ -155,13 +157,15 @@ const captureDescription = () => {
 }
 
 const loadLocations = async () => {
-    const response = await axios.get('/locations/for-select');
+    const response = LocationService.forSelect()
+    //const response = await axios.get('/locations/for-select');
     locations.value = response.data;
     filteredLocations.value = locations;
 }
 
 const filterLocations = async () => {
-    const response = await axios.get('/locations/for-select?search=' + locationSearch.value);
+    const response = LocationService.forSelect(locationSearch.value)
+    //const response = await axios.get('/locations/for-select?search=' + locationSearch.value);
     filteredLocations.value = response.data.filter(location => {
         return !selectedLocations.value.find(selectedLocation => selectedLocation.id === location.id);
     })
@@ -182,13 +186,15 @@ const removeLocation = (id) => {
 }
 
 const filterCategories = async () => {
-    const response = await axios.get('/categories/for-select?search=' + categorySearch.value);
+    const response = CategoryService.forSelect(categorySearch.value)
+    //const response = await axios.get('/categories/for-select?search=' + categorySearch.value);
     filteredCategories.value = response.data;
 }
 
 const setSelectedCategory = async (id) => {
     console.log('setSelectedCategory id: ' + id)
-    const response = await axios.get('/categories/' + id + '/levels');
+    const response = CategoryService.levels(id)
+    //const response = await axios.get('/categories/' + id + '/levels');
 
     const selected = selectedLevelIds;
 
@@ -220,13 +226,15 @@ const setSelectedCategory = async (id) => {
 
 const loadParentCategories = async () => {
     form.category_id = null
-    const response = await fetch(`/api/parent-categories?type=original`)
+    const response = CategoryService.parents(`original`)
+    //const response = await fetch(`/api/parent-categories?type=original`)
     levelLists.value.level1 = await response.json()
 }
 
 const loadCategories = async (id) => {
     form.category_id = null
-    const response = await fetch(`/categories/${id}/children`)
+    const response = CategoryService.children(id)
+    //const response = await fetch(`/categories/${id}/children`)
     return await response.json()
 }
 
@@ -253,7 +261,8 @@ const resetLists = (currentLevel) => {
 }
 
 const categoryConfirmed = async () => {
-    const response = await fetch(`/categories/${form.category_id}`)
+    const response = CategoryService.item(form.category_id)
+    //const response = await fetch(`/categories/${form.category_id}`)
     selectedCategory.value = await response.json()
     showCategorySelection.value = false
 }
