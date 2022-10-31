@@ -7,8 +7,44 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 // import { CategoryService } from '@/services/CategoryService'
 // import { LocationService } from '@/services/LocationService'
+import { useRouter, useRoute } from 'vue-router'
 
-const form = reactive({
+const route = useRoute()
+
+const initDescriptionEditor = () => {
+    // var _this = this;
+    descriptionEditor.value = new Quill(descriptionEditorRef.value, {
+        modules: {
+            toolbar: [
+                [
+                    {
+                        header: [1, 2, 3, 4, false],
+                    },
+                ],
+                ["bold", "italic", "underline", "link"],
+            ],
+        },
+        // theme: 'bubble',
+        theme: "snow",
+        formats: ["bold", "underline", "header", "italic", "link"],
+        placeholder: "Type something in here!",
+    });
+    // descriptionEditor.on("text-change", function () {
+    //   _descriptionEditorChanged();
+    // });
+}
+
+
+onMounted(() => {
+    console.log('mounted hello')
+    loadParentCategories();
+    loadLocations();
+    initDescriptionEditor();
+    loadFormData()
+})
+
+
+const form = ref({
     title: '',
     description: '',
     description_delta: '',
@@ -22,6 +58,47 @@ const form = reactive({
     locations: [],
     photos: [],
 })
+
+
+const loadFormData = async () => {
+    const response = await axios.get(`/listings/${route.params.slug}/form-data`);
+    const data = response.data;
+    form.value = data.form;
+    
+    showCategorySelection.value = false;
+    console.log('b4 setSelectedCategory')
+    setSelectedCategory(form.value.category_id);
+    console.log('after setSelectedCategory')
+    selectedCategory.value = data.category;
+
+    console.log('b4 location...................')
+    form.value.locations.forEach(id => {
+        console.log('location...................')
+        console.log(id)
+        addLocation(id)
+    })
+    
+    console.log(data.photos[0].url)
+    console.log(data.photos[1].url)
+    console.log(data.photos[2].url)
+    for (var key in images.value) {
+        if (images.value.hasOwnProperty(key)) {
+            console.log('key')
+            console.log(key)
+            if (form.value.photos[key - 1]) {
+                console.log('inside if')
+                console.log(data.photos[key - 1].id)
+                console.log(data.photos[key - 1].url)
+                images.value[key].photo_id = data.photos[key - 1].id;
+                images.value[key].url = data.photos[key - 1].url;
+            }
+        }
+    }
+
+    descriptionEditor.value.root.innerHTML = form.value.description;
+
+    console.log(form);
+}
 
 const showCategorySelection = ref(true)//set to false temporarily
 
@@ -120,34 +197,6 @@ watch(categorySearch, (val, oldVal) => {
     }
 })
 
-onMounted(() => {
-    loadParentCategories();
-    loadLocations();
-    initDescriptionEditor();
-})
-
-const initDescriptionEditor = () => {
-    // var _this = this;
-    descriptionEditor.value = new Quill(descriptionEditorRef.value, {
-        modules: {
-            toolbar: [
-                [
-                    {
-                        header: [1, 2, 3, 4, false],
-                    },
-                ],
-                ["bold", "italic", "underline", "link"],
-            ],
-        },
-        // theme: 'bubble',
-        theme: "snow",
-        formats: ["bold", "underline", "header", "italic", "link"],
-        placeholder: "Type something in here!",
-    });
-    // descriptionEditor.on("text-change", function () {
-    //   _descriptionEditorChanged();
-    // });
-}
 
 // const descriptionEditorChanged = () => {
 // }
@@ -172,12 +221,14 @@ const filterLocations = async () => {
 }
 
 const addLocation = (id) => {
+    console.log('addLocation', id)
     selectedLocations.value.push(locations.value.find(location => location.id == id))
     selectedLocationId.value = null
     //remove from filtered locations
     filteredLocations.value = locations.value.filter(
-        location => !selectedLocations.value.find(selectedLocation => selectedLocation.id == location.id)
+    location => !selectedLocations.value.find(selectedLocation => selectedLocation.id == location.id)
     )
+    console.log('addLocation end', id)
 }
 
 const removeLocation = (id) => {
@@ -280,9 +331,9 @@ const onDescriptionEditorBlur = ($event) => {
 }
 
 const captureLocations = () => {
-    form.locations.value = []
+    form.value.locations = []
     selectedLocations.value.forEach(location => {
-        form.locations.push(location.id)
+        form.value.locations.push(location.id)
     })
 }
 
@@ -337,15 +388,24 @@ const capurePhotos = () => {
 }
 
 const submitForm = async () => {
+    console.log('submitForm start')
+    console.log('captureDescription')
     captureDescription()
+    console.log('capurePhotos')
     capurePhotos()
+    console.log('captureLocations')
     captureLocations()
-    axios.post('/listings', form)
+    console.log(form)
+    console.log(form.value)
+    // axios.post('/listings', form.value)
+    axios.patch(`/listings/${route.params.slug}`, form.value)
         .then(response => {
             //@todo add route push here and proceed to preview before publishing
             window.location.href = '/products/' + response.data.product.slug
         })
         .catch(error => {
+            console.log(error)
+
             if (error.response.status == 422) {
                 errors.value = error.response.data.errors
             }
