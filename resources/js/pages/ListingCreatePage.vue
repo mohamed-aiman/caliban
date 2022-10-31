@@ -3,7 +3,7 @@ import { watch, ref, nextTick, onMounted, reactive } from 'vue'
 import axios from 'axios';
 import Quill from "quill";
 import "quill/dist/quill.core.css";
-import "quill/dist/quill.bubble.css";
+// import "quill/dist/quill.bubble.css";
 import "quill/dist/quill.snow.css";
 // import { CategoryService } from '@/services/CategoryService'
 // import { LocationService } from '@/services/LocationService'
@@ -139,7 +139,7 @@ const initDescriptionEditor = () => {
                 ["bold", "italic", "underline", "link"],
             ],
         },
-        //theme: 'bubble',
+        // theme: 'bubble',
         theme: "snow",
         formats: ["bold", "underline", "header", "italic", "link"],
         placeholder: "Type something in here!",
