@@ -5,7 +5,7 @@ export class CategoryService extends BaseService {
 
   static async item (id) {
     try {
-      const response = await this.request({ auth: false }).get(`/categories/${id}`)
+      const response = await this.request({ auth: false }).get(`/api/categories/${id}`)
       return new ResponseWrapper(response, response.data)
     } catch (error) {
       const message = error.response.data ? error.response.data.error : error.response.statusText
@@ -26,7 +26,7 @@ export class CategoryService extends BaseService {
 
   static async children (id) {
     try {
-      const response = await this.request({ auth: false }).get(`/categories/${id}/children`)
+      const response = await this.request({ auth: false }).get(`/api/categories/${id}/children`)
       return new ResponseWrapper(response, response.data)
     } catch (error) {
       const message = error.response.data ? error.response.data.error : error.response.statusText
@@ -36,7 +36,7 @@ export class CategoryService extends BaseService {
   
   static async levels (id) {
     try {
-      const response = await this.request({ auth: false }).get(`/categories/${id}/levels`)
+      const response = await this.request({ auth: false }).get(`/api/categories/${id}/levels`)
       return new ResponseWrapper(response, response.data)
     } catch (error) {
       const message = error.response.data ? error.response.data.error : error.response.statusText
@@ -46,7 +46,7 @@ export class CategoryService extends BaseService {
   
   static async forSelect (query) {
     try {
-      const url = (query) ? `/categories/for-select?search=${query}` : `/categories/for-select`;
+      const url = (query) ? `/api/categories/for-select?search=${query}` : `/api/categories/for-select`;
       const response = await this.request({ auth: false }).get(url)
       return new ResponseWrapper(response, response.data)
     } catch (error) {
