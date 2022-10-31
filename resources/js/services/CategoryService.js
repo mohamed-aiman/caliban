@@ -36,7 +36,8 @@ export class CategoryService extends BaseService {
   
   static async forSelect (query) {
     try {
-      const response = await this.request({ auth: false }).get(`/categories/for-select?search=${query}`)
+      const url = (query) ? `/categories/for-select?search=${query}` : `/categories/for-select`;
+      const response = await this.request({ auth: false }).get(url)
       return new ResponseWrapper(response, response.data)
     } catch (error) {
       const message = error.response.data ? error.response.data.error : error.response.statusText
