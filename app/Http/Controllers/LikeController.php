@@ -10,7 +10,6 @@ class LikeController extends Controller
     public function __construct(Like $like)
     {
         $this->like = $like;
-        $this->product = $product;
     }
 
     protected function store(Request $request)
@@ -19,13 +18,18 @@ class LikeController extends Controller
             'product_id' => 'required|integer|exists:products,id',
         ]);
 
-        $this->like->create([
-            'user_id' => $request->user()->id,
-            'product_id' => $request->product_id,
-        ]);
+        if (!$like = $this->like->where('user_id', $request->user()->id)
+            ->where('product_id', $request->product_id)
+            ->first()) {
+            $like = $this->like->create([
+                'user_id' => $request->user()->id,
+                'product_id' => $request->product_id,
+            ]);
+        };
 
         return response()->json([
-            'message' => 'success',
+            'message' => 'like success',
+            'data' => $like,
         ]);
     }
     
@@ -42,7 +46,7 @@ class LikeController extends Controller
         $like->delete();
 
         return response()->json([
-            'message' => 'success',
+            'message' => 'undo like success',
         ]);
     }
 }

@@ -2,6 +2,7 @@
 import { onMounted, computed, ref, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
+import LikeToggle from '@/components/like-toggle.vue';
 
 const store = useStore()
 const route = useRoute()
@@ -110,7 +111,9 @@ const loadPhoto = (photoUrl) => {
                         </div>
                     </div>
                 </div>
-
+                <div class="bg-white p-3">
+                    <like-toggle :product_id="product.id" :liked="product.liked"></like-toggle>
+                </div>
             </div>
         </div>
         <!-- 4 -->

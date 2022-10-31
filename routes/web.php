@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\ProductController;
@@ -50,8 +51,8 @@ Route::group(['middleware' => ['auth'], 'prefix'=>'api', 'as'=>'user.'], functio
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('listings/{productSlug}', [ListingController::class, 'show'])->name('listings.show');
     Route::get('locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
-    Route::post('like', [LikeController::class, 'store'])->name('likes.store');
-    Route::delete('like', [LikeController::class, 'destroy'])->name('likes.destroy');
+    Route::post('likes', [LikeController::class, 'store'])->name('likes.store');
+    Route::post('likes/undo', [LikeController::class, 'destroy'])->name('likes.destroy');
 });
 
 //LOGGED IN USER SPA ROUTES

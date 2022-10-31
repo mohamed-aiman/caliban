@@ -20546,7 +20546,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/locations/for-select');
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/locations/for-select');
 
               case 2:
                 response = _context.sent;
@@ -20574,7 +20574,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/locations/for-select?search=' + locationSearch.value);
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/locations/for-select?search=' + locationSearch.value);
 
               case 2:
                 response = _context2.sent;
@@ -20625,7 +20625,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/categories/for-select?search=' + categorySearch.value);
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/categories/for-select?search=' + categorySearch.value);
 
               case 2:
                 response = _context3.sent;
@@ -20654,7 +20654,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 console.log('setSelectedCategory id: ' + id); // const response = CategoryService.levels(id)
 
                 _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/categories/' + id + '/levels');
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/categories/' + id + '/levels');
 
               case 3:
                 response = _context4.sent;
@@ -20744,7 +20744,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 form.category_id = null; // const response = CategoryService.children(id)
 
                 _context6.next = 3;
-                return fetch("/categories/".concat(id, "/children"));
+                return fetch("/api/categories/".concat(id, "/children"));
 
               case 3:
                 response = _context6.sent;
@@ -20821,7 +20821,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context8.prev = _context8.next) {
               case 0:
                 _context8.next = 2;
-                return fetch("/categories/".concat(form.category_id));
+                return fetch("/api/categories/".concat(form.category_id));
 
               case 2:
                 response = _context8.sent;
@@ -20880,7 +20880,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       formData.append('image', file, file.name); // $emit('uploading');
 
       uploading.value = true;
-      axios__WEBPACK_IMPORTED_MODULE_1___default().post('/photos', formData, {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/photos', formData, {
         onUploadProgress: function onUploadProgress(progressEvent) {
           uploadProgress.value = Math.round(progressEvent.loaded * 100 / progressEvent.total);
         }
@@ -20923,7 +20923,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 captureDescription();
                 capurePhotos();
                 captureLocations();
-                axios__WEBPACK_IMPORTED_MODULE_1___default().post('/listings', form).then(function (response) {
+                axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/listings', form).then(function (response) {
                   //@todo add route push here and proceed to preview before publishing
                   window.location.href = '/products/' + response.data.product.slug;
                 })["catch"](function (error) {
@@ -21108,7 +21108,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/listings/".concat(route.params.slug, "/form-data"));
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/listings/".concat(route.params.slug, "/form-data"));
 
               case 2:
                 response = _context.sent;
@@ -21281,7 +21281,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/locations/for-select');
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/locations/for-select');
 
               case 2:
                 response = _context2.sent;
@@ -21309,7 +21309,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/locations/for-select?search=' + locationSearch.value);
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/locations/for-select?search=' + locationSearch.value);
 
               case 2:
                 response = _context3.sent;
@@ -21362,7 +21362,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/categories/for-select?search=' + categorySearch.value);
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/categories/for-select?search=' + categorySearch.value);
 
               case 2:
                 response = _context4.sent;
@@ -21391,7 +21391,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log('setSelectedCategory id: ' + id); // const response = CategoryService.levels(id)
 
                 _context5.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/categories/' + id + '/levels');
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/categories/' + id + '/levels');
 
               case 3:
                 response = _context5.sent;
@@ -21481,7 +21481,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 form.category_id = null; // const response = CategoryService.children(id)
 
                 _context7.next = 3;
-                return fetch("/categories/".concat(id, "/children"));
+                return fetch("/api/categories/".concat(id, "/children"));
 
               case 3:
                 response = _context7.sent;
@@ -21558,7 +21558,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context9.prev = _context9.next) {
               case 0:
                 _context9.next = 2;
-                return fetch("/categories/".concat(form.category_id));
+                return fetch("/api/categories/".concat(form.category_id));
 
               case 2:
                 response = _context9.sent;
@@ -21617,7 +21617,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       formData.append('image', file, file.name); // $emit('uploading');
 
       uploading.value = true;
-      axios__WEBPACK_IMPORTED_MODULE_1___default().post('/photos', formData, {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/photos', formData, {
         onUploadProgress: function onUploadProgress(progressEvent) {
           uploadProgress.value = Math.round(progressEvent.loaded * 100 / progressEvent.total);
         }
@@ -21667,7 +21667,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log(form);
                 console.log(form.value); // axios.post('/listings', form.value)
 
-                axios__WEBPACK_IMPORTED_MODULE_1___default().patch("/listings/".concat(route.params.slug), form.value).then(function (response) {
+                axios__WEBPACK_IMPORTED_MODULE_1___default().patch("/api/listings/".concat(route.params.slug), form.value).then(function (response) {
                   //@todo add route push here and proceed to preview before publishing
                   window.location.href = '/products/' + response.data.product.slug;
                 })["catch"](function (error) {

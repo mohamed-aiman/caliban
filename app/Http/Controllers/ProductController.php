@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class ProductController extends Controller
         $this->product = $product;
     }
 
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         $product = $this->product->where('slug', $slug)->firstOrFail();
 
@@ -57,6 +58,12 @@ class ProductController extends Controller
 
         $locations = $product->locations->pluck('name')->toArray();
         $product->locations_string = implode(', ', $locations);
+
+  
+        $product->liked = Like::where('user_id', $request->user()->id)
+                ->where('product_id', $product->id)
+                ->exists();
+
 
         return $product->toArray();
 
