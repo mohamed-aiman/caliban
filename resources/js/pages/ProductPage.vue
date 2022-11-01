@@ -112,7 +112,7 @@ const loadPhoto = (photoUrl) => {
                     </div>
                 </div>
                 <div class="bg-white p-3">
-                    <like-toggle :product_id="product.id" :liked="product.liked"></like-toggle>
+                    <like-toggle :product="product"></like-toggle>
                 </div>
             </div>
         </div>
