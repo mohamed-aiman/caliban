@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios';
 import { ref, computed, watch } from 'vue';
+import { ProductService } from '@/services/ProductService';
 
 const props = defineProps(['product'])
 const liked = ref(props.product.liked)
@@ -17,17 +18,10 @@ watch(() => props.product, (val) => {
 })
 
 const toggle = () => {
-  axios.post('/api/likes/toggle', { product_id: props.product.id })
-    .then(response => {
-      console.log(response.data)
+  ProductService.toggleLike(props.product.id)
+    .then((response) => {
       liked.value = response.data.liked
-      console.log(liked)
     })
-    // .catch(error => {
-    //   if (error.response.status == 422) {
-    //     console.log(error.response.data.errors)
-    //   }
-    // })
 }
 
 </script>

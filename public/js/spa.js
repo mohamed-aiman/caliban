@@ -20231,6 +20231,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _services_ProductService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/services/ProductService */ "./resources/js/services/ProductService.js");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -20253,17 +20255,9 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     var toggle = function toggle() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/likes/toggle', {
-        product_id: props.product.id
-      }).then(function (response) {
-        console.log(response.data);
+      _services_ProductService__WEBPACK_IMPORTED_MODULE_2__.ProductService.toggleLike(props.product.id).then(function (response) {
         liked.value = response.data.liked;
-        console.log(liked);
-      }); // .catch(error => {
-      //   if (error.response.status == 422) {
-      //     console.log(error.response.data.errors)
-      //   }
-      // })
+      });
     };
 
     var __returned__ = {
@@ -20274,7 +20268,8 @@ __webpack_require__.r(__webpack_exports__);
       axios: (axios__WEBPACK_IMPORTED_MODULE_0___default()),
       ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,
       computed: vue__WEBPACK_IMPORTED_MODULE_1__.computed,
-      watch: vue__WEBPACK_IMPORTED_MODULE_1__.watch
+      watch: vue__WEBPACK_IMPORTED_MODULE_1__.watch,
+      ProductService: _services_ProductService__WEBPACK_IMPORTED_MODULE_2__.ProductService
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -22104,6 +22099,47 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
 
       return loadProduct;
     }()
+  }, {
+    key: "toggleLike",
+    value: function () {
+      var _toggleLike = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(productId) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return this.request({
+                  auth: false
+                }).post("/api/likes/toggle", {
+                  product_id: productId
+                });
+
+              case 3:
+                response = _context3.sent;
+                return _context3.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                message = _context3.t0.response.data ? _context3.t0.response.data.error : _context3.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context3.t0, message);
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 7]]);
+      }));
+
+      function toggleLike(_x3) {
+        return _toggleLike.apply(this, arguments);
+      }
+
+      return toggleLike;
+    }()
   }]);
 
   return ProductService;
@@ -22292,8 +22328,13 @@ var Http = /*#__PURE__*/function () {
 
       return response;
     }, function (error) {
-      // Any status codes that falls outside the range of 2xx cause this function to trigger
+      if (error.response.status === 401) {
+        //redirect to login
+        window.location.href = '/login';
+      } // Any status codes that falls outside the range of 2xx cause this function to trigger
       // Do something with response error
+
+
       return Promise.reject(error);
     });
     return this.init();

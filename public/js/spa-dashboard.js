@@ -25405,6 +25405,47 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
 
       return loadProduct;
     }()
+  }, {
+    key: "toggleLike",
+    value: function () {
+      var _toggleLike = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(productId) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return this.request({
+                  auth: false
+                }).post("/api/likes/toggle", {
+                  product_id: productId
+                });
+
+              case 3:
+                response = _context3.sent;
+                return _context3.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                message = _context3.t0.response.data ? _context3.t0.response.data.error : _context3.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context3.t0, message);
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 7]]);
+      }));
+
+      function toggleLike(_x3) {
+        return _toggleLike.apply(this, arguments);
+      }
+
+      return toggleLike;
+    }()
   }]);
 
   return ProductService;
@@ -25593,8 +25634,13 @@ var Http = /*#__PURE__*/function () {
 
       return response;
     }, function (error) {
-      // Any status codes that falls outside the range of 2xx cause this function to trigger
+      if (error.response.status === 401) {
+        //redirect to login
+        window.location.href = '/login';
+      } // Any status codes that falls outside the range of 2xx cause this function to trigger
       // Do something with response error
+
+
       return Promise.reject(error);
     });
     return this.init();
