@@ -6,7 +6,7 @@ use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class CategorySeederV2 extends Seeder
+class CategorySeederV2 extends CategorySeeder
 {
     /**
      * Run the database seeds.
@@ -120,7 +120,11 @@ class CategorySeederV2 extends Seeder
                     'fifth_level_category_name' => $data[4],
                 ]);
             }
+
         }
+       
+        $this->fillRemainingFields();
+        
 
 
         // foreach ($categories as $data) {

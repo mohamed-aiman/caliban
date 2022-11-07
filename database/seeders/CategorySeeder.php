@@ -88,7 +88,11 @@ class CategorySeeder extends Seeder
                 ]);
             }
         }
+        $this->fillRemainingFields();
+    }
 
+    protected function fillRemainingFields()
+    {
         $this->addPathFieldToCategories();
         $this->setSlugs();
         $this->setIsSelectable();
