@@ -19,13 +19,14 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $this->seedRealisticProducts();
-
         $this->faker = \Faker\Factory::create();
+        $allCategories = Category::where('is_selectable', true)->select('id')->get()->pluck('id')->toArray();
+
+        $this->seedRealisticProducts($this->faker->randomElement($allCategories));
+
 
         $stores = Store::all()->pluck('id')->toArray();
 
-        $allCategories = Category::where('is_selectable', true)->select('id')->get()->pluck('id')->toArray();
         // $selectableCategories = Category::whereNotIn('parent_id', $allCategories)
         //     ->get()->pluck('id')
         //     ->toArray();
@@ -72,7 +73,7 @@ class ProductSeeder extends Seeder
         return '<p>APPLE IPHONE 13 PRO 128GB 256GB + Apple 1year Warranty Free delivery shop 7781353</p><p>HOTLINE 7781353 | 9775757 SHOP 7700441</p><p>check all items price hampseshop.com&nbsp;</p><p>&nbsp;</p><p><strong>REGIS</strong></p><p>APPLE IPHONE 13 PRO MAX 128GB</p><p><strong>PRICE 20,499MVR</strong></p><p>APPLE IPHONE 13 PRO MAX 256GB</p><p><strong>PRICE 22,499MVR</strong></p><p>APPLE IPHONE 13 PRO MAX 512GB</p><p><strong>PRICE 26999 MVR</strong></p><p>APPLE IPHONE 13 PRO 128GB</p><p><strong>PRICE 18,499 MVR</strong></p><p>APPLE IPHONE 13 PRO 256GB</p><p><strong>PRICE 20,499&nbsp;MVR</strong></p><p>TERED BUSINESS</p><p>Registered Business in accordance with the Law of Maldives.</p><p>We provide a bill of sale with all our purchases upon request.&nbsp;</p><p><u>Search Hamps in Google Maps for our Outlet location.</u></p><p>&nbsp;</p><p><strong>GENIUNE PRODUCT</strong></p><p>A brand-new, unused, unopened, undamaged item in its original packaging</p><p>(where packaging is applicable).</p><p><br></p><p><strong>WARRANTY CLAUSE</strong></p><p>Smart phones sold in Hamps are sold with one-year international warranty.&nbsp;</p><p>We&nbsp;provide a testing period of 72hrs. During this testing period, a reported factory&nbsp;</p><p>defected product will be replaced or refunded from our outlet after a proper</p><p>diagnose by our technicians. However, any factory defected product reported</p><p>after the said&nbsp;72hrs will be handled under the one-year international warranty.</p><p><br></p><p><strong>DELIVERY CLAUSE</strong></p><p>Smart Phones and Laptops are delivered island wide without any delivery charge.&nbsp;</p><p>We also deliver to Boats, Ferries and Speed Launches.</p><p><br></p><p><strong>BANKING DETAILS</strong></p><p>BML MVR&nbsp;7730000086848</p><p>BML USD 773000008904</p>';
     }
 
-    public function seedRealisticProducts()
+    public function seedRealisticProducts($categoryId = 10073)
     {
 
         $product = Product::create([
@@ -90,7 +91,7 @@ class ProductSeeder extends Seeder
             'unit' => null,
             'description' => "<p>APPLE IPHONE 13 PRO 128GB 256GB + Apple 1year Warranty Free delivery shop 7781353</p><p>HOTLINE 7781353 | 9775757 SHOP 7700441</p><p>check all items price hampseshop.com&nbsp;</p><p>&nbsp;</p><p><strong>REGIS</strong></p><p>APPLE IPHONE 13 PRO MAX 128GB</p><p><strong>PRICE 20,499MVR</strong></p><p>APPLE IPHONE 13 PRO MAX 256GB</p><p><strong>PRICE 22,499MVR</strong></p><p>APPLE IPHONE 13 PRO MAX 512GB</p><p><strong>PRICE 26999 MVR</strong></p><p>APPLE IPHONE 13 PRO 128GB</p><p><strong>PRICE 18,499 MVR</strong></p><p>APPLE IPHONE 13 PRO 256GB</p><p><strong>PRICE 20,499&nbsp;MVR</strong></p><p>TERED BUSINESS</p><p>Registered Business in accordance with the Law of Maldives.</p><p>We provide a bill of sale with all our purchases upon request.&nbsp;</p><p><u>Search Hamps in Google Maps for our Outlet location.</u></p><p>&nbsp;</p><p><strong>GENIUNE PRODUCT</strong></p><p>A brand-new, unused, unopened, undamaged item in its original packaging</p><p>(where packaging is applicable).</p><p><br></p><p><strong>WARRANTY CLAUSE</strong></p><p>Smart phones sold in Hamps are sold with one-year international warranty.&nbsp;</p><p>We&nbsp;provide a testing period of 72hrs. During this testing period, a reported factory&nbsp;</p><p>defected product will be replaced or refunded from our outlet after a proper</p><p>diagnose by our technicians. However, any factory defected product reported</p><p>after the said&nbsp;72hrs will be handled under the one-year international warranty.</p><p><br></p><p><strong>DELIVERY CLAUSE</strong></p><p>Smart Phones and Laptops are delivered island wide without any delivery charge.&nbsp;</p><p>We also deliver to Boats, Ferries and Speed Launches.</p><p><br></p><p><strong>BANKING DETAILS</strong></p><p>BML MVR&nbsp;7730000086848</p><p>BML USD 773000008904</p>",
             'description_delta' => null,
-            'category_id' => 100073,
+            'category_id' => $categoryId,
             'seller_id' => 1,
             'condition' => "new",
             'selling_format' => "buy_now",
