@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth'], 'prefix'=>'api', 'as'=>'user.'], functio
     Route::get('locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
     Route::post('likes', [LikeController::class, 'store'])->name('likes.store');
     Route::post('likes/undo', [LikeController::class, 'destroy'])->name('likes.destroy');
+    Route::get('watchlist', [LikeController::class, 'index'])->name('likes.index');
 });
 
 //LOGGED IN USER SPA ROUTES

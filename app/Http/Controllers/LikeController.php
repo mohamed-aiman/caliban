@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Like;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -10,6 +11,23 @@ class LikeController extends Controller
     public function __construct(Like $like)
     {
         $this->like = $like;
+    }
+    
+    public function index(Request $request)
+    {
+        $likes = request()->user()->likes()->get();
+        $products = Product::whereIn('id', $likes->pluck('product_id'));
+
+        $max = 20;
+        $perPage = $request->has('per_page') ? $request->per_page : $max;
+        if ($perPage > $max) {
+            $perPage = $max;
+        }
+
+        $products = $products->with('photos','locations','category')
+            ->simplePaginate($perPage);
+
+        return $products;
     }
 
     protected function store(Request $request)

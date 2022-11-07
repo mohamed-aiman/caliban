@@ -5,6 +5,8 @@ import ListingCreatePage from '@/pages/ListingCreatePage.vue'
 import ListingIndexPage from '@/pages/ListingIndexPage.vue'
 import ListingEditPage from '@/pages/ListingEditPage.vue'
 import ListingShowPage from '@/pages/ListingShowPage.vue'
+import WatchlistPage from '@/pages/WatchlistPage.vue'
+import ProductPage from '@/pages/ProductPage.vue'
 
 const routes = [
   {
@@ -31,6 +33,16 @@ const routes = [
     path: "/dashboard/listings/:slug",
     name: "listings-show",
     component: ListingShowPage,
+  },
+  {
+    path: "/dashboard/watchlist",
+    name: "watchlist",
+    component: WatchlistPage,
+  },
+  {
+    path: "/products/:slug",
+    name: "products-show",
+    component: ProductPage,
   },
   {
     path: "/test",

@@ -56,6 +56,13 @@ const actions = {
     .then(response => {
       commit('SET_PRODUCT', response.data)
     })
+  },
+
+  async loadWatchlist ({ commit }, url) {
+    ProductService.loadWatchlist(url || '/api/watchlist')
+    .then(response => {
+      commit('SET_PRODUCTS', response.data)
+    })
   }
 }
 
