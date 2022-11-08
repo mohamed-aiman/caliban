@@ -22,9 +22,17 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
+            - proxy
         depends_on:
             - mysql
             - redis
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.beast.rule=Host(`${APP_SERVICE}`)
+            - traefik.http.routers.beast.tls=true
+            - traefik.http.routers.beast.tls.certresolver=proxyresolver
+            - traefik.port=80
+            - traefik.docker.network=proxy
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
@@ -60,6 +68,8 @@ services:
 networks:
     sail:
         driver: bridge
+    proxy:
+        external: true
 volumes:
     sail-mysql:
         driver: local
