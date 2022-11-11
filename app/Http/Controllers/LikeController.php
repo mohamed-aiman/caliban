@@ -30,41 +30,29 @@ class LikeController extends Controller
         return $products;
     }
 
-    protected function store(Request $request)
+    protected function toggle(Request $request)
     {
         $request->validate([
             'product_id' => 'required|integer|exists:products,id',
         ]);
 
-        if (!$like = $this->like->where('user_id', $request->user()->id)
+        $liked = false;
+        if ($like = $this->like->where('user_id', $request->user()->id)
             ->where('product_id', $request->product_id)
             ->first()) {
+            $like->delete();
+            $liked = false;
+        } else {
             $like = $this->like->create([
                 'user_id' => $request->user()->id,
                 'product_id' => $request->product_id,
             ]);
-        };
+            $liked = true;
+        }
 
         return response()->json([
-            'message' => 'like success',
-            'data' => $like,
-        ]);
-    }
-    
-    protected function destroy(Request $request)
-    {
-        $request->validate([
-            'product_id' => 'required|integer|exists:products,id',
-        ]);
-
-        $like = $this->like->where('user_id', $request->user()->id)
-            ->where('product_id', $request->product_id)
-            ->firstOrFail();
-
-        $like->delete();
-
-        return response()->json([
-            'message' => 'undo like success',
+            'message' => 'like toggled',
+            'liked' => $liked,
         ]);
     }
 }

@@ -20234,61 +20234,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _services_ProductService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/services/ProductService */ "./resources/js/services/ProductService.js");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'like-toggle',
-  props: ['product_id', 'liked'],
+  props: ['product'],
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
     var props = __props;
-    var liked = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(props.liked);
-    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
-      liked.value = props.liked;
-      console.log(props.product_id);
-      console.log(props.liked);
-      console.log(liked);
+    var liked = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(props.product.liked);
+    var likedColor = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+      return liked.value ? 'bg-green-700 hover:bg-green-800 dark:bg-blue-300 dark:hover:bg-blue-400 dark:focus:ring-blue-500' : 'bg-gray-300 hover:bg-gray-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800';
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
+      return props.product;
+    }, function (val) {
+      if (val) {
+        liked.value = val.liked;
+      }
     });
 
-    var like = function like() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/likes', {
-        product_id: props.product_id
-      }).then(function (response) {
-        console.log(response);
-        liked.value = true;
-      })["catch"](function (error) {
-        console.log(error);
-
-        if (error.response.status == 422) {
-          console.log(error.response.data.errors);
-        }
-      });
-    };
-
-    var undoLike = function undoLike() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/likes/undo', {
-        product_id: props.product_id
-      }).then(function (response) {
-        console.log(response);
-        liked.value = false;
-      })["catch"](function (error) {
-        console.log(error);
-
-        if (error.response.status == 422) {
-          console.log(error.response.data.errors);
-        }
+    var toggle = function toggle() {
+      _services_ProductService__WEBPACK_IMPORTED_MODULE_2__.ProductService.toggleLike(props.product.id).then(function (response) {
+        liked.value = response.data.liked;
       });
     };
 
     var __returned__ = {
       props: props,
       liked: liked,
-      like: like,
-      undoLike: undoLike,
+      likedColor: likedColor,
+      toggle: toggle,
       axios: (axios__WEBPACK_IMPORTED_MODULE_0___default()),
       ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,
-      onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted
+      computed: vue__WEBPACK_IMPORTED_MODULE_1__.computed,
+      watch: vue__WEBPACK_IMPORTED_MODULE_1__.watch,
+      ProductService: _services_ProductService__WEBPACK_IMPORTED_MODULE_2__.ProductService
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -22299,36 +22283,15 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_2 = [_hoisted_1];
-
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
-  xmlns: "http://www.w3.org/2000/svg",
-  fill: "none",
-  viewBox: "0 0 24 24",
-  "stroke-width": "1.5",
-  stroke: "currentColor",
-  "class": "w-4 h-4"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
-  "stroke-linecap": "round",
-  "stroke-linejoin": "round",
-  d: "M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_4 = [_hoisted_3];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [!$setup.liked ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-    key: 0,
-    onClick: $setup.like,
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return $setup.toggle();
+    }),
     type: "button",
-    "class": "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-  }, _hoisted_2)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.liked ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-    key: 1,
-    onClick: $setup.undoLike,
-    type: "button",
-    "class": "text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-  }, _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
-  /* STABLE_FRAGMENT */
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["focus:ring-4 focus:ring-red-300 focus:outline-none font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2", $setup.likedColor])
+  }, _hoisted_2, 2
+  /* CLASS */
   );
 }
 
@@ -25657,11 +25620,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), $setup.product.seller.phone2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_32, " ," + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.product.seller.phone2), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["LikeToggle"], {
-    product_id: $setup.product.id,
-    liked: $setup.product.liked
+    product: $setup.product
   }, null, 8
   /* PROPS */
-  , ["product_id", "liked"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 4 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  , ["product"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 4 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     innerHTML: $setup.product.description
   }, null, 8
   /* PROPS */
@@ -26163,6 +26125,47 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
 
       return loadProduct;
     }()
+  }, {
+    key: "toggleLike",
+    value: function () {
+      var _toggleLike = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(productId) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return this.request({
+                  auth: false
+                }).post("/api/likes/toggle", {
+                  product_id: productId
+                });
+
+              case 3:
+                response = _context4.sent;
+                return _context4.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+                message = _context4.t0.response.data ? _context4.t0.response.data.error : _context4.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context4.t0, message);
+
+              case 11:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this, [[0, 7]]);
+      }));
+
+      function toggleLike(_x4) {
+        return _toggleLike.apply(this, arguments);
+      }
+
+      return toggleLike;
+    }()
   }]);
 
   return ProductService;
@@ -26351,8 +26354,13 @@ var Http = /*#__PURE__*/function () {
 
       return response;
     }, function (error) {
-      // Any status codes that falls outside the range of 2xx cause this function to trigger
+      if (error.response.status === 401) {
+        //redirect to login
+        window.location.href = '/login';
+      } // Any status codes that falls outside the range of 2xx cause this function to trigger
       // Do something with response error
+
+
       return Promise.reject(error);
     });
     return this.init();

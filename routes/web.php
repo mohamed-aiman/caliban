@@ -51,9 +51,8 @@ Route::group(['middleware' => ['auth'], 'prefix'=>'api', 'as'=>'user.'], functio
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('listings/{productSlug}', [ListingController::class, 'show'])->name('listings.show');
     Route::get('locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
-    Route::post('likes', [LikeController::class, 'store'])->name('likes.store');
-    Route::post('likes/undo', [LikeController::class, 'destroy'])->name('likes.destroy');
     Route::get('watchlist', [LikeController::class, 'index'])->name('likes.index');
+    Route::post('likes/toggle', [LikeController::class, 'toggle'])->name('likes.toggle');
 });
 
 //LOGGED IN USER SPA ROUTES
