@@ -22,11 +22,16 @@ class CategorySeederV2 extends CategorySeeder
         //first add level 1 categories
         foreach ($categories as $data) {
             if (count($data) == 1) {
-                $category->create([
+                $current = $category->create([
                     'name' => $data[0],
                     'level' => 1,
                     'parent_id' => null,
                     'category_name' => $data[0],
+                ]);
+
+                $current->update([
+                    'category' => $current->id,
+                    // 'category_slug' => $current->slug,
                 ]);
             }
         }
@@ -37,13 +42,18 @@ class CategorySeederV2 extends CategorySeeder
 
                 $level1 = $category->where('name', $data[0])->first();
 
-                $category->create([
+                $current = $category->create([
                     'name' => $data[1],
                     'level' => 2,
                     'parent_id' => $level1->id,
                     'category' => $level1->id,
                     'category_name' => $level1->name,
                     'sub_category_name' => $data[1],
+                ]);
+
+                $current->update([
+                    'sub_category' => $current->id,
+                    // 'sub_category_slug' => $current->slug,
                 ]);
             }
         }
@@ -55,7 +65,7 @@ class CategorySeederV2 extends CategorySeeder
                 $level1 = $category->where('name', $data[0])->first();
                 $level2 = $category->where('name', $data[1])->first();
 
-                $category->create([
+                $current = $category->create([
                     'name' => $data[2],
                     'level' => 3,
                     'parent_id' => $level2->id,
@@ -64,6 +74,11 @@ class CategorySeederV2 extends CategorySeeder
                     'category_name' => $level1->name,
                     'sub_category_name' => $level2->name,
                     'third_level_category_name' => $data[2],
+                ]);
+
+                $current->update([
+                    'third_level_category' => $current->id,
+                    // 'third_level_category_slug' => $current->slug,
                 ]);
             }
         }
@@ -77,7 +92,7 @@ class CategorySeederV2 extends CategorySeeder
                 $level3 = $category->where('name', $data[2])->first();
 
                 try {
-                    $category->create([
+                    $current = $category->create([
                         'name' => $data[3],
                         'level' => 4,
                         'parent_id' => $level3->id,
@@ -88,6 +103,11 @@ class CategorySeederV2 extends CategorySeeder
                         'sub_category_name' => $level2->name,
                         'third_level_category_name' => $level3->name,
                         'fourth_level_category_name' => $data[3],
+                    ]);
+
+                    $current->update([
+                        'fourth_level_category' => $current->id,
+                        // 'fourth_level_category_slug' => $current->slug,
                     ]);
                 } catch (\Exception $e) {
                     dd($data);
@@ -105,7 +125,7 @@ class CategorySeederV2 extends CategorySeeder
                 $level3 = $category->where('name', $data[2])->first();
                 $level4 = $category->where('name', $data[3])->first();
 
-                $category->create([
+                $current = $category->create([
                     'name' => $data[4],
                     'level' => 5,
                     'parent_id' => $level4->id,
@@ -119,69 +139,16 @@ class CategorySeederV2 extends CategorySeeder
                     'fourth_level_category_name' => $level4->name,
                     'fifth_level_category_name' => $data[4],
                 ]);
+
+                $current->update([
+                    'fifth_level_category' => $current->id,
+                    // 'fifth_level_category_slug' => $current->slug,
+                ]);
             }
 
         }
        
         $this->fillRemainingFields();
-        
-
-
-        // foreach ($categories as $data) {
-
-        //     if (count($data) == 5) {
-        //         $name = $data[4];
-        //         $parentId = $data[3];
-        //     }
-            
-        //     if (count($data) == 4) {
-        //         $name = $data[3];
-        //         $parentId = $data[2];
-        //     }
-            
-        //     if (count($data) == 3) {
-        //         $name = $data[2];
-        //         $parentId = $data[1];
-        //     }
-            
-        //     if (count($data) == 2) {
-        //         $name = $data[1];
-        //         $parentId = $data[0];
-        //     }
-            
-        //     if (count($data) == 1) {
-        //         $name = $data[0];
-        //         $parentId = null;
-        //     }
-            
-        //     $category->create([                
-        //         'name' => $name,
-        //         // 'slug' =>
-        //         // 'mtime' =>
-        //         // 'images' =>
-        //         'parent_id' => $parentId,
-        //         'level' => count($data),
-        //         // 'category' =>
-        //         // 'category_name' =>
-        //         // 'category_slug' =>
-        //         // 'sub_category' =>
-        //         // 'sub_category_name' =>
-        //         // 'sub_category_slug' =>
-        //         // 'third_level_category' =>
-        //         // 'third_level_category_name' =>
-        //         // 'third_level_category_slug' =>
-        //         // 'fourth_level_category' =>
-        //         // 'fourth_level_category_name' =>
-        //         // 'fourth_level_category_slug' =>
-        //         // 'fifth_level_category' =>
-        //         // 'fifth_level_category_name' =>
-        //         // 'fifth_level_category_slug' =>
-        //         // 'path' =>
-        //         // 'is_selectable' =>
-        //     ]);
-        //     // $category->create($data);
-            
-        // }
     }
 
     public function getCategories()
