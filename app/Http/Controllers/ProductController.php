@@ -59,10 +59,11 @@ class ProductController extends Controller
         $locations = $product->locations->pluck('name')->toArray();
         $product->locations_string = implode(', ', $locations);
 
-  
-        $product->liked = Like::where('user_id', $request->user()->id)
-                ->where('product_id', $product->id)
-                ->exists();
+        if ($request->user()) {
+            $product->liked = Like::where('user_id', $request->user()->id)
+                    ->where('product_id', $product->id)
+                    ->exists();
+        }
 
 
         return $product->toArray();
