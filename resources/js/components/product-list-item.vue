@@ -1,6 +1,5 @@
 <script setup>
 
-import { onMounted } from '@vue/runtime-core'
 import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()

@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref, onMounted, computed } from '@vue/runtime-core'
+import { ref, computed } from '@vue/runtime-core'
 import { useStore } from 'vuex'
 
 const store = useStore()

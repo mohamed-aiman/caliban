@@ -216,6 +216,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import { UserService } from '@/services/UserService'
+import { useRouter, useRoute } from 'vue-router'
 
 const showMenu = ref(false)
 const toggleNavbar = () => {
@@ -263,12 +264,25 @@ const categorySlug = computed({
     }
 })
 
+const router = useRouter()
+const route = useRoute()
 const query = ref('')
 const search = async () => {
-    await store.dispatch('product/queryProducts',{
+    await store.dispatch('product/queryProducts', {
         q: query.value,
         category: store.state.category.selectedCategory.slug
     })
+
+    // if (route.name != 'home') {
+        router.push({
+            name: 'search',
+            query: {
+                q: query.value,
+                category: store.state.category.selectedCategory.slug
+            }
+        })
+    // }
+
     searchInput.value.focus()
 }
 </script>
