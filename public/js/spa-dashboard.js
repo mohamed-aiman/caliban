@@ -26017,36 +26017,33 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log('queryProducts', params);
-                _context.prev = 1;
+                _context.prev = 0;
                 // const url = '/api/search?q=' + query.value + '&category=' + store.state.category.selectedCategory.slug
                 url = url || '/api/search?';
-                console.log('url', url);
                 searchParams = new URLSearchParams(params);
-                console.log('searchParams', searchParams);
                 url += searchParams.toString();
-                console.log('url2', url);
-                _context.next = 10;
+                console.log('url', url);
+                _context.next = 7;
                 return this.request({
                   auth: false
                 }).get(url);
 
-              case 10:
+              case 7:
                 response = _context.sent;
                 return _context.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
 
-              case 14:
-                _context.prev = 14;
-                _context.t0 = _context["catch"](1);
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](0);
                 message = _context.t0.response.data ? _context.t0.response.data.error : _context.t0.response.statusText;
                 throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context.t0, message);
 
-              case 18:
+              case 15:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 14]]);
+        }, _callee, this, [[0, 11]]);
       }));
 
       function queryProducts(_x, _x2) {
@@ -26751,7 +26748,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = {
   queryParams: {// q: '',
     // category: null,
-    // price: null,
+    // min_price: null,
+    // max_price: null,
     // condition: null,
     // brand: null,
     // color: null,
@@ -26798,7 +26796,6 @@ var mutations = {
     state.queryParams = data;
   },
   UPDATE_A_QUERY_PARAM: function UPDATE_A_QUERY_PARAM(state, data) {
-    console.log('UPDATE_A_QUERY_PARAM', data);
     state.queryParams[data.key] = data.value;
   },
   SET_QUERY_MESSAGE: function SET_QUERY_MESSAGE(state, data) {
@@ -26814,8 +26811,7 @@ var actions = {
           switch (_context.prev = _context.next) {
             case 0:
               commit = _ref.commit;
-              console.log('queryProducts', params); //fore each key in params UPDATE_A_QUERY_PARAM
-
+              //fore each key in params UPDATE_A_QUERY_PARAM
               Object.keys(params).forEach(function (key) {
                 commit('UPDATE_A_QUERY_PARAM', {
                   key: key,
@@ -26828,7 +26824,7 @@ var actions = {
                 commit('SET_QUERY_MESSAGE', 'Showing ' + response.data.data.length + ' of ' + response.data.total + ' results');
               });
 
-            case 4:
+            case 3:
             case "end":
               return _context.stop();
           }

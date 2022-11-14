@@ -38,6 +38,7 @@ return new class extends Migration
             $table->unsignedInteger('duration')->nullable();//days
             $table->datetime('list_till')->nullable();
             $table->string('tax')->nullable();
+            $table->unsignedInteger('likes_count')->default(0);
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories');

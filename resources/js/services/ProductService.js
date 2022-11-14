@@ -4,15 +4,12 @@ import { ErrorWrapper, ResponseWrapper } from '@/services/util'
 export class ProductService extends BaseService {
 
   static async queryProducts (params, url) {
-    console.log('queryProducts', params);
     try {
       // const url = '/api/search?q=' + query.value + '&category=' + store.state.category.selectedCategory.slug
       url = url || '/api/search?';
-      console.log('url', url);
       const searchParams = new URLSearchParams(params);
-      console.log('searchParams', searchParams);
       url += searchParams.toString();
-      console.log('url2', url);
+      console.log('url', url);
 
 
       const response = await this.request({ auth: false }).get(url)

@@ -4,7 +4,8 @@ const state = {
   queryParams: {
     // q: '',
     // category: null,
-    // price: null,
+    // min_price: null,
+    // max_price: null,
     // condition: null,
     // brand: null,
     // color: null,
@@ -57,7 +58,6 @@ const mutations = {
     state.queryParams = data
   },
   UPDATE_A_QUERY_PARAM (state, data) {
-    console.log('UPDATE_A_QUERY_PARAM', data)
     state.queryParams[data.key] = data.value
   },
   SET_QUERY_MESSAGE (state, data) {
@@ -68,7 +68,6 @@ const mutations = {
 const actions = {
 
   async queryProducts ({ commit }, params, url) {
-    console.log('queryProducts', params)
     //fore each key in params UPDATE_A_QUERY_PARAM
     Object.keys(params).forEach(key => {
       commit('UPDATE_A_QUERY_PARAM', { key: key, value: params[key] })
