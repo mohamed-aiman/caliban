@@ -20400,6 +20400,18 @@ __webpack_require__.r(__webpack_exports__);
       });
     };
 
+    var queryMessage = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+      return store.state.product.queryMessage;
+    });
+
+    var clearFiltersSort = function clearFiltersSort() {
+      store.dispatch('product/queryProducts', {
+        sort: null,
+        min_price: null,
+        max_price: null
+      });
+    };
+
     var __returned__ = {
       store: store,
       selectedSortBy: selectedSortBy,
@@ -20412,6 +20424,8 @@ __webpack_require__.r(__webpack_exports__);
       minPrice: minPrice,
       maxPrice: maxPrice,
       filterByPrice: filterByPrice,
+      queryMessage: queryMessage,
+      clearFiltersSort: clearFiltersSort,
       ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.ref,
       onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       computed: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.computed,
@@ -21387,6 +21401,30 @@ var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_18 = [_hoisted_17];
+var _hoisted_19 = {
+  "class": "flex w-full"
+};
+var _hoisted_20 = {
+  "class": "h-full flex flex-nowrap space-x-2 w-full justify-center"
+};
+var _hoisted_21 = ["textContent"];
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  "aria-hidden": "true",
+  "class": "ml-2 -mr-1 w-5 h-5",
+  fill: "none",
+  viewBox: "0 0 24 24",
+  "stroke-width": "1.5",
+  stroke: "currentColor",
+  xmlns: "http://www.w3.org/2000/svg"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  d: "M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+})], -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
@@ -21416,7 +21454,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $setup.sortBy('best_match');
     }),
     type: "button"
-  }, " Best Match ", 2
+  }, " Best Match ", 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.selectedSortBy == "likes_count" ? $setup.buttonSelectedCss : $setup.buttonNotSelectedCss, "my-auto text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"]),
@@ -21426,7 +21464,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "button"
   }, " Likes ", 2
   /* CLASS */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" price low to high button "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.selectedSortBy == "price_desc" || $setup.selectedSortBy == "price" ? $setup.buttonSelectedCss : $setup.buttonNotSelectedCss, "my-auto text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"]),
     onClick: _cache[4] || (_cache[4] = function ($event) {
       return $setup.sortByPrice();
@@ -21434,7 +21472,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "button"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Price "), $setup.selectedSortBy == 'price' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", _hoisted_13, _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.selectedSortBy == 'price_desc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", _hoisted_16, _hoisted_18)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" price high to low button "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button v-bind:class=\"(selectedSortBy == `price_low_to_high`) ? buttonSelectedCss : buttonNotSelectedCss\" \n                        v-if=\"selectedSortBy && (selectedSortBy == `price_low_to_high` || selectedSortBy != `price_desc`)\" \n                        @click=\"sortBy('price_desc')\" type=\"button\"\n                        class=\"text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center\">\n                        Price\n                        <svg aria-hidden=\"true\" class=\"ml-2 -mr-1 w-5 h-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\"\n                            stroke=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n                            <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M15.75 17.25L12 21m0 0l-3.75-3.75M12 21V3\" />\n                        </svg>\n                    </button> ")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"flex flex-nowrap w-full justify-start space-x-2 space-y-2 items-baseline\">\n\n        </div> ")]);
+  )])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.queryMessage),
+    "class": "my-auto text-sm font-mono text-gray-700"
+  }, null, 8
+  /* PROPS */
+  , _hoisted_21), $setup.selectedSortBy || $setup.minPrice || $setup.maxPrice ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    key: 0,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.buttonNotSelectedCss, "my-auto text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"]),
+    onClick: _cache[5] || (_cache[5] = function ($event) {
+      return $setup.clearFiltersSort();
+    }),
+    type: "button"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Clear "), _hoisted_22])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
 }
 
 /***/ }),
@@ -23026,6 +23076,7 @@ var state = {
     // sort: null,
     // page: null
   },
+  queryMessage: '',
   products: {
     current_page: null,
     data: [],
@@ -23066,6 +23117,9 @@ var mutations = {
   UPDATE_A_QUERY_PARAM: function UPDATE_A_QUERY_PARAM(state, data) {
     console.log('UPDATE_A_QUERY_PARAM', data);
     state.queryParams[data.key] = data.value;
+  },
+  SET_QUERY_MESSAGE: function SET_QUERY_MESSAGE(state, data) {
+    state.queryMessage = data;
   }
 };
 var actions = {
@@ -23088,6 +23142,7 @@ var actions = {
 
               _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.queryProducts(state.queryParams).then(function (response) {
                 commit('SET_PRODUCTS', response.data);
+                commit('SET_QUERY_MESSAGE', 'Showing ' + response.data.data.length + ' of ' + response.data.total + ' results');
               });
 
             case 4:

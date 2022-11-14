@@ -12,6 +12,7 @@ const state = {
     // sort: null,
     // page: null
   },
+  queryMessage: '',
   products: {
     current_page:null,
     data: [],
@@ -58,6 +59,9 @@ const mutations = {
   UPDATE_A_QUERY_PARAM (state, data) {
     console.log('UPDATE_A_QUERY_PARAM', data)
     state.queryParams[data.key] = data.value
+  },
+  SET_QUERY_MESSAGE (state, data) {
+    state.queryMessage = data
   }
 }
 
@@ -73,6 +77,7 @@ const actions = {
     ProductService.queryProducts(state.queryParams)
     .then(response => {
       commit('SET_PRODUCTS', response.data)
+      commit('SET_QUERY_MESSAGE', 'Showing ' + response.data.data.length + ' of ' + response.data.total + ' results')
     })
   },
 
