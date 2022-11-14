@@ -20357,8 +20357,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 
 
@@ -20368,6 +20368,13 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_0__.useStore)();
+    var selectedSortBy = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+      return store.state.product.queryParams.sort;
+    });
+    var buttonNotSelectedCss = 'focus:ring-blue-300 bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800';
+    var buttonSelectedCss = 'focus:ring-teal-300 bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800';
+    var inputNotSelectedCss = 'focus:ring-blue-300 text-blue-700 hover:text-blue-800 dark:text-blue-600 dark:hover:text-blue-700 dark:focus:ring-blue-800';
+    var inputSelectedCss = 'focus:ring-teal-300 text-teal-700 hover:text-teal-800 dark:text-teal-600 dark:hover:text-teal-700 dark:focus:ring-teal-800';
 
     var sortBy = function sortBy(sort) {
       store.dispatch('product/queryProducts', {
@@ -20375,8 +20382,16 @@ __webpack_require__.r(__webpack_exports__);
       });
     };
 
-    var minPrice = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
-    var maxPrice = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var sortByPrice = function sortByPrice() {
+      if (selectedSortBy.value == 'price') {
+        sortBy('price_desc');
+      } else {
+        sortBy('price');
+      }
+    };
+
+    var minPrice = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.ref)(null);
+    var maxPrice = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.ref)(null);
 
     var filterByPrice = function filterByPrice(filter) {
       store.dispatch('product/queryProducts', {
@@ -20387,12 +20402,19 @@ __webpack_require__.r(__webpack_exports__);
 
     var __returned__ = {
       store: store,
+      selectedSortBy: selectedSortBy,
+      buttonNotSelectedCss: buttonNotSelectedCss,
+      buttonSelectedCss: buttonSelectedCss,
+      inputNotSelectedCss: inputNotSelectedCss,
+      inputSelectedCss: inputSelectedCss,
       sortBy: sortBy,
+      sortByPrice: sortByPrice,
       minPrice: minPrice,
       maxPrice: maxPrice,
       filterByPrice: filterByPrice,
-      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.ref,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.onMounted,
+      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.ref,
+      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.onMounted,
+      computed: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.computed,
       useStore: vuex__WEBPACK_IMPORTED_MODULE_0__.useStore
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
@@ -21273,7 +21295,7 @@ var _hoisted_2 = {
   "class": "flex w-full"
 };
 var _hoisted_3 = {
-  "class": "h-full flex flex-nowrap space-x-2"
+  "class": "h-full flex flex-nowrap space-x-2 w-full"
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
@@ -21289,89 +21311,130 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
-  xmlns: "http://www.w3.org/2000/svg",
-  fill: "none",
-  viewBox: "0 0 24 24",
-  "stroke-width": "1.5",
-  stroke: "currentColor",
-  "class": "w-6 h-6"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
-  "stroke-linecap": "round",
-  "stroke-linejoin": "round",
-  d: "M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_7 = [_hoisted_6];
-var _hoisted_8 = {
-  "class": "flex w-full"
-};
-var _hoisted_9 = {
-  "class": "h-full flex flex-nowrap space-x-2"
-};
-
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "my-auto text-sm font-mono text-gray-700"
-}, "Sort by:", -1
-/* HOISTED */
-);
-
-var _hoisted_11 = {
-  "class": "block text-gray-700"
-};
-
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
-  xmlns: "http://www.w3.org/2000/svg",
-  "class": "h-4 w-4 inline-block",
+  "aria-hidden": "true",
+  "class": "w-5 h-5",
+  fill: "currentColor",
   viewBox: "0 0 20 20",
-  fill: "currentColor"
+  xmlns: "http://www.w3.org/2000/svg"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
   "fill-rule": "evenodd",
-  d: "M3.293 7.293a1 1 0 011.414 0L10 13.586l6.293-6.293a1 1 0 111.414 1.414l-7 7a1 1 0 01-1.414 0l-7-7a1 1 0 010-1.414z",
+  d: "M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z",
   "clip-rule": "evenodd"
 })], -1
 /* HOISTED */
 );
 
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "sr-only"
+}, "Filter by price", -1
+/* HOISTED */
+);
+
+var _hoisted_8 = [_hoisted_6, _hoisted_7];
+var _hoisted_9 = {
+  "class": "flex w-full"
+};
+var _hoisted_10 = {
+  "class": "h-full flex flex-nowrap space-x-2 w-full"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "my-auto text-sm font-mono text-gray-700"
+}, "Sort by:", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = {
+  "class": "text-gray-700 flex space-x-1 h-full"
+};
+var _hoisted_13 = {
+  key: 0,
+  "aria-hidden": "true",
+  "class": "ml-2 -mr-1 w-5 h-5",
+  fill: "none",
+  viewBox: "0 0 24 24",
+  "stroke-width": "1.5",
+  stroke: "currentColor",
+  xmlns: "http://www.w3.org/2000/svg"
+};
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  d: "M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_15 = [_hoisted_14];
+var _hoisted_16 = {
+  key: 1,
+  "aria-hidden": "true",
+  "class": "ml-2 -mr-1 w-5 h-5",
+  fill: "none",
+  viewBox: "0 0 24 24",
+  "stroke-width": "1.5",
+  stroke: "currentColor",
+  xmlns: "http://www.w3.org/2000/svg"
+};
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  d: "M15.75 17.25L12 21m0 0l-3.75-3.75M12 21V3"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_18 = [_hoisted_17];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $setup.minPrice = $event;
     }),
-    type: "text",
-    "class": "w-1/4 border border-gray-300 rounded-md",
-    placeholder: "min"
-  }, null, 512
-  /* NEED_PATCH */
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.minPrice ? $setup.inputSelectedCss : $setup.inputNotSelectedCss, "my-auto text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center w-1/4"]),
+    type: "number",
+    placeholder: "min price"
+  }, null, 2
+  /* CLASS */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.minPrice]]), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $setup.maxPrice = $event;
     }),
-    type: "text",
-    "class": "w-1/4 border border-gray-300 rounded-md",
-    placeholder: "max"
-  }, null, 512
-  /* NEED_PATCH */
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.maxPrice ? $setup.inputSelectedCss : $setup.inputNotSelectedCss, "my-auto text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center w-1/4"]),
+    type: "number",
+    placeholder: "max price"
+  }, null, 2
+  /* CLASS */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.maxPrice]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: $setup.filterByPrice,
-    "class": "rounded bg-teal-500 px-2"
-  }, _hoisted_7)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "my-3 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
+  }, _hoisted_8)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.selectedSortBy == "best_match" ? $setup.buttonSelectedCss : $setup.buttonNotSelectedCss, "my-auto text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"]),
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $setup.sortBy('best_match');
     }),
-    "class": "p-3 bg-teal-300 border border-gray-300"
-  }, "Best Match"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button"
+  }, " Best Match ", 2
+  /* CLASS */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.selectedSortBy == "likes_count" ? $setup.buttonSelectedCss : $setup.buttonNotSelectedCss, "my-auto text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"]),
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $setup.sortBy('likes_count');
     }),
-    "class": "p-3 bg-teal-300 border border-gray-300"
-  }, "Likes"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button"
+  }, " Likes ", 2
+  /* CLASS */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" price low to high button "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.selectedSortBy == "price_desc" || $setup.selectedSortBy == "price" ? $setup.buttonSelectedCss : $setup.buttonNotSelectedCss, "my-auto text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"]),
     onClick: _cache[4] || (_cache[4] = function ($event) {
-      return $setup.sortBy('price');
+      return $setup.sortByPrice();
     }),
-    "class": "p-3 bg-teal-300 border border-gray-300"
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Price "), _hoisted_12])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"flex flex-nowrap w-full justify-start space-x-2 space-y-2 items-baseline\">\n\n        </div> ")]);
+    type: "button"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Price "), $setup.selectedSortBy == 'price' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", _hoisted_13, _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.selectedSortBy == 'price_desc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", _hoisted_16, _hoisted_18)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
+  /* CLASS */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" price high to low button "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button v-bind:class=\"(selectedSortBy == `price_low_to_high`) ? buttonSelectedCss : buttonNotSelectedCss\" \n                        v-if=\"selectedSortBy && (selectedSortBy == `price_low_to_high` || selectedSortBy != `price_desc`)\" \n                        @click=\"sortBy('price_desc')\" type=\"button\"\n                        class=\"text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center\">\n                        Price\n                        <svg aria-hidden=\"true\" class=\"ml-2 -mr-1 w-5 h-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\"\n                            stroke=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n                            <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M15.75 17.25L12 21m0 0l-3.75-3.75M12 21V3\" />\n                        </svg>\n                    </button> ")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"flex flex-nowrap w-full justify-start space-x-2 space-y-2 items-baseline\">\n\n        </div> ")]);
 }
 
 /***/ }),
@@ -21807,7 +21870,7 @@ var _hoisted_6 = {
   "class": "text-l font-mono font-semibold text-orange-700"
 };
 var _hoisted_7 = {
-  "class": "py-3 mx-auto my-2 flex justify-between border rounded-md"
+  "class": "py-3 mx-auto my-2 flex justify-between border-t-2 border-b-2"
 };
 var _hoisted_8 = {
   "class": ""

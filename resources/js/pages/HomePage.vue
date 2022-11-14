@@ -47,7 +47,7 @@ const goToCategoryProducts = (slug) => {
                     </div>
 
                     <!-- filters-->
-                    <div class="py-3 mx-auto my-2 flex justify-between border rounded-md">
+                    <div class="py-3 mx-auto my-2 flex justify-between border-t-2 border-b-2">
                         <product-filters/>
                     </div>
     
