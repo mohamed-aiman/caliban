@@ -24,6 +24,13 @@ const goToCategoryProducts = (slug) => {
     window.location.href = `/categories/${slug}/products`
 }
 
+
+const sortBy = (sort) => {
+    store.dispatch('product/queryProducts', {
+        sort: sort
+    })
+}
+
 </script>
 
 <template>
@@ -43,6 +50,41 @@ const goToCategoryProducts = (slug) => {
                         <p class="text-l font-mono font-semibold text-orange-700">
                             {{ selectedCategory.name }}
                         </p>
+                    </div>
+
+                    <!-- left side -->
+                    <div class="py-3 mx-auto flex justify-between">
+                        <div class="flex flex-row space-x-2 items-baseline">
+                            <!-- price -->
+                            <div class="flex flex-col space-y-2">
+                                <div class="flex flex-row space-x-2 items-baseline">
+                                    <p class="text-sm font-mono text-gray-700">Price:</p>
+                                    <input type="text" class="w-1/4 px-2 py-1 border border-gray-300 rounded-md" placeholder="min">
+                                    <p class="text-sm font-mono text-gray-700">-</p>
+                                    <input type="text" class="w-1/4 px-2 py-1 border border-gray-300 rounded-md" placeholder="max">
+                                </div>
+
+                                <!-- sort by -->
+                                <div class="flex flex-row space-x-2 items-baseline">
+                                    <p class="text-sm font-mono text-gray-700">Sort by:</p>
+                                    <div class="block text-gray-700">
+                                        <button @click="sortBy('best_match')" class="p-3 bg-teal-300 border border-gray-300">Best Match</button>
+                                        <button @click="sortBy('likes_count')" class="p-3 bg-teal-300 border border-gray-300">Likes</button>
+                                        <button @click="sortBy('price')" class="p-3 bg-teal-300 border border-gray-300">
+                                            Price
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M3.293 7.293a1 1 0 011.414 0L10 13.586l6.293-6.293a1 1 0 111.414 1.414l-7 7a1 1 0 01-1.414 0l-7-7a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- right side -->
+                        <div class="">
+                        </div>
                     </div>
     
                     <!-- product list start -->

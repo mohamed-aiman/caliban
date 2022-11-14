@@ -265,10 +265,10 @@ const categorySlug = computed({
 
 const query = ref('')
 const search = async () => {
-    await store.dispatch(
-        'product/loadProducts',
-        '/api/search?q=' + query.value + '&category=' + store.state.category.selectedCategory.slug
-    )
+    await store.dispatch('product/queryProducts',{
+        q: query.value,
+        category: store.state.category.selectedCategory.slug
+    })
     searchInput.value.focus()
 }
 </script>
