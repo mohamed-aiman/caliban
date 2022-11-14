@@ -50,7 +50,7 @@ const clearFiltersSort = () => {
 </script>
 
 <template>
-    <div class="flex flex-wrap lg:flex-nowrap space-y-2">
+    <div class="flex flex-wrap lg:flex-nowrap py-3 my-3 items-baseline h-full border-t border-b">
 
 
         <div class="flex w-full">
@@ -60,13 +60,13 @@ const clearFiltersSort = () => {
                      :class="(minPrice) ? inputSelectedCss : inputNotSelectedCss"
                     class="my-auto text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center w-1/4"
                     type="number" 
-                    placeholder="min price">
+                    placeholder="min">
                 <p class="my-auto text-sm font-mono text-gray-700">-</p>
                 <input v-model="maxPrice" 
                      :class="(maxPrice) ? inputSelectedCss : inputNotSelectedCss"
                     class="my-auto text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center w-1/4"
                     type="number"
-                    placeholder="max price">
+                    placeholder="max">
                 <button @click="filterByPrice" type="button"
                     class="my-3 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white 
                     focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 
@@ -84,7 +84,7 @@ const clearFiltersSort = () => {
 
         <div class="flex w-full">
             <div class="h-full flex flex-nowrap space-x-2 w-full">
-                <p class="my-auto text-sm font-mono text-gray-700">Sort by:</p>
+                <p class="my-auto text-sm font-mono text-gray-700">Sort&nbspby:</p>
                 <div class="text-gray-700 flex space-x-1 h-full">
 
                     <button :class="(selectedSortBy == `best_match`) ? buttonSelectedCss : buttonNotSelectedCss"
