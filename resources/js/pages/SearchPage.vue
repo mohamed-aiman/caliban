@@ -5,7 +5,7 @@ import ProductListItem from '@/components/product-list-item.vue';
 import ProductFilters from '@/components/product-filters.vue';
 import SideCategories from '@/navigation/SideCategories.vue'
 
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 
@@ -14,24 +14,35 @@ const route = useRoute()
 
 const store = useStore()
 const selectedCategory = computed(() => store.state.category.selectedCategory)
-const q = computed(() => store.state.product.queryParams.q)
 
 const products = computed(() => store.state.product.products)
 const loadPage = async (page) => {
     await store.dispatch('product/loadProducts', page)
 }
 
-const loadProductsFromRoute = async () => {
-    console.log('loadProductsFromRoute')
-    await store.dispatch('product/queryProducts', {
-        q: route.query.q,
-        category: route.query.category,
-    })
-}
+//need these watchers to refresh the page when the category or query changes when onMount is not called
+// const q = computed(() => store.state.product.queryParams.q)
+// watch(q, (val, oldVal) => {
+//     console.log('q changed')
+//     loadProductsFromRoute()
+// })
+// const selectedCategorySlug = computed(() => store.state.product.queryParams.category)
+// watch(selectedCategorySlug, (val, oldVal) => {
+//     console.log('selectedCategorySlug changed')
+//     loadProductsFromRoute()
+// })
+
+// const loadProductsFromRoute = async () => {
+//     console.log('loadProductsFromRoute')
+//     await store.dispatch('product/queryProducts', {
+//         q: route.query.q,
+//         category: route.query.category,
+//     })
+// }
 
 onMounted(() => {
     console.log('SearchPage mounted')
-    loadProductsFromRoute()
+    // loadProductsFromRoute()
 })
 
 const goToCategoryProducts = (slug) => {

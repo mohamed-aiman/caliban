@@ -20672,15 +20672,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                console.log('loadParentCategories');
+
                 if (!(parentCategories.value.length === 0)) {
-                  _context.next = 3;
+                  _context.next = 5;
                   break;
                 }
 
-                _context.next = 3;
+                console.log('loadParentCategories loading...');
+                _context.next = 5;
                 return store.dispatch('category/loadParentCategories');
 
-              case 3:
+              case 5:
+                console.log('loadParentCategories done');
+
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -20704,55 +20710,67 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         //setting focus on desktop search input
         desktopSearchInput.value.focus();
       });
+      loadProductsFromRoute();
     });
+
+    var setSelectedCategorySlug = function setSelectedCategorySlug(val) {
+      console.log('setSelectedCategorySlug', val);
+      var selectedCategory = parentCategories.value.find(function (c) {
+        return c.slug === val;
+      });
+
+      if (selectedCategory) {
+        store.commit('category/SET_SELECTED_CATEGORY', selectedCategory);
+      } else {
+        store.commit('category/SET_SELECTED_CATEGORY', {
+          id: null,
+          slug: 'all',
+          name: 'All Categories'
+        });
+      }
+    };
+
     var categorySlug = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)({
       get: function get() {
         return store.state.category.selectedCategory.slug;
       },
       set: function set(val) {
-        var selectedCategory = store.state.category.parentCategories.find(function (c) {
-          return c.slug === val;
-        });
-
-        if (selectedCategory) {
-          store.commit('category/SET_SELECTED_CATEGORY', selectedCategory);
-        } else {
-          store.commit('category/SET_SELECTED_CATEGORY', {
-            id: null,
-            slug: 'all',
-            name: 'All Categories'
-          });
-        }
+        setSelectedCategorySlug(val);
       }
     });
     var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
     var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.useRoute)();
+    console.log('route.params');
+    console.log(route.query);
     var query = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
 
-    var search = /*#__PURE__*/function () {
+    var loadProductsFromRoute = /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return store.dispatch('product/queryProducts', {
-                  q: query.value,
-                  category: store.state.category.selectedCategory.slug
-                });
-
-              case 2:
-                desktopSearchInput.value.focus(); // if (route.name != 'home') {
-                // router.push({
-                //     name: 'search',
-                //     query: {
-                //         q: query.value,
-                //         category: store.state.category.selectedCategory.slug
-                //     }
-                // })
-                // }
+                console.log('loadProductsFromRoute');
+                _context2.next = 3;
+                return router.isReady();
 
               case 3:
+                console.log({
+                  q: route.query.q,
+                  category: route.query.category
+                });
+                query.value = route.query.q;
+                setSelectedCategorySlug(route.query.category);
+                _context2.next = 8;
+                return store.dispatch('product/queryProducts', {
+                  q: route.query.q,
+                  category: route.query.category
+                });
+
+              case 8:
+                console.log('loadProductsFromRoute');
+
+              case 9:
               case "end":
                 return _context2.stop();
             }
@@ -20760,8 +20778,78 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }));
 
-      return function search() {
+      return function loadProductsFromRoute() {
         return _ref3.apply(this, arguments);
+      };
+    }();
+
+    var loadProductsFromSearch = /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                console.log('loadProductsFromSearch');
+                console.log({
+                  q: query.value,
+                  category: store.state.category.selectedCategory.slug
+                });
+                _context3.next = 4;
+                return store.dispatch('product/queryProducts', {
+                  q: query.value,
+                  category: store.state.category.selectedCategory.slug
+                });
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function loadProductsFromSearch() {
+        return _ref4.apply(this, arguments);
+      };
+    }();
+
+    var search = /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                console.log('search');
+                loadProductsFromSearch(); // store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'q', value: query.value })
+                // store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'category', value: store.state.category.selectedCategory.slug })
+                // desktopSearchInput.value.focus()
+                // if (route.name != 'search') {
+
+                router.push({
+                  name: 'search',
+                  query: {
+                    q: query.value,
+                    category: store.state.category.selectedCategory.slug
+                  }
+                }); // } else {
+                //     router.replace({
+                //         name: 'search',
+                //         query: {
+                //             q: query.value
+                //         }
+                //     })
+                // }
+
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      return function search() {
+        return _ref5.apply(this, arguments);
       };
     }();
 
@@ -20774,10 +20862,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       loadParentCategories: loadParentCategories,
       user: user,
       desktopSearchInput: desktopSearchInput,
+      setSelectedCategorySlug: setSelectedCategorySlug,
       categorySlug: categorySlug,
       router: router,
       route: route,
       query: query,
+      loadProductsFromRoute: loadProductsFromRoute,
+      loadProductsFromSearch: loadProductsFromSearch,
       search: search,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
@@ -21046,9 +21137,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var selectedCategory = (0,vue__WEBPACK_IMPORTED_MODULE_4__.computed)(function () {
       return store.state.category.selectedCategory;
     });
-    var q = (0,vue__WEBPACK_IMPORTED_MODULE_4__.computed)(function () {
-      return store.state.product.queryParams.q;
-    });
     var products = (0,vue__WEBPACK_IMPORTED_MODULE_4__.computed)(function () {
       return store.state.product.products;
     });
@@ -21073,37 +21161,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return function loadPage(_x) {
         return _ref2.apply(this, arguments);
       };
-    }();
+    }(); //need these watchers to refresh the page when the category or query changes when onMount is not called
+    // const q = computed(() => store.state.product.queryParams.q)
+    // watch(q, (val, oldVal) => {
+    //     console.log('q changed')
+    //     loadProductsFromRoute()
+    // })
+    // const selectedCategorySlug = computed(() => store.state.product.queryParams.category)
+    // watch(selectedCategorySlug, (val, oldVal) => {
+    //     console.log('selectedCategorySlug changed')
+    //     loadProductsFromRoute()
+    // })
+    // const loadProductsFromRoute = async () => {
+    //     console.log('loadProductsFromRoute')
+    //     await store.dispatch('product/queryProducts', {
+    //         q: route.query.q,
+    //         category: route.query.category,
+    //     })
+    // }
 
-    var loadProductsFromRoute = /*#__PURE__*/function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                console.log('loadProductsFromRoute');
-                _context2.next = 3;
-                return store.dispatch('product/queryProducts', {
-                  q: route.query.q,
-                  category: route.query.category
-                });
-
-              case 3:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      return function loadProductsFromRoute() {
-        return _ref3.apply(this, arguments);
-      };
-    }();
 
     (0,vue__WEBPACK_IMPORTED_MODULE_4__.onMounted)(function () {
-      console.log('SearchPage mounted');
-      loadProductsFromRoute();
+      console.log('SearchPage mounted'); // loadProductsFromRoute()
     });
 
     var goToCategoryProducts = function goToCategoryProducts(slug) {
@@ -21116,10 +21195,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       route: route,
       store: store,
       selectedCategory: selectedCategory,
-      q: q,
       products: products,
       loadPage: loadPage,
-      loadProductsFromRoute: loadProductsFromRoute,
       goToCategoryProducts: goToCategoryProducts,
       pagination: _components_pagination_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       ProductListItem: _components_product_list_item_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -21127,6 +21204,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       SideCategories: _navigation_SideCategories_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
       onMounted: vue__WEBPACK_IMPORTED_MODULE_4__.onMounted,
       computed: vue__WEBPACK_IMPORTED_MODULE_4__.computed,
+      watch: vue__WEBPACK_IMPORTED_MODULE_4__.watch,
       useStore: vuex__WEBPACK_IMPORTED_MODULE_6__.useStore,
       useRouter: vue_router__WEBPACK_IMPORTED_MODULE_5__.useRouter,
       useRoute: vue_router__WEBPACK_IMPORTED_MODULE_5__.useRoute

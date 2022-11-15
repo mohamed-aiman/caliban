@@ -235,9 +235,12 @@ const logout = () => {
 const store = useStore()
 const parentCategories = computed(() => store.state.category.parentCategories)
 const loadParentCategories = async () => {
+    console.log('loadParentCategories')
     if (parentCategories.value.length === 0) {
+        console.log('loadParentCategories loading...')
         await store.dispatch('category/loadParentCategories')
     }
+    console.log('loadParentCategories done')
 }
 
 const user = ref({})
@@ -251,42 +254,90 @@ onMounted(() => {
         //setting focus on desktop search input
         desktopSearchInput.value.focus()
     });
+
+    loadProductsFromRoute()
 })
+
+const setSelectedCategorySlug = (val) => {
+    console.log('setSelectedCategorySlug', val)
+    let selectedCategory = parentCategories.value.find(c => c.slug === val)
+    if (selectedCategory) {
+        store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
+    } else {
+        store.commit('category/SET_SELECTED_CATEGORY', {
+            id: null,
+            slug: 'all',
+            name: 'All Categories'
+        })
+    }
+}
 
 const categorySlug = computed({
     get: () => store.state.category.selectedCategory.slug,
     set: (val) => {
-        let selectedCategory = store.state.category.parentCategories.find(c => c.slug === val)
-        if (selectedCategory) {
-            store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
-        } else {
-            store.commit('category/SET_SELECTED_CATEGORY', {
-                id: null,
-                slug: 'all',
-                name: 'All Categories'
-            })
-        }
+        setSelectedCategorySlug(val)
     }
 })
 
 const router = useRouter()
 const route = useRoute()
+console.log('route.params')
+console.log(route.query)
 const query = ref('')
-const search = async () => {
-    await store.dispatch('product/queryProducts', {
-            q: query.value,
-            category: store.state.category.selectedCategory.slug
-        })
-    desktopSearchInput.value.focus()
+const loadProductsFromRoute = async () => {
+    console.log('loadProductsFromRoute')
+    await router.isReady();
+    console.log( {
+        q: route.query.q,
+        category: route.query.category,
+    })
+    query.value = route.query.q
+    setSelectedCategorySlug(route.query.category)
 
-    // if (route.name != 'home') {
-        // router.push({
-        //     name: 'search',
-        //     query: {
-        //         q: query.value,
-        //         category: store.state.category.selectedCategory.slug
-        //     }
-        // })
+    await store.dispatch('product/queryProducts', {
+        q: route.query.q,
+        category: route.query.category,
+    })
+    console.log('loadProductsFromRoute')
+}
+
+const loadProductsFromSearch = async () => {
+    console.log('loadProductsFromSearch')
+    console.log({
+        q: query.value,
+        category: store.state.category.selectedCategory.slug
+    })
+    await store.dispatch('product/queryProducts', {
+        q: query.value,
+        category: store.state.category.selectedCategory.slug
+    })
+}
+
+const search = async () => {
+    console.log('search')
+
+    loadProductsFromSearch()
+
+    // store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'q', value: query.value })
+    // store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'category', value: store.state.category.selectedCategory.slug })
+
+
+    // desktopSearchInput.value.focus()
+    // if (route.name != 'search') {
+        router.push({
+            name: 'search',
+            query: {
+                q: query.value,
+                category: store.state.category.selectedCategory.slug
+            }
+        })
+    // } else {
+    //     router.replace({
+    //         name: 'search',
+    //         query: {
+    //             q: query.value
+    //         }
+    //     })
     // }
 
 
