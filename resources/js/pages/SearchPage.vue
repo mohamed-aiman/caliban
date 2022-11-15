@@ -17,18 +17,12 @@ const selectedCategory = computed(() => store.state.category.selectedCategory)
 const q = computed(() => store.state.product.queryParams.q)
 
 const products = computed(() => store.state.product.products)
-const loadProducts = async (page) => {
-    if (page) {
-        await store.dispatch('product/loadProducts', page)
-    } else {
-        await store.dispatch('product/queryProducts', {
-            q: q.value,
-            category: selectedCategory.value,
-        })
-    }
+const loadPage = async (page) => {
+    await store.dispatch('product/loadProducts', page)
 }
 
 const loadProductsFromRoute = async () => {
+    console.log('loadProductsFromRoute')
     await store.dispatch('product/queryProducts', {
         q: route.query.q,
         category: route.query.category,
@@ -37,10 +31,7 @@ const loadProductsFromRoute = async () => {
 
 onMounted(() => {
     console.log('SearchPage mounted')
-    if (!route.query.q) {
-        loadProductsFromRoute()
-    }
-    loadProducts()
+    loadProductsFromRoute()
 })
 
 const goToCategoryProducts = (slug) => {
@@ -85,7 +76,7 @@ const goToCategoryProducts = (slug) => {
                     </div>
                     <!-- product list end -->
                     <!-- pagination start -->
-                    <pagination :data="products" @load-page="loadProducts" />
+                    <pagination :data="products" @load-page="loadPage" />
                     <!-- pagination end -->
     
 

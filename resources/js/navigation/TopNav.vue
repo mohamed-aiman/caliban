@@ -26,7 +26,7 @@
                             </svg>
                         </div>
                         <input v-model="query" 
-                            type="search" ref="searchInput" 
+                            type="search" ref="desktopSearchInput" id="desktop-search-input" 
                             @keydown.enter="search"
                             placeholder="Search for listings..." 
                             required="" 
@@ -73,7 +73,7 @@
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </div>
-                        <input v-model="query" type="search" ref="searchInput" @keydown.enter="search"
+                        <input v-model="query" type="search" ref="searchInputMobile" id="search-input-mobile" @keydown.enter="search"
                             placeholder="Search for listings..." required="" class="block p-4 pl-10 w-full text-sm text-gray-900 
                                                         bg-gray-50 rounded-lg border 
                                                         border-gray-300 focus:ring-blue-500 
@@ -213,7 +213,7 @@
 
 <script setup>
 
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import { UserService } from '@/services/UserService'
 import { useRouter, useRoute } from 'vue-router'
@@ -241,11 +241,16 @@ const loadParentCategories = async () => {
 }
 
 const user = ref({})
-const searchInput = ref('')
+const desktopSearchInput = ref('')
 onMounted(() => {
-    searchInput.value.focus()
+    console.log('TopNav Mounted')
+    // desktopSearchInput.value.focus()
     user.value = window.Laravel.user
     loadParentCategories()
+    nextTick(() => {
+        //setting focus on desktop search input
+        desktopSearchInput.value.focus()
+    });
 })
 
 const categorySlug = computed({
@@ -269,20 +274,21 @@ const route = useRoute()
 const query = ref('')
 const search = async () => {
     await store.dispatch('product/queryProducts', {
-        q: query.value,
-        category: store.state.category.selectedCategory.slug
-    })
+            q: query.value,
+            category: store.state.category.selectedCategory.slug
+        })
+    desktopSearchInput.value.focus()
 
     // if (route.name != 'home') {
-        router.push({
-            name: 'search',
-            query: {
-                q: query.value,
-                category: store.state.category.selectedCategory.slug
-            }
-        })
+        // router.push({
+        //     name: 'search',
+        //     query: {
+        //         q: query.value,
+        //         category: store.state.category.selectedCategory.slug
+        //     }
+        // })
     // }
 
-    searchInput.value.focus()
+
 }
 </script>

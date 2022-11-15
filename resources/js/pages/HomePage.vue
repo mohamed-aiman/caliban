@@ -17,6 +17,7 @@ const loadProducts = async (page) => {
 }
 
 onMounted(() => {
+    console.log('Home Mounted')
     loadProducts('/api/products')
 })
 

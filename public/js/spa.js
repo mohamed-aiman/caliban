@@ -20694,11 +20694,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }();
 
     var user = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({});
-    var searchInput = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var desktopSearchInput = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
-      searchInput.value.focus();
+      console.log('TopNav Mounted'); // desktopSearchInput.value.focus()
+
       user.value = window.Laravel.user;
       loadParentCategories();
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.nextTick)(function () {
+        //setting focus on desktop search input
+        desktopSearchInput.value.focus();
+      });
     });
     var categorySlug = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)({
       get: function get() {
@@ -20737,18 +20742,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 2:
-                // if (route.name != 'home') {
-                router.push({
-                  name: 'search',
-                  query: {
-                    q: query.value,
-                    category: store.state.category.selectedCategory.slug
-                  }
-                }); // }
+                desktopSearchInput.value.focus(); // if (route.name != 'home') {
+                // router.push({
+                //     name: 'search',
+                //     query: {
+                //         q: query.value,
+                //         category: store.state.category.selectedCategory.slug
+                //     }
+                // })
+                // }
 
-                searchInput.value.focus();
-
-              case 4:
+              case 3:
               case "end":
                 return _context2.stop();
             }
@@ -20769,7 +20773,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       parentCategories: parentCategories,
       loadParentCategories: loadParentCategories,
       user: user,
-      searchInput: searchInput,
+      desktopSearchInput: desktopSearchInput,
       categorySlug: categorySlug,
       router: router,
       route: route,
@@ -20778,6 +20782,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       computed: vue__WEBPACK_IMPORTED_MODULE_0__.computed,
+      nextTick: vue__WEBPACK_IMPORTED_MODULE_0__.nextTick,
       useStore: vuex__WEBPACK_IMPORTED_MODULE_2__.useStore,
       UserService: _services_UserService__WEBPACK_IMPORTED_MODULE_1__.UserService,
       useRouter: vue_router__WEBPACK_IMPORTED_MODULE_3__.useRouter,
@@ -20860,6 +20865,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }();
 
     (0,vue__WEBPACK_IMPORTED_MODULE_3__.onMounted)(function () {
+      console.log('Home Mounted');
       loadProducts('/api/products');
     });
 
@@ -21047,32 +21053,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return store.state.product.products;
     });
 
-    var loadProducts = /*#__PURE__*/function () {
+    var loadPage = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(page) {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!page) {
-                  _context.next = 5;
-                  break;
-                }
-
-                _context.next = 3;
+                _context.next = 2;
                 return store.dispatch('product/loadProducts', page);
 
-              case 3:
-                _context.next = 7;
-                break;
-
-              case 5:
-                _context.next = 7;
-                return store.dispatch('product/queryProducts', {
-                  q: q.value,
-                  category: selectedCategory.value
-                });
-
-              case 7:
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -21080,7 +21070,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }));
 
-      return function loadProducts(_x) {
+      return function loadPage(_x) {
         return _ref2.apply(this, arguments);
       };
     }();
@@ -21091,13 +21081,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                console.log('loadProductsFromRoute');
+                _context2.next = 3;
                 return store.dispatch('product/queryProducts', {
                   q: route.query.q,
                   category: route.query.category
                 });
 
-              case 2:
+              case 3:
               case "end":
                 return _context2.stop();
             }
@@ -21112,12 +21103,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     (0,vue__WEBPACK_IMPORTED_MODULE_4__.onMounted)(function () {
       console.log('SearchPage mounted');
-
-      if (!route.query.q) {
-        loadProductsFromRoute();
-      }
-
-      loadProducts();
+      loadProductsFromRoute();
     });
 
     var goToCategoryProducts = function goToCategoryProducts(slug) {
@@ -21132,7 +21118,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       selectedCategory: selectedCategory,
       q: q,
       products: products,
-      loadProducts: loadProducts,
+      loadPage: loadPage,
       loadProductsFromRoute: loadProductsFromRoute,
       goToCategoryProducts: goToCategoryProducts,
       pagination: _components_pagination_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -21982,7 +21968,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $setup.query = $event;
     }),
     type: "search",
-    ref: "searchInput",
+    ref: "desktopSearchInput",
+    id: "desktop-search-input",
     onKeydown: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)($setup.search, ["enter"]),
     placeholder: "Search for listings...",
     required: "",
@@ -22015,7 +22002,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $setup.query = $event;
     }),
     type: "search",
-    ref: "searchInput",
+    ref: "searchInputMobile",
+    id: "search-input-mobile",
     onKeydown: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)($setup.search, ["enter"]),
     placeholder: "Search for listings...",
     required: "",
@@ -22368,7 +22356,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" product list end "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" pagination start "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["pagination"], {
     data: $setup.products,
-    onLoadPage: $setup.loadProducts
+    onLoadPage: $setup.loadPage
   }, null, 8
   /* PROPS */
   , ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" pagination end ")])])])])], 2112
