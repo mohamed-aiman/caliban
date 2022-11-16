@@ -2,7 +2,7 @@ import { ProductService } from '@/services/ProductService'
 
 const state = {
   queryParams: {
-    // q: '',
+    q: '',
     category: 'all',
     // min_price: null,
     // max_price: null,
@@ -70,7 +70,7 @@ const actions = {
   async queryProducts ({ commit }, params, url) {
     //fore each key in params UPDATE_A_QUERY_PARAM
     Object.keys(params).forEach(key => {
-      commit('UPDATE_A_QUERY_PARAM', { key: key, value: params[key] })
+      commit('UPDATE_A_QUERY_PARAM', { key: key, value: params[key] || '' })
     });
     // commit('SET_QUERY_PARAMS', params)
     ProductService.queryProducts(state.queryParams)

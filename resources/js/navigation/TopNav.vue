@@ -281,7 +281,7 @@ const categorySlug = computed({
     }
 })
 
-const query = ref(null)
+const query = ref('')
 const router = useRouter()
 const route = useRoute()
 //if has url params try to load from it.

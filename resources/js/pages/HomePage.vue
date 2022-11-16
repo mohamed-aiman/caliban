@@ -3,10 +3,10 @@
 import pagination from '@/components/pagination.vue';
 import ProductListItem from '@/components/product-list-item.vue';
 import ProductFilters from '@/components/product-filters.vue';
+import SideCategories from '@/navigation/SideCategories.vue'
 
 import { onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
-import SideCategories from '@/navigation/SideCategories.vue'
 
 const store = useStore()
 const selectedCategory = computed(() => store.state.category.selectedCategory)

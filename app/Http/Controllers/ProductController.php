@@ -23,7 +23,7 @@ class ProductController extends Controller
             $query = $query->where('title', 'like', '%' . $request->q . '%');
         }
 
-        if ($request->has('category') && $request->category != 'all' && $request->category != 'undefined') {
+        if ($request->has('category') && $request->category != 'all') {
             $query = $query->whereIn('category_id', $this->flattenCategoryIds($request->category));
         }
 

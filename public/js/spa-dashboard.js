@@ -26747,7 +26747,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var state = {
   queryParams: {
-    // q: '',
+    q: '',
     category: 'all' // min_price: null,
     // max_price: null,
     // condition: null,
@@ -26816,7 +26816,7 @@ var actions = {
               Object.keys(params).forEach(function (key) {
                 commit('UPDATE_A_QUERY_PARAM', {
                   key: key,
-                  value: params[key]
+                  value: params[key] || ''
                 });
               }); // commit('SET_QUERY_PARAMS', params)
 
