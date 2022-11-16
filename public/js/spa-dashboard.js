@@ -22186,6 +22186,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }();
 
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
+      console.log('WatchListPage mounted');
       loadProducts('/api/watchlist');
     });
 

@@ -29,7 +29,7 @@ class ProductController extends Controller
 
         //apply filters
         foreach (['min_price', 'max_price', 'sort'] as $param) {
-            if ($request->has($param) && $request->$param != 'null') {
+            if ($request->has($param) && $request->$param) {
                 $query = $this->applyFilter($query, $param, $request->$param);
             }
         }

@@ -116,8 +116,8 @@
                         </li>
                         <li class="nav-item">
                             <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                href="/watch-list">
-                                <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span class="ml-2">Watch&nbspList</span>
+                                href="/dashboard/watchlist">
+                                <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span class="ml-2">Watchlist</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -218,6 +218,9 @@ import { useStore } from 'vuex'
 import { UserService } from '@/services/UserService'
 import { useRouter, useRoute } from 'vue-router'
 
+const router = useRouter()
+const route = useRoute()
+
 const showMenu = ref(false)
 const toggleNavbar = () => {
     showMenu.value = !showMenu.value
@@ -282,26 +285,26 @@ const categorySlug = computed({
 })
 
 const query = ref('')
-const router = useRouter()
-const route = useRoute()
 //if has url params try to load from it.
 const loadProductsFromRoute = async () => {
     console.log('loadProductsFromRoute NavBar')
     await router.isReady();
-    console.log(route.query)
-    await store.dispatch('product/queryProducts', route.query)
-    if (route.query.q) {
-        //set search bar value
-        query.value = route.query.q
-        store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'q', value: route.query.q })
-    }
+    if (route.name == 'home' || route.name == 'search') {
+        console.log(route.query)
+        await store.dispatch('product/queryProducts', route.query)
+        if (route.query.q) {
+            //set search bar value
+            query.value = route.query.q
+            store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'q', value: route.query.q })
+        }
 
-    if (route.query.category) {
-        //set search bar dropdown value
-        store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'category', value: route.query.category })
-    }
+        if (route.query.category) {
+            //set search bar dropdown value
+            store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'category', value: route.query.category })
+        }
 
-    console.log('loadProductsFromRoute end NavBar')
+        console.log('loadProductsFromRoute end NavBar')
+    }
 }
 
 

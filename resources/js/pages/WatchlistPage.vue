@@ -1,4 +1,5 @@
 <script setup>
+
 import pagination from '@/components/pagination.vue';
 import { onMounted, computed, ref} from 'vue'
 import { useStore } from 'vuex'
@@ -11,6 +12,7 @@ const loadProducts = async (page) => {
     await store.dispatch('product/loadWatchlist', page)
 }
 onMounted(() => {
+    console.log('WatchListPage mounted')
     loadProducts('/api/watchlist')
 })
 
