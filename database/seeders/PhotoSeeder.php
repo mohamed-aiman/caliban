@@ -15,23 +15,313 @@ class PhotoSeeder extends Seeder
      */
     public function run()
     {
-        $photos = json_decode($this->photosJson());
+        // $photos = json_decode($this->s3PhotosJson());
+        // $photos = json_decode($this->local20PhotosJson());
+        $photos = json_decode($this->local5PhotosJson());
 
         foreach ($photos as $photo) {
             Photo::create((array) $photo);
         }
     }
 
-    public function photosJson()
+    public function local5PhotosJson()
+    {
+        return '[
+            {
+                "id": 1,
+                "file_name": "photo_1.jpeg",
+                "url": "/storage/photo_1.jpeg",
+                "large_url": "/storage/photo_1.jpeg",
+                "medium_url": "/storage/photo_1.jpeg",
+                "thumbnail_url": "/storage/photo_1.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:16:34.000000Z",
+                "updated_at": "2022-10-15T05:16:34.000000Z"
+            },
+            {
+                "id": 2,
+                "file_name": "photo_2.jpeg",
+                "url": "/storage/photo_2.jpeg",
+                "large_url": "/storage/photo_2.jpeg",
+                "medium_url": "/storage/photo_2.jpeg",
+                "thumbnail_url": "/storage/photo_2.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:16:54.000000Z",
+                "updated_at": "2022-10-15T05:16:55.000000Z"
+            },
+            {
+                "id": 3,
+                "file_name": "photo_3.jpeg",
+                "url": "/storage/photo_3.jpeg",
+                "large_url": "/storage/photo_3.jpeg",
+                "medium_url": "/storage/photo_3.jpeg",
+                "thumbnail_url": "/storage/photo_3.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 4,
+                "file_name": "photo_4.jpeg",
+                "url": "/storage/photo_4.jpeg",
+                "large_url": "/storage/photo_4.jpeg",
+                "medium_url": "/storage/photo_4.jpeg",
+                "thumbnail_url": "/storage/photo_4.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 5,
+                "file_name": "photo_5.jpeg",
+                "url": "/storage/photo_5.jpeg",
+                "large_url": "/storage/photo_5.jpeg",
+                "medium_url": "/storage/photo_5.jpeg",
+                "thumbnail_url": "/storage/photo_5.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            }
+        ]';
+    }
+
+    public function local20PhotosJson()
+    {
+        return '[
+            {
+                "id": 1,
+                "file_name": "photo_1.jpeg",
+                "url": "/storage/photo_1.jpeg",
+                "large_url": "/storage/photo_1.jpeg",
+                "medium_url": "/storage/photo_1.jpeg",
+                "thumbnail_url": "/storage/photo_1.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:16:34.000000Z",
+                "updated_at": "2022-10-15T05:16:34.000000Z"
+            },
+            {
+                "id": 2,
+                "file_name": "photo_2.jpeg",
+                "url": "/storage/photo_2.jpeg",
+                "large_url": "/storage/photo_2.jpeg",
+                "medium_url": "/storage/photo_2.jpeg",
+                "thumbnail_url": "/storage/photo_2.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:16:54.000000Z",
+                "updated_at": "2022-10-15T05:16:55.000000Z"
+            },
+            {
+                "id": 3,
+                "file_name": "photo_3.jpeg",
+                "url": "/storage/photo_3.jpeg",
+                "large_url": "/storage/photo_3.jpeg",
+                "medium_url": "/storage/photo_3.jpeg",
+                "thumbnail_url": "/storage/photo_3.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 4,
+                "file_name": "photo_4.jpeg",
+                "url": "/storage/photo_4.jpeg",
+                "large_url": "/storage/photo_4.jpeg",
+                "medium_url": "/storage/photo_4.jpeg",
+                "thumbnail_url": "/storage/photo_4.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 5,
+                "file_name": "photo_5.jpeg",
+                "url": "/storage/photo_5.jpeg",
+                "large_url": "/storage/photo_5.jpeg",
+                "medium_url": "/storage/photo_5.jpeg",
+                "thumbnail_url": "/storage/photo_5.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 6,
+                "file_name": "photo_6.jpeg",
+                "url": "/storage/photo_6.jpeg",
+                "large_url": "/storage/photo_6.jpeg",
+                "medium_url": "/storage/photo_6.jpeg",
+                "thumbnail_url": "/storage/photo_6.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 7,
+                "file_name": "photo_7.jpeg",
+                "url": "/storage/photo_7.jpeg",
+                "large_url": "/storage/photo_7.jpeg",
+                "medium_url": "/storage/photo_7.jpeg",
+                "thumbnail_url": "/storage/photo_7.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 8,
+                "file_name": "photo_8.jpeg",
+                "url": "/storage/photo_8.jpeg",
+                "large_url": "/storage/photo_8.jpeg",
+                "medium_url": "/storage/photo_8.jpeg",
+                "thumbnail_url": "/storage/photo_8.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 9,
+                "file_name": "photo_9.jpeg",
+                "url": "/storage/photo_9.jpeg",
+                "large_url": "/storage/photo_9.jpeg",
+                "medium_url": "/storage/photo_9.jpeg",
+                "thumbnail_url": "/storage/photo_9.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 10,
+                "file_name": "photo_10.jpeg",
+                "url": "/storage/photo_10.jpeg",
+                "large_url": "/storage/photo_10.jpeg",
+                "medium_url": "/storage/photo_10.jpeg",
+                "thumbnail_url": "/storage/photo_10.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 11,
+                "file_name": "photo_11.jpeg",
+                "url": "/storage/photo_11.jpeg",
+                "large_url": "/storage/photo_11.jpeg",
+                "medium_url": "/storage/photo_11.jpeg",
+                "thumbnail_url": "/storage/photo_11.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 12,
+                "file_name": "photo_12.jpeg",
+                "url": "/storage/photo_12.jpeg",
+                "large_url": "/storage/photo_12.jpeg",
+                "medium_url": "/storage/photo_12.jpeg",
+                "thumbnail_url": "/storage/photo_12.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 13,
+                "file_name": "photo_13.jpeg",
+                "url": "/storage/photo_13.jpeg",
+                "large_url": "/storage/photo_13.jpeg",
+                "medium_url": "/storage/photo_13.jpeg",
+                "thumbnail_url": "/storage/photo_13.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 14,
+                "file_name": "photo_14.jpeg",
+                "url": "/storage/photo_14.jpeg",
+                "large_url": "/storage/photo_14.jpeg",
+                "medium_url": "/storage/photo_14.jpeg",
+                "thumbnail_url": "/storage/photo_14.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 15,
+                "file_name": "photo_15.jpeg",
+                "url": "/storage/photo_15.jpeg",
+                "large_url": "/storage/photo_15.jpeg",
+                "medium_url": "/storage/photo_15.jpeg",
+                "thumbnail_url": "/storage/photo_15.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 16,
+                "file_name": "photo_16.jpeg",
+                "url": "/storage/photo_16.jpeg",
+                "large_url": "/storage/photo_16.jpeg",
+                "medium_url": "/storage/photo_16.jpeg",
+                "thumbnail_url": "/storage/photo_16.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 17,
+                "file_name": "photo_17.jpeg",
+                "url": "/storage/photo_17.jpeg",
+                "large_url": "/storage/photo_17.jpeg",
+                "medium_url": "/storage/photo_17.jpeg",
+                "thumbnail_url": "/storage/photo_17.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 18,
+                "file_name": "photo_18.jpeg",
+                "url": "/storage/photo_18.jpeg",
+                "large_url": "/storage/photo_18.jpeg",
+                "medium_url": "/storage/photo_18.jpeg",
+                "thumbnail_url": "/storage/photo_18.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 19,
+                "file_name": "photo_19.jpeg",
+                "url": "/storage/photo_19.jpeg",
+                "large_url": "/storage/photo_19.jpeg",
+                "medium_url": "/storage/photo_19.jpeg",
+                "thumbnail_url": "/storage/photo_19.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            },
+            {
+                "id": 20,
+                "file_name": "photo_20.jpeg",
+                "url": "/storage/photo_20.jpeg",
+                "large_url": "/storage/photo_20.jpeg",
+                "medium_url": "/storage/photo_20.jpeg",
+                "thumbnail_url": "/storage/photo_20.jpeg",
+                "user_id": 1,
+                "created_at": "2022-10-15T05:17:13.000000Z",
+                "updated_at": "2022-10-15T05:17:13.000000Z"
+            }
+        ]';
+    }
+
+
+    public function s3PhotosJson()
     {
         return '[
             {
                 "id": 1,
                 "file_name": "3_1-143365_1665810993.jpg",
-                "url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/143365_1665810993.jpg",
-                "large_url": null,
-                "medium_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/medium/143365_1665810993.jpg",
-                "thumbnail_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/thumbnail/143365_1665810993.jpg",
+                "url": "/storage/photo_1.jpeg",
+                "large_url": "/storage/photo_1.jpeg",
+                "medium_url": "/storage/photo_1.jpeg",
+                "thumbnail_url": "/storage/photo_1.jpeg",
                 "user_id": 1,
                 "created_at": "2022-10-15T05:16:34.000000Z",
                 "updated_at": "2022-10-15T05:16:34.000000Z"
@@ -39,10 +329,10 @@ class PhotoSeeder extends Seeder
             {
                 "id": 2,
                 "file_name": "3_2-113827_1665811014.jpg",
-                "url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/113827_1665811014.jpg",
-                "large_url": null,
-                "medium_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/medium/113827_1665811014.jpg",
-                "thumbnail_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/thumbnail/113827_1665811014.jpg",
+                "url": "/storage/photo_1.jpeg",
+                "large_url": "/storage/photo_1.jpeg",
+                "medium_url": "/storage/photo_1.jpeg",
+                "thumbnail_url": "/storage/photo_1.jpeg",
                 "user_id": 1,
                 "created_at": "2022-10-15T05:16:54.000000Z",
                 "updated_at": "2022-10-15T05:16:55.000000Z"
@@ -50,10 +340,10 @@ class PhotoSeeder extends Seeder
             {
                 "id": 3,
                 "file_name": "3_3-162943_1665811032.jpg",
-                "url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/162943_1665811032.jpg",
-                "large_url": null,
-                "medium_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/medium/162943_1665811032.jpg",
-                "thumbnail_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/thumbnail/162943_1665811032.jpg",
+                "url": "/storage/photo_1.jpeg",
+                "large_url": "/storage/photo_1.jpeg",
+                "medium_url": "/storage/photo_1.jpeg",
+                "thumbnail_url": "/storage/photo_1.jpeg",
                 "user_id": 1,
                 "created_at": "2022-10-15T05:17:13.000000Z",
                 "updated_at": "2022-10-15T05:17:13.000000Z"
@@ -61,10 +351,10 @@ class PhotoSeeder extends Seeder
             {
                 "id": 4,
                 "file_name": "189071_1665810065.jpeg",
-                "url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/189071_1665810065.jpeg",
-                "large_url": null,
-                "medium_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/medium/189071_1665810065.jpeg",
-                "thumbnail_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/thumbnail/189071_1665810065.jpeg",
+                "url": "/storage/photo_1.jpeg",
+                "large_url": "/storage/photo_1.jpeg",
+                "medium_url": "/storage/photo_1.jpeg",
+                "thumbnail_url": "/storage/photo_1.jpeg",
                 "user_id": 1,
                 "created_at": "2022-10-15T05:01:06.000000Z",
                 "updated_at": "2022-10-15T05:01:07.000000Z"
@@ -72,10 +362,10 @@ class PhotoSeeder extends Seeder
             {
                 "id": 5,
                 "file_name": "168052_1665810112.jpg",
-                "url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/168052_1665810112.jpg",
-                "large_url": null,
-                "medium_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/medium/168052_1665810112.jpg",
-                "thumbnail_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/thumbnail/168052_1665810112.jpg",
+                "url": "/storage/photo_1.jpeg",
+                "large_url": "/storage/photo_1.jpeg",
+                "medium_url": "/storage/photo_1.jpeg",
+                "thumbnail_url": "/storage/photo_1.jpeg",
                 "user_id": 1,
                 "created_at": "2022-10-15T05:01:53.000000Z",
                 "updated_at": "2022-10-15T05:01:53.000000Z"
@@ -83,8 +373,8 @@ class PhotoSeeder extends Seeder
             {
                 "id": 6,
                 "file_name": "175825_1665810159.jpg",
-                "url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/175825_1665810159.jpg",
-                "large_url": null,
+                "url": "/storage/photo_1.jpeg",
+                "large_url": "/storage/photo_1.jpeg",
                 "medium_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/medium/175825_1665810159.jpg",
                 "thumbnail_url": "https://aimme.s3.ap-southeast-1.amazonaws.com/shop_dev/thumbnail/175825_1665810159.jpg",
                 "user_id": 1,

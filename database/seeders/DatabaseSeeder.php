@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             PhotoSeeder::class,
             //depends on multiple other seeders
             ProductSeeder::class,
+            // RealisticProductSeeder::class,
         ]);
     }
 }
