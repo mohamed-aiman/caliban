@@ -269,11 +269,13 @@ const setSelectedCategorySlug = (val) => {
             slug: 'all',
             name: 'All Categories'
         })
+        store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'category', value: 'all' })
     }
 }
 
 const categorySlug = computed({
-    get: () => store.state.category.selectedCategory.slug,
+    // get: () => store.state.category.selectedCategory.slug,
+    get: () => store.state.product.queryParams.category,
     set: (val) => {
         setSelectedCategorySlug(val)
     }
@@ -291,11 +293,12 @@ const loadProductsFromRoute = async () => {
     if (route.query.q) {
         //set search bar value
         query.value = route.query.q
+        store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'q', value: route.query.q })
     }
 
     if (route.query.category) {
         //set search bar dropdown value
-        setSelectedCategorySlug(route.query.category)
+        store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'category', value: route.query.category })
     }
 
     console.log('loadProductsFromRoute end NavBar')
@@ -307,15 +310,13 @@ const search = async () => {
     console.log('search')
     loadProductsFromSearch()
     desktopSearchInput.value.focus()
-    if (route.name != 'search') {
-        router.push({
-            name: 'search',
-            query: {
-                q: query.value,
-                category: store.state.category.selectedCategory.slug
-            }
-        })
-    }
+    router.push({
+        name: 'search',
+        query: {
+            q: query.value,
+            category: store.state.category.selectedCategory.slug
+        }
+    })
 }
 
 //this is called to load products from search

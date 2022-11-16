@@ -3,7 +3,7 @@ import { ProductService } from '@/services/ProductService'
 const state = {
   queryParams: {
     // q: '',
-    // category: null,
+    category: 'all',
     // min_price: null,
     // max_price: null,
     // condition: null,

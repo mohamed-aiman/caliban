@@ -26746,9 +26746,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var state = {
-  queryParams: {// q: '',
-    // category: null,
-    // min_price: null,
+  queryParams: {
+    // q: '',
+    category: 'all' // min_price: null,
     // max_price: null,
     // condition: null,
     // brand: null,
@@ -26756,6 +26756,7 @@ var state = {
     // size: null,
     // sort: null,
     // page: null
+
   },
   queryMessage: '',
   products: {

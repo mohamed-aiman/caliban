@@ -25,6 +25,7 @@ const loadCategoryProducts = async (slug) => {
     let selectedCategory = store.state.category.parentCategories.find(c => c.slug === slug)
     if (selectedCategory) {
         store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
+        store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'category', value: selectedCategory.slug })
     }
 
     // console.log(slug)

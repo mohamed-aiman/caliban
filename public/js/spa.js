@@ -20576,6 +20576,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (selectedCategory) {
                   store.commit('category/SET_SELECTED_CATEGORY', selectedCategory);
+                  store.commit('product/UPDATE_A_QUERY_PARAM', {
+                    key: 'category',
+                    value: selectedCategory.slug
+                  });
                 } // console.log(slug)
                 // window.location.href = `/categories/${slug}/products`
 
@@ -20727,12 +20731,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           slug: 'all',
           name: 'All Categories'
         });
+        store.commit('product/UPDATE_A_QUERY_PARAM', {
+          key: 'category',
+          value: 'all'
+        });
       }
     };
 
     var categorySlug = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)({
+      // get: () => store.state.category.selectedCategory.slug,
       get: function get() {
-        return store.state.category.selectedCategory.slug;
+        return store.state.product.queryParams.category;
       },
       set: function set(val) {
         setSelectedCategorySlug(val);
@@ -20761,11 +20770,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (route.query.q) {
                   //set search bar value
                   query.value = route.query.q;
+                  store.commit('product/UPDATE_A_QUERY_PARAM', {
+                    key: 'q',
+                    value: route.query.q
+                  });
                 }
 
                 if (route.query.category) {
                   //set search bar dropdown value
-                  setSelectedCategorySlug(route.query.category);
+                  store.commit('product/UPDATE_A_QUERY_PARAM', {
+                    key: 'category',
+                    value: route.query.category
+                  });
                 }
 
                 console.log('loadProductsFromRoute end NavBar');
@@ -20793,16 +20809,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log('search');
                 loadProductsFromSearch();
                 desktopSearchInput.value.focus();
-
-                if (route.name != 'search') {
-                  router.push({
-                    name: 'search',
-                    query: {
-                      q: query.value,
-                      category: store.state.category.selectedCategory.slug
-                    }
-                  });
-                }
+                router.push({
+                  name: 'search',
+                  query: {
+                    q: query.value,
+                    category: store.state.category.selectedCategory.slug
+                  }
+                });
 
               case 4:
               case "end":
@@ -23361,9 +23374,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var state = {
-  queryParams: {// q: '',
-    // category: null,
-    // min_price: null,
+  queryParams: {
+    // q: '',
+    category: 'all' // min_price: null,
     // max_price: null,
     // condition: null,
     // brand: null,
@@ -23371,6 +23384,7 @@ var state = {
     // size: null,
     // sort: null,
     // page: null
+
   },
   queryMessage: '',
   products: {
