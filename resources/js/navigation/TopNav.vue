@@ -279,28 +279,46 @@ const categorySlug = computed({
     }
 })
 
+const query = ref(null)
 const router = useRouter()
 const route = useRoute()
-console.log('route.params')
-console.log(route.query)
-const query = ref('')
+//if has url params try to load from it.
 const loadProductsFromRoute = async () => {
-    console.log('loadProductsFromRoute')
+    console.log('loadProductsFromRoute NavBar')
     await router.isReady();
-    console.log( {
-        q: route.query.q,
-        category: route.query.category,
-    })
-    query.value = route.query.q
-    setSelectedCategorySlug(route.query.category)
+    console.log(route.query)
+    await store.dispatch('product/queryProducts', route.query)
+    if (route.query.q) {
+        //set search bar value
+        query.value = route.query.q
+    }
 
-    await store.dispatch('product/queryProducts', {
-        q: route.query.q,
-        category: route.query.category,
-    })
-    console.log('loadProductsFromRoute')
+    if (route.query.category) {
+        //set search bar dropdown value
+        setSelectedCategorySlug(route.query.category)
+    }
+
+    console.log('loadProductsFromRoute end NavBar')
 }
 
+
+//this is called when search is clicked
+const search = async () => {
+    console.log('search')
+    loadProductsFromSearch()
+    desktopSearchInput.value.focus()
+    if (route.name != 'search') {
+        router.push({
+            name: 'search',
+            query: {
+                q: query.value,
+                category: store.state.category.selectedCategory.slug
+            }
+        })
+    }
+}
+
+//this is called to load products from search
 const loadProductsFromSearch = async () => {
     console.log('loadProductsFromSearch')
     console.log({
@@ -311,35 +329,5 @@ const loadProductsFromSearch = async () => {
         q: query.value,
         category: store.state.category.selectedCategory.slug
     })
-}
-
-const search = async () => {
-    console.log('search')
-
-    loadProductsFromSearch()
-
-    // store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'q', value: query.value })
-    // store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'category', value: store.state.category.selectedCategory.slug })
-
-
-    // desktopSearchInput.value.focus()
-    // if (route.name != 'search') {
-        router.push({
-            name: 'search',
-            query: {
-                q: query.value,
-                category: store.state.category.selectedCategory.slug
-            }
-        })
-    // } else {
-    //     router.replace({
-    //         name: 'search',
-    //         query: {
-    //             q: query.value
-    //         }
-    //     })
-    // }
-
-
 }
 </script>

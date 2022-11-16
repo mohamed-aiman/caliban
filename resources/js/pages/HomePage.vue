@@ -18,7 +18,7 @@ const loadProducts = async (page) => {
 
 onMounted(() => {
     console.log('Home Mounted')
-    loadProducts('/api/products')
+    // loadProducts('/api/products') //this is now done by top navbar
 })
 
 const goToCategoryProducts = (slug) => {
