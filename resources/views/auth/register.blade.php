@@ -14,7 +14,7 @@
         <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-20 lg:py-16 lg:grid-cols-12">
             <div
                 class="w-full p-6 mx-auto bg-white rounded-lg shadow dark:bg-gray-800 sm:max-w-xl lg:col-span-6 sm:p-8">
-                <a href="#" class="inline-flex items-center mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+                <a href="/" class="inline-flex items-center mb-4 text-xl font-semibold text-gray-900 dark:text-white">
                     <img class="w-8 h-8 mr-2" src="/logo.svg"
                         alt="logo">
                     {{ config('app.name') }}
@@ -27,10 +27,16 @@
                         class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>.
                 </p>
 
-                {{-- if validation errors show validation errors --}}
                 @if ($errors->any())
-                    {{ implode('', $errors->all('<div class="text-red-500">:message</div>')) }}
-
+                <div class="mt-4 flex flex-col">
+                    {{-- {{ implode('', $errors->all('<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">:message</div>')) }} --}}
+                    @foreach ($errors->all() as $error)
+                    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                        role="alert">
+                        {{ $error }}
+                    </div>
+                    @endforeach
+                </div>
                 @endif
 
                 <form class="mt-4 space-y-6 sm:mt-6" method="POST" action="{{ route('register') }}">
@@ -40,12 +46,12 @@
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                             <input type="email" name="email" id="email"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="name@company.com" required="required">
+                                placeholder="mohamed@gmail.com" required="required">
                         </div>
                         <div>
-                            <label for="contact_no"
+                            <label for="phone_number"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
-                            <input type="text" name="contact_no" id="contact_no"
+                            <input type="text" name="phone_number" id="phone_number"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="9123456" required="required">
                         </div>
@@ -135,7 +141,7 @@
             </div>
             <div class="mr-auto place-self-center lg:col-span-6">
                 <img class="hidden mx-auto lg:flex"
-                    src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/authentication/illustration.svg"
+                    src="/logo.svg"
                     alt="illustration">
             </div>
         </div>
