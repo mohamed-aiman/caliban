@@ -4,14 +4,106 @@ namespace App\Http\Controllers;
 
 use App\Models\Like;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function __construct(Product $product)
+    public function __construct(Product $product, Category $category)
     {
         $this->product = $product;
+        $this->category = $category;
     }
+
+    public function search(Request $request)
+    {
+        $query = $this->product;
+
+        if ($request->has('q')) {
+            $query = $query->where('title', 'like', '%' . $request->q . '%');
+        }
+
+        if ($request->has('category') && $request->category != 'all') {
+            $query = $query->whereIn('category_id', $this->flattenCategoryIds($request->category));
+        }
+
+        //apply filters
+        foreach (['min_price', 'max_price', 'sort'] as $param) {
+            if ($request->has($param) && $request->$param) {
+                $query = $this->applyFilter($query, $param, $request->$param);
+            }
+        }
+
+        //apply sorting
+        if ($request->has('sort') && $request->sort != 'null' && 
+            in_array($request->sort, ['best_match', 'price', 'price_desc', 'likes_count'])
+        ) {
+            $query = $this->applySorting($query, $request->sort);
+        }
+
+        $max = 20;
+        $perPage = $request->has('per_page') ? $request->per_page : $max;
+
+        if ($perPage > $max) {
+            $perPage = $max;
+        }
+
+        $products = $query->with('photos','locations')->paginate($perPage);
+
+        $products->appends($request->all());
+        
+        return $products;
+    }
+
+
+    protected function flattenCategoryIds($slug)
+    {
+        $category = $this->category->where('slug', $slug)
+            ->with('childrenRecursive')->first();
+
+        $categoryIds = [$category->id];
+        $flattened = flatten_recursive($category->toArray());
+        $categoryIds = array_merge($categoryIds, array_column($flattened, 'id'));
+
+        return $categoryIds;
+    }
+
+    protected function applyFilter($query, $filter, $value)
+    {
+        switch ($filter) {
+            case 'min_price':
+                return $query->where('price', '>=', $value);
+                break;
+            case 'max_price':
+                return $query->where('price', '<=', $value);
+                break;
+            default:
+                return $query;
+                break;
+        }
+    }
+
+    protected function applySorting($query, $sort)
+    {
+        switch ($sort) {
+            case 'best_match':
+                return $query->orderBy('created_at', 'desc');
+                break;
+            case 'price':
+                return $query->orderBy('price', 'asc');
+                break;
+            case 'price_desc':
+                return $query->orderBy('price', 'desc');
+                break;
+            case 'likes_count':
+                return $query->orderBy('likes_count', 'desc');
+                break;
+            default:
+                return $query;
+                break;
+        }
+    }
+
 
     public function show(Request $request, $slug)
     {

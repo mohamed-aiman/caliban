@@ -5,20 +5,44 @@ import ProductListItem from '@/components/product-list-item.vue';
 import ProductFilters from '@/components/product-filters.vue';
 import SideCategories from '@/navigation/SideCategories.vue'
 
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, watch } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
 
 const store = useStore()
 const selectedCategory = computed(() => store.state.category.selectedCategory)
 
 const products = computed(() => store.state.product.products)
-const loadProducts = async (page) => {
+const loadPage = async (page) => {
     await store.dispatch('product/loadProducts', page)
 }
 
+//need these watchers to refresh the page when the category or query changes when onMount is not called
+// const q = computed(() => store.state.product.queryParams.q)
+// watch(q, (val, oldVal) => {
+//     console.log('q changed')
+//     loadProductsFromRoute()
+// })
+// const selectedCategorySlug = computed(() => store.state.product.queryParams.category)
+// watch(selectedCategorySlug, (val, oldVal) => {
+//     console.log('selectedCategorySlug changed')
+//     loadProductsFromRoute()
+// })
+
+// const loadProductsFromRoute = async () => {
+//     console.log('loadProductsFromRoute')
+//     await store.dispatch('product/queryProducts', {
+//         q: route.query.q,
+//         category: route.query.category,
+//     })
+// }
+
 onMounted(() => {
-    console.log('Home Mounted')
-    // loadProducts('/api/products') //this is now done by top navbar
+    console.log('SearchPage mounted')
+    // loadProductsFromRoute()
 })
 
 const goToCategoryProducts = (slug) => {
@@ -63,7 +87,7 @@ const goToCategoryProducts = (slug) => {
                     </div>
                     <!-- product list end -->
                     <!-- pagination start -->
-                    <pagination :data="products" @load-page="loadProducts" />
+                    <pagination :data="products" @load-page="loadPage" />
                     <!-- pagination end -->
     
 

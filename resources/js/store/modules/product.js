@@ -1,6 +1,19 @@
 import { ProductService } from '@/services/ProductService'
 
 const state = {
+  queryParams: {
+    q: '',
+    category: 'all',
+    // min_price: null,
+    // max_price: null,
+    // condition: null,
+    // brand: null,
+    // color: null,
+    // size: null,
+    // sort: null,
+    // page: null
+  },
+  queryMessage: '',
   products: {
     current_page:null,
     data: [],
@@ -40,16 +53,40 @@ const mutations = {
   },
   SET_PRODUCT (state, data) {
     state.product = data
+  },
+  SET_QUERY_PARAMS (state, data) {
+    state.queryParams = data
+  },
+  UPDATE_A_QUERY_PARAM (state, data) {
+    state.queryParams[data.key] = data.value
+  },
+  SET_QUERY_MESSAGE (state, data) {
+    state.queryMessage = data
   }
 }
 
 const actions = {
+
+  async queryProducts ({ commit }, params, url) {
+    //fore each key in params UPDATE_A_QUERY_PARAM
+    Object.keys(params).forEach(key => {
+      commit('UPDATE_A_QUERY_PARAM', { key: key, value: params[key] || '' })
+    });
+    // commit('SET_QUERY_PARAMS', params)
+    ProductService.queryProducts(state.queryParams)
+    .then(response => {
+      commit('SET_PRODUCTS', response.data)
+      commit('SET_QUERY_MESSAGE', 'Showing ' + response.data.data.length + ' of ' + response.data.total + ' results')
+    })
+  },
+
   async loadProducts ({ commit }, url) {
     ProductService.loadProducts(url || '/api/products')
     .then(response => {
       commit('SET_PRODUCTS', response.data)
     })
   },
+  
 
   async loadProduct ({ commit }, slug) {
     ProductService.loadProduct(slug)

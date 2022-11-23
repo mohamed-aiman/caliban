@@ -32,7 +32,7 @@ Route::get('/categories/{slug}/products', [CategoryProductController::class, 'in
 
 //GUEST API ROUTES
 Route::group(['prefix'=>'api','as'=>'guest.'], function(){
-    Route::get('search', [HomeController::class, 'search'])->name('search');
+    Route::get('search', [ProductController::class, 'search'])->name('search');
     Route::get('products/{slug}', [ProductController::class, 'show'])->name('products.show');
     Route::get('products', [ProductController::class, 'index'])->name('products.index');
     Route::get('parent-categories', [CategoryController::class, 'parents'])->name('categories.parents');

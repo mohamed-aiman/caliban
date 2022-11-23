@@ -8,15 +8,16 @@ use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
-    public function __construct(Like $like)
+    public function __construct(Like $like, Product $product)
     {
         $this->like = $like;
+        $this->product = $product;
     }
     
     public function index(Request $request)
     {
         $likes = request()->user()->likes()->get();
-        $products = Product::whereIn('id', $likes->pluck('product_id'));
+        $products = $this->product->whereIn('id', $likes->pluck('product_id'));
 
         $max = 20;
         $perPage = $request->has('per_page') ? $request->per_page : $max;
@@ -32,21 +33,26 @@ class LikeController extends Controller
 
     protected function toggle(Request $request)
     {
-        $request->validate([
-            'product_id' => 'required|integer|exists:products,id',
-        ]);
+        //why waste a query if we are going to fetch the product anyway
+        // $request->validate([
+        //     'product_id' => 'required|integer|exists:products,id',
+        // ]);
+
+        $product = $this->product->findOrFail($request->product_id);
 
         $liked = false;
         if ($like = $this->like->where('user_id', $request->user()->id)
             ->where('product_id', $request->product_id)
             ->first()) {
             $like->delete();
+            $product->update(['likes_count' => $product->likes_count - 1]);
             $liked = false;
         } else {
             $like = $this->like->create([
                 'user_id' => $request->user()->id,
                 'product_id' => $request->product_id,
             ]);
+            $product->update(['likes_count' => $product->likes_count + 1]);
             $liked = true;
         }
 

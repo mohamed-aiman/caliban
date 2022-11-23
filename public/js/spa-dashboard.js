@@ -22186,6 +22186,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }();
 
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
+      console.log('WatchListPage mounted');
       loadProducts('/api/watchlist');
     });
 
@@ -25478,11 +25479,11 @@ var _hoisted_8 = {
   "class": "relative"
 };
 var _hoisted_9 = {
-  "class": "max-h-200 w-full"
+  "class": "w-full"
 };
 var _hoisted_10 = ["src"];
 var _hoisted_11 = {
-  "class": "flex justify-start space-x-4 my-3"
+  "class": "flex justify-start space-x-4 mb-3 mt-1"
 };
 var _hoisted_12 = ["onClick", "src"];
 var _hoisted_13 = {
@@ -25578,11 +25579,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), 128
   /* KEYED_FRAGMENT */
   ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 1 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 2 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" photos "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 2.1 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-    "class": "mx-auto",
+    "class": "mx-auto object-contain h-96",
     src: (_$setup$loadedPhoto = $setup.loadedPhoto) !== null && _$setup$loadedPhoto !== void 0 ? _$setup$loadedPhoto : $setup.product.photos[0].url
   }, null, 8
   /* PROPS */
-  , _hoisted_10)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 2.2 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.product.photos, function (photo, index) {
+  , _hoisted_10)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 2.2 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.product.photos, function (photo, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: index,
       "class": "max-w-12 w-12"
@@ -25599,7 +25600,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_12)]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 3 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" summary "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.product.title), 1
+  ))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 3 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" summary "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.product.title), 1
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.product.price_formatted), 1
   /* TEXT */
@@ -26009,48 +26010,53 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
   }
 
   _createClass(ProductService, null, [{
-    key: "loadProducts",
+    key: "queryProducts",
     value: function () {
-      var _loadProducts = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(page) {
-        var response, message;
+      var _queryProducts = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(params, url) {
+        var searchParams, response, message;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                _context.next = 3;
+                // const url = '/api/search?q=' + query.value + '&category=' + store.state.category.selectedCategory.slug
+                url = url || '/api/search?';
+                searchParams = new URLSearchParams(params);
+                url += searchParams.toString();
+                console.log('url', url);
+                _context.next = 7;
                 return this.request({
                   auth: false
-                }).get(page);
+                }).get(url);
 
-              case 3:
+              case 7:
                 response = _context.sent;
                 return _context.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
 
-              case 7:
-                _context.prev = 7;
+              case 11:
+                _context.prev = 11;
                 _context.t0 = _context["catch"](0);
                 message = _context.t0.response.data ? _context.t0.response.data.error : _context.t0.response.statusText;
                 throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context.t0, message);
 
-              case 11:
+              case 15:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 7]]);
+        }, _callee, this, [[0, 11]]);
       }));
 
-      function loadProducts(_x) {
-        return _loadProducts.apply(this, arguments);
+      function queryProducts(_x, _x2) {
+        return _queryProducts.apply(this, arguments);
       }
 
-      return loadProducts;
+      return queryProducts;
     }()
   }, {
-    key: "loadWatchlist",
+    key: "loadProducts",
     value: function () {
-      var _loadWatchlist = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(page) {
+      var _loadProducts = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(page) {
         var response, message;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
@@ -26059,7 +26065,7 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
                 _context2.prev = 0;
                 _context2.next = 3;
                 return this.request({
-                  auth: true
+                  auth: false
                 }).get(page);
 
               case 3:
@@ -26080,16 +26086,16 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
         }, _callee2, this, [[0, 7]]);
       }));
 
-      function loadWatchlist(_x2) {
-        return _loadWatchlist.apply(this, arguments);
+      function loadProducts(_x3) {
+        return _loadProducts.apply(this, arguments);
       }
 
-      return loadWatchlist;
+      return loadProducts;
     }()
   }, {
-    key: "loadProduct",
+    key: "loadWatchlist",
     value: function () {
-      var _loadProduct = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(slug) {
+      var _loadWatchlist = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(page) {
         var response, message;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) {
@@ -26098,8 +26104,8 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
                 _context3.prev = 0;
                 _context3.next = 3;
                 return this.request({
-                  auth: false
-                }).get("/api/products/".concat(slug));
+                  auth: true
+                }).get(page);
 
               case 3:
                 response = _context3.sent;
@@ -26119,16 +26125,16 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
         }, _callee3, this, [[0, 7]]);
       }));
 
-      function loadProduct(_x3) {
-        return _loadProduct.apply(this, arguments);
+      function loadWatchlist(_x4) {
+        return _loadWatchlist.apply(this, arguments);
       }
 
-      return loadProduct;
+      return loadWatchlist;
     }()
   }, {
-    key: "toggleLike",
+    key: "loadProduct",
     value: function () {
-      var _toggleLike = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(productId) {
+      var _loadProduct = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(slug) {
         var response, message;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) {
@@ -26138,9 +26144,7 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
                 _context4.next = 3;
                 return this.request({
                   auth: false
-                }).post("/api/likes/toggle", {
-                  product_id: productId
-                });
+                }).get("/api/products/".concat(slug));
 
               case 3:
                 response = _context4.sent;
@@ -26160,7 +26164,48 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
         }, _callee4, this, [[0, 7]]);
       }));
 
-      function toggleLike(_x4) {
+      function loadProduct(_x5) {
+        return _loadProduct.apply(this, arguments);
+      }
+
+      return loadProduct;
+    }()
+  }, {
+    key: "toggleLike",
+    value: function () {
+      var _toggleLike = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(productId) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.prev = 0;
+                _context5.next = 3;
+                return this.request({
+                  auth: false
+                }).post("/api/likes/toggle", {
+                  product_id: productId
+                });
+
+              case 3:
+                response = _context5.sent;
+                return _context5.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context5.prev = 7;
+                _context5.t0 = _context5["catch"](0);
+                message = _context5.t0.response.data ? _context5.t0.response.data.error : _context5.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context5.t0, message);
+
+              case 11:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this, [[0, 7]]);
+      }));
+
+      function toggleLike(_x6) {
         return _toggleLike.apply(this, arguments);
       }
 
@@ -26336,7 +26381,8 @@ var Http = /*#__PURE__*/function () {
   function Http(status) {
     _classCallCheck(this, Http);
 
-    this.instance = axios__WEBPACK_IMPORTED_MODULE_0___default().create({// baseURL: 'http://shop.local:10087'
+    this.instance = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
+      baseURL: 'https://beast.local/'
     }); // Add a request interceptor
 
     this.instance.interceptors.request.use(function (config) {
@@ -26701,6 +26747,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var state = {
+  queryParams: {
+    q: '',
+    category: 'all' // min_price: null,
+    // max_price: null,
+    // condition: null,
+    // brand: null,
+    // color: null,
+    // size: null,
+    // sort: null,
+    // page: null
+
+  },
+  queryMessage: '',
   products: {
     current_page: null,
     data: [],
@@ -26734,10 +26793,19 @@ var mutations = {
   },
   SET_PRODUCT: function SET_PRODUCT(state, data) {
     state.product = data;
+  },
+  SET_QUERY_PARAMS: function SET_QUERY_PARAMS(state, data) {
+    state.queryParams = data;
+  },
+  UPDATE_A_QUERY_PARAM: function UPDATE_A_QUERY_PARAM(state, data) {
+    state.queryParams[data.key] = data.value;
+  },
+  SET_QUERY_MESSAGE: function SET_QUERY_MESSAGE(state, data) {
+    state.queryMessage = data;
   }
 };
 var actions = {
-  loadProducts: function loadProducts(_ref, url) {
+  queryProducts: function queryProducts(_ref, params, url) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       var commit;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -26745,11 +26813,20 @@ var actions = {
           switch (_context.prev = _context.next) {
             case 0:
               commit = _ref.commit;
-              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.loadProducts(url || '/api/products').then(function (response) {
+              //fore each key in params UPDATE_A_QUERY_PARAM
+              Object.keys(params).forEach(function (key) {
+                commit('UPDATE_A_QUERY_PARAM', {
+                  key: key,
+                  value: params[key] || ''
+                });
+              }); // commit('SET_QUERY_PARAMS', params)
+
+              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.queryProducts(state.queryParams).then(function (response) {
                 commit('SET_PRODUCTS', response.data);
+                commit('SET_QUERY_MESSAGE', 'Showing ' + response.data.data.length + ' of ' + response.data.total + ' results');
               });
 
-            case 2:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -26757,7 +26834,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  loadProduct: function loadProduct(_ref2, slug) {
+  loadProducts: function loadProducts(_ref2, url) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
       var commit;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
@@ -26765,8 +26842,8 @@ var actions = {
           switch (_context2.prev = _context2.next) {
             case 0:
               commit = _ref2.commit;
-              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.loadProduct(slug).then(function (response) {
-                commit('SET_PRODUCT', response.data);
+              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.loadProducts(url || '/api/products').then(function (response) {
+                commit('SET_PRODUCTS', response.data);
               });
 
             case 2:
@@ -26777,7 +26854,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  loadWatchlist: function loadWatchlist(_ref3, url) {
+  loadProduct: function loadProduct(_ref3, slug) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
       var commit;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -26785,8 +26862,8 @@ var actions = {
           switch (_context3.prev = _context3.next) {
             case 0:
               commit = _ref3.commit;
-              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.loadWatchlist(url || '/api/watchlist').then(function (response) {
-                commit('SET_PRODUCTS', response.data);
+              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.loadProduct(slug).then(function (response) {
+                commit('SET_PRODUCT', response.data);
               });
 
             case 2:
@@ -26795,6 +26872,26 @@ var actions = {
           }
         }
       }, _callee3);
+    }))();
+  },
+  loadWatchlist: function loadWatchlist(_ref4, url) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+      var commit;
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.loadWatchlist(url || '/api/watchlist').then(function (response) {
+                commit('SET_PRODUCTS', response.data);
+              });
+
+            case 2:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
     }))();
   }
 };

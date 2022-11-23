@@ -35,7 +35,12 @@
                 'csrfToken' => csrf_token(),
                 'user' => Auth::user(),
             ]) !!};
-        </script>
+            // function focusChanged(e){
+            //     console.log(e)
+            //     console.log(document.activeElement)
+            // }
+            // document.addEventListener('focusin', focusChanged)
+            </script>
         <script src="{{ mix('js/spa.js') }}"></script>
     </body>
 </html>

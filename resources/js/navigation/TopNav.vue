@@ -26,7 +26,7 @@
                             </svg>
                         </div>
                         <input v-model="query" 
-                            type="search" ref="searchInput" 
+                            type="search" ref="desktopSearchInput" id="desktop-search-input" 
                             @keydown.enter="search"
                             placeholder="Search for listings..." 
                             required="" 
@@ -73,7 +73,7 @@
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </div>
-                        <input v-model="query" type="search" ref="searchInput" @keydown.enter="search"
+                        <input v-model="query" type="search" ref="searchInputMobile" id="search-input-mobile" @keydown.enter="search"
                             placeholder="Search for listings..." required="" class="block p-4 pl-10 w-full text-sm text-gray-900 
                                                         bg-gray-50 rounded-lg border 
                                                         border-gray-300 focus:ring-blue-500 
@@ -116,8 +116,8 @@
                         </li>
                         <li class="nav-item">
                             <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                href="/watch-list">
-                                <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span class="ml-2">Watch&nbspList</span>
+                                href="/dashboard/watchlist">
+                                <i class="fab fa-pinterest text-lg leading-lg text-white opacity-75" /><span class="ml-2">Watchlist</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -213,9 +213,13 @@
 
 <script setup>
 
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import { UserService } from '@/services/UserService'
+import { useRouter, useRoute } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
 
 const showMenu = ref(false)
 const toggleNavbar = () => {
@@ -234,41 +238,100 @@ const logout = () => {
 const store = useStore()
 const parentCategories = computed(() => store.state.category.parentCategories)
 const loadParentCategories = async () => {
+    console.log('loadParentCategories')
     if (parentCategories.value.length === 0) {
+        console.log('loadParentCategories loading...')
         await store.dispatch('category/loadParentCategories')
     }
+    console.log('loadParentCategories done')
 }
 
 const user = ref({})
-const searchInput = ref('')
+const desktopSearchInput = ref('')
 onMounted(() => {
-    searchInput.value.focus()
+    console.log('TopNav Mounted')
+    // desktopSearchInput.value.focus()
     user.value = window.Laravel.user
     loadParentCategories()
+    nextTick(() => {
+        //setting focus on desktop search input
+        desktopSearchInput.value.focus()
+    });
+
+    loadProductsFromRoute()
 })
 
+const setSelectedCategorySlug = (val) => {
+    console.log('setSelectedCategorySlug', val)
+    let selectedCategory = parentCategories.value.find(c => c.slug === val)
+    if (selectedCategory) {
+        store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
+    } else {
+        store.commit('category/SET_SELECTED_CATEGORY', {
+            id: null,
+            slug: 'all',
+            name: 'All Categories'
+        })
+        store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'category', value: 'all' })
+    }
+}
+
 const categorySlug = computed({
-    get: () => store.state.category.selectedCategory.slug,
+    // get: () => store.state.category.selectedCategory.slug,
+    get: () => store.state.product.queryParams.category,
     set: (val) => {
-        let selectedCategory = store.state.category.parentCategories.find(c => c.slug === val)
-        if (selectedCategory) {
-            store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
-        } else {
-            store.commit('category/SET_SELECTED_CATEGORY', {
-                id: null,
-                slug: 'all',
-                name: 'All Categories'
-            })
-        }
+        setSelectedCategorySlug(val)
     }
 })
 
 const query = ref('')
+//if has url params try to load from it.
+const loadProductsFromRoute = async () => {
+    console.log('loadProductsFromRoute NavBar')
+    await router.isReady();
+    if (route.name == 'home' || route.name == 'search') {
+        console.log(route.query)
+        await store.dispatch('product/queryProducts', route.query)
+        if (route.query.q) {
+            //set search bar value
+            query.value = route.query.q
+            store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'q', value: route.query.q })
+        }
+
+        if (route.query.category) {
+            //set search bar dropdown value
+            store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'category', value: route.query.category })
+        }
+
+        console.log('loadProductsFromRoute end NavBar')
+    }
+}
+
+
+//this is called when search is clicked
 const search = async () => {
-    await store.dispatch(
-        'product/loadProducts',
-        '/api/search?q=' + query.value + '&category=' + store.state.category.selectedCategory.slug
-    )
-    searchInput.value.focus()
+    console.log('search')
+    loadProductsFromSearch()
+    desktopSearchInput.value.focus()
+    router.push({
+        name: 'search',
+        query: {
+            q: query.value,
+            category: store.state.category.selectedCategory.slug
+        }
+    })
+}
+
+//this is called to load products from search
+const loadProductsFromSearch = async () => {
+    console.log('loadProductsFromSearch')
+    console.log({
+        q: query.value,
+        category: store.state.category.selectedCategory.slug
+    })
+    await store.dispatch('product/queryProducts', {
+        q: query.value,
+        category: store.state.category.selectedCategory.slug
+    })
 }
 </script>

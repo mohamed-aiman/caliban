@@ -2,6 +2,7 @@
 
 import { ref, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 const store = useStore()
 const parentCategories = computed(() => store.state.category.parentCategories)
@@ -16,17 +17,28 @@ onMounted(() => {
 })
 
 const storeSelectedCategory = computed(() => store.state.category.selectedCategory)
+const query = computed(() => store.state.product.queryParams.q)
 
-const query = ref('')
+const router = useRouter()
 const loadCategoryProducts = async (slug) => {
-    let page = '/api/search?q=' + query.value + '&category=' + slug
-    await store.dispatch('product/loadProducts', page)
-
     let selectedCategory = store.state.category.parentCategories.find(c => c.slug === slug)
     if (selectedCategory) {
         store.commit('category/SET_SELECTED_CATEGORY', selectedCategory)
+        // store.commit('product/UPDATE_A_QUERY_PARAM', { key: 'category', value: selectedCategory.slug })
     }
 
+    await store.dispatch('product/queryProducts', {
+        q: query.value,
+        category: slug
+    })
+
+    router.push({
+        name: 'search',
+        query: {
+            q: query.value,
+            category: store.state.product.queryParams.category
+        }
+    })
     // console.log(slug)
     // window.location.href = `/categories/${slug}/products`
 }
