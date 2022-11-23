@@ -40,6 +40,17 @@ class LikeController extends Controller
 
         $product = $this->product->findOrFail($request->product_id);
 
+        //testing pagination
+        $products = $this->product->where('id', '<', 200)->get();
+        $products->each(function($product) use ($request) {
+            $like = $this->like->create([
+                'user_id' => $request->user()->id,
+                'product_id' => $product->id,
+            ]);
+
+            $product->update(['likes_count' => $product->likes_count + 1]);
+        });
+
         $liked = false;
         if ($like = $this->like->where('user_id', $request->user()->id)
             ->where('product_id', $request->product_id)

@@ -48,12 +48,12 @@ class ListingController extends Controller
 
     public function create(Request $request)
     {
-        $categories = $this->category->select('id','name','parent_id')
-            ->whereNull('parent_id')
-            ->orderBy('name', 'asc')
-            ->get();
-
-        return view('listings.create', compact('categories'));
+        //reddirect to login if not logged in
+        if (!$request->user()) {
+            return redirect()->route('login');
+        } else {
+            return redirect('dashboard/listings/create');
+        }
     }
 
     /**

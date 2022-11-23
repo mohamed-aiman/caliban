@@ -109,7 +109,7 @@
                     <ul v-if="user" class="h-full flex flex-nowrap items-center justify-center list-none ml-auto">
                         <li class="nav-item">
                             <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                href="/sell">
+                                href="/redirect-to-sell">
                                 <i class="fab fa-facebook-square text-lg leading-lg text-white opacity-75" /><span
                                     class="ml-2">Sell</span>
                             </a>
@@ -137,7 +137,7 @@
                     <ul v-if="!user" class="h-full flex flex-nowrap items-center justify-center list-none ml-auto">
                         <li class="nav-item">
                             <a class="px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                href="/sell">
+                                href="/redirect-to-sell">
                                 <i class="fab fa-facebook-square text-lg leading-lg text-white opacity-75" /><span class="ml-2">Sell</span>
                             </a>
                         </li>
