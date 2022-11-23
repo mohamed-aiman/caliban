@@ -23,13 +23,12 @@
                     Create your Account
                 </h1>
                 <p class="text-sm font-light text-gray-500 dark:text-gray-300">
-                    Start selling in seconds. Already have an account? <a href="/login"
+                    Start selling in seconds. Already have an account? <a href="{{ route('login') }}"
                         class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>.
                 </p>
 
                 @if ($errors->any())
                 <div class="mt-4 flex flex-col">
-                    {{-- {{ implode('', $errors->all('<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">:message</div>')) }} --}}
                     @foreach ($errors->all() as $error)
                     <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
                         role="alert">
@@ -88,7 +87,7 @@
                             </svg>
                             Sign up with Google
                         </a>
-                        <a href="#"
+                        {{-- <a href="#"
                             class="w-full inline-flex items-center justify-center py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                             <svg class="w-5 h-5 mr-2 text-gray-900 dark:text-white" viewBox="0 0 21 20" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +103,7 @@
                                 </defs>
                             </svg>
                             Sign up with Apple
-                        </a>
+                        </a> --}}
                     </div>
                     <div class="space-y-3">
                         <div class="flex items-start">
