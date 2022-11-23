@@ -59,19 +59,18 @@ const loadPhoto = (photoUrl) => {
             <!-- photos -->
             <!-- 2.1 -->
             <div class="relative">
-                <div class="max-h-200 w-full">
-                    <img class= "mx-auto" 
-                    :src="loadedPhoto ?? product.photos[0].url" >
+                <div class="w-full">
+                    <img class= "mx-auto object-contain h-96" :src="loadedPhoto ?? product.photos[0].url" >
                 </div>
-            </div>
-            <!-- 2.2 -->
-            <div class="flex justify-start space-x-4 my-3">
-                <div v-for="(photo, index) in product.photos" :key="index"
-                    class="max-w-12 w-12">
-                    <img @click="loadPhoto(photo.url)" 
-                        class="photo-options border-2 rounded-md cursor-pointer"
-                        :class="{'border-teal-700': (photo.url === loadedPhoto || (photo.url === product.photos[0].url && loadedPhoto === null))}"
-                        :src="photo.url">
+                <!-- 2.2 -->
+                <div class="flex justify-start space-x-4 mb-3 mt-1">
+                    <div v-for="(photo, index) in product.photos" :key="index"
+                        class="max-w-12 w-12">
+                        <img @click="loadPhoto(photo.url)" 
+                            class="photo-options border-2 rounded-md cursor-pointer"
+                            :class="{'border-teal-700': (photo.url === loadedPhoto || (photo.url === product.photos[0].url && loadedPhoto === null))}"
+                            :src="photo.url">
+                    </div>
                 </div>
             </div>
         </div>
