@@ -42,24 +42,9 @@ const undoLike = (productId) => {
                                     <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
                                         <thead class="bg-gray-100 dark:bg-gray-700">
                                             <tr>
-                                                <!-- <th scope="col" class="p-4">
-                                                    <div class="flex items-center">
-                                                        <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox"
-                                                            class="w-4 h-4 bg-gray-50 rounded border-gray-300 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                                        <label for="checkbox-all" class="sr-only">checkbox</label>
-                                                    </div>
-                                                </th> -->
                                                 <th scope="col"
                                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                     Product Name
-                                                </th>
-                                                <th scope="col"
-                                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                    Created At
-                                                </th>
-                                                <th scope="col"
-                                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                    ID
                                                 </th>
                                                 <th scope="col"
                                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -73,22 +58,11 @@ const undoLike = (productId) => {
                     
                                             <tr  v-for="product in products['data']" :key="product.id" 
                                                 class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                <!-- <td class="p-4 w-4">
-                                                    <div class="flex items-center">
-                                                        <input id="checkbox-194556" aria-describedby="checkbox-1" type="checkbox"
-                                                            class="w-4 h-4 bg-gray-50 rounded border-gray-300 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                                        <label for="checkbox-194556" class="sr-only">checkbox</label>
-                                                    </div>
-                                                </td> -->
                                                 <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                    <div class="text-ellipsis overflow-hidden w-96 text-base font-semibold text-gray-900 dark:text-white">{{ product.title }}
+                                                    <div class="text-ellipsis overflow-hidden w-max-md text-base font-semibold text-gray-900 dark:text-white">{{ product.title }}
                                                     </div>
                                                     <div class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ product.category.name }}</div>
                                                 </td>
-                                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ moment(product.created_at).fromNow() }}</td>
-                                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ product.id }}</td>
                                                 <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                     {{ product.price }}
                                                 </td>
