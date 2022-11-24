@@ -294,5 +294,20 @@ class ListingController extends Controller
         ], 200);
     }
 
+    public function isActiveToggle(Request $request)
+    {
+        $product = $this->product
+            ->where('id', $request->product_id)
+            ->where('seller_id', $this->getSelectedStore()->id) //
+            ->firstOrFail();
 
+        $product->update([
+            'is_active' => !$product->is_active,
+        ]);
+
+        return response()->json([
+            'message' => 'Listing updated successfully',
+            'product' => $product,
+        ], 200);
+    }
 }

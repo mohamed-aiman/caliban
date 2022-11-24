@@ -22807,6 +22807,47 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
 
       return toggleLike;
     }()
+  }, {
+    key: "toggleIsActive",
+    value: function () {
+      var _toggleIsActive = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(productId) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.prev = 0;
+                _context6.next = 3;
+                return this.request({
+                  auth: false
+                }).patch("/api/listings/is-active-toggle", {
+                  product_id: productId
+                });
+
+              case 3:
+                response = _context6.sent;
+                return _context6.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context6.prev = 7;
+                _context6.t0 = _context6["catch"](0);
+                message = _context6.t0.response.data ? _context6.t0.response.data.error : _context6.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context6.t0, message);
+
+              case 11:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this, [[0, 7]]);
+      }));
+
+      function toggleIsActive(_x7) {
+        return _toggleIsActive.apply(this, arguments);
+      }
+
+      return toggleIsActive;
+    }()
   }]);
 
   return ProductService;

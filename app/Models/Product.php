@@ -13,6 +13,11 @@ class Product extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        // 'images' => 'array',
+        'is_active' => 'boolean',
+    ];
+
     protected $appends = ['price_formatted'];
 
     public function getPriceFormattedAttribute()

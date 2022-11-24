@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('selling_format')->nullable();
             $table->unsignedInteger('duration')->nullable();//days
             $table->datetime('list_till')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->string('tax')->nullable();
             $table->unsignedInteger('likes_count')->default(0);
             $table->timestamps();

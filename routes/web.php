@@ -49,12 +49,14 @@ Route::group(['middleware' => ['auth'], 'prefix'=>'api', 'as'=>'user.'], functio
     Route::post('photos', [PhotoController::class, 'store'])->name('photos.store');
     Route::get('listings', [ListingController::class, 'index'])->name('listings.index');
     Route::get('listings/{productSlug}/form-data', [ListingController::class, 'productFormData'])->name('listings.product-form-data');
+    Route::patch('listings/is-active-toggle', [ListingController::class, 'isActiveToggle'])->name('listings.is-active-toggle');
     Route::patch('listings/{productSlug}', [ListingController::class, 'update'])->name('listings.update');
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('listings/{productSlug}', [ListingController::class, 'show'])->name('listings.show');
     Route::get('locations/for-select', [LocationController::class, 'forSelect'])->name('locations.for-select');
     Route::get('watchlist', [LikeController::class, 'index'])->name('likes.index');
     Route::post('likes/toggle', [LikeController::class, 'toggle'])->name('likes.toggle');
+
 });
 
 //LOGGED IN USER SPA ROUTES

@@ -19,6 +19,8 @@ class ProductController extends Controller
     {
         $query = $this->product;
 
+        $query = $query->where('is_active', true);
+
         if ($request->has('q')) {
             $query = $query->where('title', 'like', '%' . $request->q . '%');
         }

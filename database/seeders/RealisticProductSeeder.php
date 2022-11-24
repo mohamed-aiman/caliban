@@ -51,6 +51,7 @@ class RealisticProductSeeder extends Seeder
             'duration' => null,
             'list_till' => "2022-10-21 12:42:20",
             'tax' => "GST_6%",
+            'is_active' => true,
         ]);
         
         $photosData = [

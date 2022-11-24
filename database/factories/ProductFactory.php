@@ -33,6 +33,8 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 1, 1000),
             'tax' => $this->faker->randomElement($taxes),
             'quantity' => $this->faker->randomNumber(2),
+            // 'unit' => $this->faker->randomElement(['kg','g','m','cm','mm','l','ml','pcs']),
+            'is_active' => $this->faker->boolean,
         ];
     }
 }
