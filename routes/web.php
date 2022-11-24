@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth'], 'prefix'=>'api', 'as'=>'user.'], functio
     Route::patch('listings/decrement-quantity', [ListingController::class, 'decrementQuantity'])->name('listings.decrement-quantity');
     Route::patch('listings/increment-quantity', [ListingController::class, 'incrementQuantity'])->name('listings.increment-quantity');
     Route::patch('listings/update-quantity', [ListingController::class, 'updateQuantity'])->name('listings.update-quantity');
+    Route::patch('listings/update-price', [ListingController::class, 'updatePrice'])->name('listings.update-price');
     Route::patch('listings/{productSlug}', [ListingController::class, 'update'])->name('listings.update');
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('listings/{productSlug}', [ListingController::class, 'show'])->name('listings.show');

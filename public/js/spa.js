@@ -22969,6 +22969,45 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
 
       return updateQuantity;
     }()
+  }, {
+    key: "updatePrice",
+    value: function () {
+      var _updatePrice = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(payload) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                _context10.prev = 0;
+                _context10.next = 3;
+                return this.request({
+                  auth: false
+                }).patch("/api/listings/update-price", payload);
+
+              case 3:
+                response = _context10.sent;
+                return _context10.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context10.prev = 7;
+                _context10.t0 = _context10["catch"](0);
+                message = _context10.t0.response.data ? _context10.t0.response.data.error : _context10.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context10.t0, message);
+
+              case 11:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this, [[0, 7]]);
+      }));
+
+      function updatePrice(_x11) {
+        return _updatePrice.apply(this, arguments);
+      }
+
+      return updatePrice;
+    }()
   }]);
 
   return ProductService;

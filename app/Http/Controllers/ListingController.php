@@ -366,4 +366,26 @@ class ListingController extends Controller
             'product' => $product,
         ], 200);
     }
+
+    public function updatePrice(Request $request)
+    {
+        $request->validate([
+            'price' => 'required|numeric',
+            'product_id' => 'required|integer',
+        ]);
+
+        $product = $this->product
+            ->where('id', $request->product_id)
+            ->where('seller_id', $this->getSelectedStore()->id) //
+            ->firstOrFail();
+
+        $product->update([
+            'price' => $request->price
+        ]);
+
+        return response()->json([
+            'message' => 'Listing updated successfully',
+            'product' => $product,
+        ], 200);
+    }
 }

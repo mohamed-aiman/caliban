@@ -21960,13 +21960,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                console.log('updateQuantity', event.target.value);
                 store.dispatch('product/updateQuantity', {
                   product_id: product.id,
                   quantity: event.target.value
                 });
 
-              case 2:
+              case 1:
               case "end":
                 return _context5.stop();
             }
@@ -21979,6 +21978,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     }();
 
+    var updatePrice = /*#__PURE__*/function () {
+      var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(event, product) {
+        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _services_ProductService__WEBPACK_IMPORTED_MODULE_3__.ProductService.updatePrice({
+                  product_id: product.id,
+                  price: event.target.value
+                });
+
+              case 1:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      return function updatePrice(_x7, _x8) {
+        return _ref7.apply(this, arguments);
+      };
+    }();
+
     var __returned__ = {
       store: store,
       products: products,
@@ -21987,6 +22010,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       decrementQuantity: decrementQuantity,
       incrementQuantity: incrementQuantity,
       updateQuantity: updateQuantity,
+      updatePrice: updatePrice,
       pagination: _components_pagination_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       computed: vue__WEBPACK_IMPORTED_MODULE_1__.computed,
@@ -25443,11 +25467,12 @@ var _hoisted_31 = [_hoisted_29, _hoisted_30];
 var _hoisted_32 = {
   "class": "p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
 };
-var _hoisted_33 = {
+var _hoisted_33 = ["value", "onInput"];
+var _hoisted_34 = {
   "class": "p-4 space-x-2 whitespace-nowrap"
 };
 
-var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "button",
   "data-modal-toggle": "delete-product-modal",
   "class": "inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
@@ -25466,7 +25491,7 @@ var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "button",
   "data-modal-toggle": "product-modal",
   "class": "inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
@@ -25541,9 +25566,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       type: "button"
     }, _hoisted_31, 8
     /* PROPS */
-    , _hoisted_28)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(product.price), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    , _hoisted_28)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      type: "text",
+      value: product.price,
+      onInput: function onInput($event) {
+        return $setup.updatePrice($event, product);
+      },
+      "class": "bg-gray-50 w-24 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+      placeholder: "1",
+      required: ""
+    }, null, 40
+    /* PROPS, HYDRATE_EVENTS */
+    , _hoisted_33)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
         name: 'listings-edit',
         params: {
@@ -25552,7 +25586,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_34];
+        return [_hoisted_35];
       }),
       _: 2
       /* DYNAMIC */
@@ -25568,7 +25602,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_35];
+        return [_hoisted_36];
       }),
       _: 2
       /* DYNAMIC */
@@ -26554,6 +26588,45 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
       }
 
       return updateQuantity;
+    }()
+  }, {
+    key: "updatePrice",
+    value: function () {
+      var _updatePrice = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(payload) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                _context10.prev = 0;
+                _context10.next = 3;
+                return this.request({
+                  auth: false
+                }).patch("/api/listings/update-price", payload);
+
+              case 3:
+                response = _context10.sent;
+                return _context10.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context10.prev = 7;
+                _context10.t0 = _context10["catch"](0);
+                message = _context10.t0.response.data ? _context10.t0.response.data.error : _context10.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context10.t0, message);
+
+              case 11:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this, [[0, 7]]);
+      }));
+
+      function updatePrice(_x11) {
+        return _updatePrice.apply(this, arguments);
+      }
+
+      return updatePrice;
     }()
   }]);
 

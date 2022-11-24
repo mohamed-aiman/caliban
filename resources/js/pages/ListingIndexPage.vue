@@ -27,10 +27,16 @@ const incrementQuantity = async (product) => {
 }
 
 const updateQuantity = async (event, product) => {
-    console.log('updateQuantity',event.target.value)
     store.dispatch('product/updateQuantity', {
         product_id: product.id,
         quantity: event.target.value
+    })
+}
+
+const updatePrice = async (event, product) => {
+    ProductService.updatePrice({
+        product_id: product.id,
+        price: event.target.value
     })
 }
 
@@ -152,7 +158,9 @@ const updateQuantity = async (event, product) => {
                                             </td>
                                             <td
                                                 class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{ product.price }}
+                                                <input type="text" :value="product.price" @input="updatePrice($event, product)"
+                                                    class="bg-gray-50 w-24 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="1" required>
                                             </td>
                                             <td class="p-4 space-x-2 whitespace-nowrap">
                                                 <router-link :to="{ name: 'listings-edit', params: { slug: product.slug }}">
