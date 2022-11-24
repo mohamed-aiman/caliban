@@ -32,7 +32,7 @@ const initDescriptionEditor = () => {
     // });
 }
 onMounted(() => {
-    console.log('mounted hello')
+    console.log('ListingEdit mounted')
     loadParentCategories();
     loadLocations();
     initDescriptionEditor();

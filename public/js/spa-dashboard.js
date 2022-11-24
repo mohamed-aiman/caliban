@@ -21142,7 +21142,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
 
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
-      console.log('mounted hello');
+      console.log('ListingEdit mounted');
       loadParentCategories();
       loadLocations();
       initDescriptionEditor();

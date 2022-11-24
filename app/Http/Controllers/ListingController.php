@@ -19,7 +19,7 @@ class ListingController extends Controller
     {
         $product = $this->product
             ->where('slug', $slug)
-            ->where('seller_id', $request->user()->id)
+            ->where('seller_id', $this->getSelectedStore()->id)
             ->firstOrFail();
 
         $product->load('photos', 'locations', 'category');
@@ -27,19 +27,40 @@ class ListingController extends Controller
         return view('listings.show', compact('product'));
     }
 
+    protected function getSelectedStore()
+    {
+        $user = request()->user();
+
+        $stores = $user->stores;
+        if ($stores->count() == 0) {
+            // return response()->json([
+            //     'message' => 'You must have at least one store to create a listing',
+            // ], 422);
+            $store = $user->store()->create([
+                'name' => $user->name,
+                // 'owner_id' => 
+                'avatar_url' => $user->avatar_url,
+                'phone' => $user->phone,
+                'phone_2' => null,
+                'email' => $user->email,
+                'website' => null,
+            ]);
+        } else {
+            // @todo handle multiple store using user_store pivot table
+            // update user model stores() method to return stores from pivot 
+            // after doing that let user select from his stores
+            // for now one user one store
+            $store = $stores->first();
+        } 
+
+        return $store;
+    }
+
     public function index(Request $request)
     {
-        $user = $request->user();
-        $stores = $user->stores;
-        // @todo handle multiple store using user_store pivot table
-        // update user model stores() method to return stores from pivot 
-        // after doing that let user select from his stores
-        // for now one user one store
-        $store = $stores->first();
-
         $products = $this->product
             ->with('category')
-            ->where('seller_id', $store->id)
+            ->where('seller_id', $this->getSelectedStore()->id)
             ->orderBy('created_at', 'desc')
             ->paginate(50);
 
@@ -98,29 +119,6 @@ class ListingController extends Controller
             ], 422);
         }
 
-        $user = $request->user();
-        $stores = $user->stores;
-        if ($stores->count() == 0) {
-            // return response()->json([
-            //     'message' => 'You must have at least one store to create a listing',
-            // ], 422);
-            $store = $user->store()->create([
-                'name' => $user->name,
-                // 'owner_id' => 
-                'avatar_url' => $user->avatar_url,
-                'phone' => $user->phone,
-                'phone_2' => null,
-                'email' => $user->email,
-                'website' => null,
-            ]);
-        } else {
-            // @todo handle multiple store using user_store pivot table
-            // update user model stores() method to return stores from pivot 
-            // after doing that let user select from his stores
-            // for now one user one store
-            $store = $stores->first();
-        } 
-
         $product = $this->product->create([
             'title' => $request->title,
             'description' => $request->description,
@@ -132,8 +130,8 @@ class ListingController extends Controller
             'price' => $request->price,
             'tax' => $request->tax,
             'quantity' => $request->quantity,
-            'seller_id' => $store->id,
-            'user_id' => $user->id,
+            'seller_id' => $this->getSelectedStore()->id,
+            'user_id' => $request->user()->id,
         ]);
 
         if ($request->photos && count($request->photos) > 0) {
@@ -160,7 +158,7 @@ class ListingController extends Controller
     {
         $product = $this->product
             ->where('slug', $slug)
-            ->where('seller_id', $request->user()->id) //
+            ->where('seller_id', $this->getSelectedStore()->id) //
             ->firstOrFail();
 
         $product->load('photos', 'locations', 'category');
@@ -216,17 +214,9 @@ class ListingController extends Controller
             ], 422);
         }
 
-        $user = $request->user();
-        $stores = $user->stores;
-        // @todo handle multiple store using user_store pivot table
-        // update user model stores() method to return stores from pivot 
-        // after doing that let user select from his stores
-        // for now one user one store
-        $store = $stores->firstOrFail();
-
         $product = $this->product
             ->where('slug', $slug)
-            ->where('seller_id', $store->id)
+            ->where('seller_id', $this->getSelectedStore()->id) //
             ->firstOrFail();
 
         $product->update([
@@ -240,7 +230,7 @@ class ListingController extends Controller
             'price' => $request->price,
             'tax' => $request->tax,
             'quantity' => $request->quantity,
-            'seller_id' => $store->id,
+            // 'seller_id' => $store->id,
         ]);
 
         if ($request->photos && count($request->photos) > 0) {
@@ -262,10 +252,10 @@ class ListingController extends Controller
     public function productFormData(Request $request, $slug)
     {
         $product = $this->product
-            ->where('slug', $slug)
-            ->where('seller_id', $request->user()->id)//
-            ->firstOrFail();
-
+        ->where('slug', $slug)
+        ->where('seller_id', $this->getSelectedStore()->id)//
+        ->firstOrFail();
+        
         $product->load('photos', 'locations', 'category');
 
         // form: {
