@@ -22894,7 +22894,7 @@ var _hoisted_7 = {
   "class": "h-full flex flex-nowrap items-center justify-center list-none ml-auto"
 };
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<li class=\"nav-item\"><a class=\"px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75\" href=\"/sell\"><i class=\"fab fa-facebook-square text-lg leading-lg text-white opacity-75\"></i><span class=\"ml-2\">Sell</span></a></li><li class=\"nav-item\"><a class=\"px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75\" href=\"/watch-list\"><i class=\"fab fa-pinterest text-lg leading-lg text-white opacity-75\"></i><span class=\"ml-2\">Watch List</span></a></li>", 2);
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<li class=\"nav-item\"><a class=\"px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75\" href=\"/sell\"><i class=\"fab fa-facebook-square text-lg leading-lg text-white opacity-75\"></i><span class=\"ml-2\">Sell</span></a></li><li class=\"nav-item\"><a class=\"px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75\" href=\"/dashboard/watchlist\"><i class=\"fab fa-pinterest text-lg leading-lg text-white opacity-75\"></i><span class=\"ml-2\">Watchlist</span></a></li>", 2);
 
 var _hoisted_10 = {
   "class": "nav-item"
