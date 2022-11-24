@@ -6,9 +6,12 @@ use App\Models\Like;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Traits\ProductTrait;
 
 class ProductController extends Controller
 {
+    use ProductTrait;
+    
     public function __construct(Product $product, Category $category)
     {
         $this->product = $product;
@@ -109,7 +112,16 @@ class ProductController extends Controller
 
     public function show(Request $request, $slug)
     {
-        $product = $this->product->where('slug', $slug)->firstOrFail();
+        $query = $this->product->where('slug', $slug);
+
+        //show if seller or is_active
+        $query = $query->where(function ($q) {
+            $q->where('is_active', true)
+                ->orWhere('seller_id', $this->getSelectedStore()->id);
+        });
+
+        $product = $query->firstOrFail();
+        
 
         $product->load('photos', 'locations', 'category', 'seller');
 
