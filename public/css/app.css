@@ -2021,6 +2021,12 @@ input:checked + .toggle-bg {
 .w-11 {
   width: 2.75rem;
 }
+.w-14 {
+  width: 3.5rem;
+}
+.w-24 {
+  width: 6rem;
+}
 .min-w-full {
   min-width: 100%;
 }
@@ -2619,6 +2625,10 @@ input:checked + .toggle-bg {
 .py-16 {
   padding-top: 4rem;
   padding-bottom: 4rem;
+}
+.px-2\.5 {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
 }
 .pt-8 {
   padding-top: 2rem;
@@ -3485,6 +3495,10 @@ input:checked + .toggle-bg {
 }
 .dark .dark\:ring-offset-gray-800 {
   --tw-ring-offset-color: #1F2937;
+}
+.dark .dark\:hover\:border-gray-600:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
 }
 .dark .dark\:hover\:bg-gray-700:hover {
   --tw-bg-opacity: 1;

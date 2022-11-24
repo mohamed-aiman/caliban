@@ -21912,11 +21912,81 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     }();
 
+    var decrementQuantity = /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(product) {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                store.dispatch('product/decrementQuantity', product.id);
+
+              case 1:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function decrementQuantity(_x3) {
+        return _ref4.apply(this, arguments);
+      };
+    }();
+
+    var incrementQuantity = /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(product) {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                store.dispatch('product/incrementQuantity', product.id);
+
+              case 1:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      return function incrementQuantity(_x4) {
+        return _ref5.apply(this, arguments);
+      };
+    }();
+
+    var updateQuantity = /*#__PURE__*/function () {
+      var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(event, product) {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                console.log('updateQuantity', event.target.value);
+                store.dispatch('product/updateQuantity', {
+                  product_id: product.id,
+                  quantity: event.target.value
+                });
+
+              case 2:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      return function updateQuantity(_x5, _x6) {
+        return _ref6.apply(this, arguments);
+      };
+    }();
+
     var __returned__ = {
       store: store,
       products: products,
       loadProducts: loadProducts,
       toggleIsActive: toggleIsActive,
+      decrementQuantity: decrementQuantity,
+      incrementQuantity: incrementQuantity,
+      updateQuantity: updateQuantity,
       pagination: _components_pagination_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       computed: vue__WEBPACK_IMPORTED_MODULE_1__.computed,
@@ -25275,6 +25345,9 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 }, " Active "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   scope: "col",
   "class": "p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
+}, " Quantity "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+  scope: "col",
+  "class": "p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
 }, " Price (MVR) "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   scope: "col",
   "class": "p-4"
@@ -25318,10 +25391,63 @@ var _hoisted_21 = {
   "class": "p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
 };
 var _hoisted_22 = {
+  "class": "flex items-center space-x-3"
+};
+var _hoisted_23 = ["onClick"];
+
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "sr-only"
+}, "Quantity button", -1
+/* HOISTED */
+);
+
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  "class": "w-4 h-4",
+  "aria-hidden": "true",
+  fill: "currentColor",
+  viewBox: "0 0 20 20",
+  xmlns: "http://www.w3.org/2000/svg"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "fill-rule": "evenodd",
+  d: "M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z",
+  "clip-rule": "evenodd"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_26 = [_hoisted_24, _hoisted_25];
+var _hoisted_27 = ["value", "onInput"];
+var _hoisted_28 = ["onClick"];
+
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "sr-only"
+}, "Quantity button", -1
+/* HOISTED */
+);
+
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  "class": "w-4 h-4",
+  "aria-hidden": "true",
+  fill: "currentColor",
+  viewBox: "0 0 20 20",
+  xmlns: "http://www.w3.org/2000/svg"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "fill-rule": "evenodd",
+  d: "M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z",
+  "clip-rule": "evenodd"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_31 = [_hoisted_29, _hoisted_30];
+var _hoisted_32 = {
+  "class": "p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
+};
+var _hoisted_33 = {
   "class": "p-4 space-x-2 whitespace-nowrap"
 };
 
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "button",
   "data-modal-toggle": "delete-product-modal",
   "class": "inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
@@ -25340,7 +25466,7 @@ var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "button",
   "data-modal-toggle": "product-modal",
   "class": "inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
@@ -25388,9 +25514,36 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       checked: product.is_active
     }, null, 40
     /* PROPS, HYDRATE_EVENTS */
-    , _hoisted_19), _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span class=\"ml-3 text-sm font-medium text-gray-900 dark:text-gray-300\">Publish</span> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(product.price), 1
+    , _hoisted_19), _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span class=\"ml-3 text-sm font-medium text-gray-900 dark:text-gray-300\">Publish</span> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      onClick: function onClick($event) {
+        return $setup.decrementQuantity(product);
+      },
+      "class": "inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white rounded-full border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700",
+      type: "button"
+    }, _hoisted_26, 8
+    /* PROPS */
+    , _hoisted_23), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      type: "number",
+      value: product.quantity,
+      onInput: function onInput($event) {
+        return $setup.updateQuantity($event, product);
+      },
+      "class": "bg-gray-50 w-24 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+      placeholder: "1",
+      required: ""
+    }, null, 40
+    /* PROPS, HYDRATE_EVENTS */
+    , _hoisted_27)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      onClick: function onClick($event) {
+        return $setup.incrementQuantity(product);
+      },
+      "class": "inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white rounded-full border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700",
+      type: "button"
+    }, _hoisted_31, 8
+    /* PROPS */
+    , _hoisted_28)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(product.price), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
         name: 'listings-edit',
         params: {
@@ -25399,7 +25552,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_23];
+        return [_hoisted_34];
       }),
       _: 2
       /* DYNAMIC */
@@ -25415,7 +25568,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_24];
+        return [_hoisted_35];
       }),
       _: 2
       /* DYNAMIC */
@@ -26281,6 +26434,127 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
 
       return toggleIsActive;
     }()
+  }, {
+    key: "decrementQuantity",
+    value: function () {
+      var _decrementQuantity = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(productId) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.prev = 0;
+                _context7.next = 3;
+                return this.request({
+                  auth: false
+                }).patch("/api/listings/decrement-quantity", {
+                  product_id: productId
+                });
+
+              case 3:
+                response = _context7.sent;
+                return _context7.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context7.prev = 7;
+                _context7.t0 = _context7["catch"](0);
+                message = _context7.t0.response.data ? _context7.t0.response.data.error : _context7.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context7.t0, message);
+
+              case 11:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this, [[0, 7]]);
+      }));
+
+      function decrementQuantity(_x8) {
+        return _decrementQuantity.apply(this, arguments);
+      }
+
+      return decrementQuantity;
+    }()
+  }, {
+    key: "incrementQuantity",
+    value: function () {
+      var _incrementQuantity = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(productId) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                _context8.prev = 0;
+                _context8.next = 3;
+                return this.request({
+                  auth: false
+                }).patch("/api/listings/increment-quantity", {
+                  product_id: productId
+                });
+
+              case 3:
+                response = _context8.sent;
+                return _context8.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context8.prev = 7;
+                _context8.t0 = _context8["catch"](0);
+                message = _context8.t0.response.data ? _context8.t0.response.data.error : _context8.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context8.t0, message);
+
+              case 11:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8, this, [[0, 7]]);
+      }));
+
+      function incrementQuantity(_x9) {
+        return _incrementQuantity.apply(this, arguments);
+      }
+
+      return incrementQuantity;
+    }()
+  }, {
+    key: "updateQuantity",
+    value: function () {
+      var _updateQuantity = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(payload) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                _context9.prev = 0;
+                _context9.next = 3;
+                return this.request({
+                  auth: false
+                }).patch("/api/listings/update-quantity", payload);
+
+              case 3:
+                response = _context9.sent;
+                return _context9.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context9.prev = 7;
+                _context9.t0 = _context9["catch"](0);
+                message = _context9.t0.response.data ? _context9.t0.response.data.error : _context9.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context9.t0, message);
+
+              case 11:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this, [[0, 7]]);
+      }));
+
+      function updateQuantity(_x10) {
+        return _updateQuantity.apply(this, arguments);
+      }
+
+      return updateQuantity;
+    }()
   }]);
 
   return ProductService;
@@ -26872,6 +27146,13 @@ var mutations = {
   },
   SET_QUERY_MESSAGE: function SET_QUERY_MESSAGE(state, data) {
     state.queryMessage = data;
+  },
+  SET_PRODUCT_QUANTITY: function SET_PRODUCT_QUANTITY(state, data) {
+    console.log('data', data.product.id, data.product.quantity); //find the item from products array
+
+    state.products.data.find(function (product) {
+      return product.id === data.product.id;
+    }).quantity = data.product.quantity;
   }
 };
 var actions = {
@@ -26962,6 +27243,66 @@ var actions = {
           }
         }
       }, _callee4);
+    }))();
+  },
+  decrementQuantity: function decrementQuantity(_ref5, productId) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+      var commit;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.decrementQuantity(productId).then(function (response) {
+                commit('SET_PRODUCT_QUANTITY', response.data);
+              });
+
+            case 2:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
+  },
+  incrementQuantity: function incrementQuantity(_ref6, productId) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+      var commit;
+      return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              commit = _ref6.commit;
+              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.incrementQuantity(productId).then(function (response) {
+                commit('SET_PRODUCT_QUANTITY', response.data);
+              });
+
+            case 2:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }))();
+  },
+  updateQuantity: function updateQuantity(_ref7, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+      var commit;
+      return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              commit = _ref7.commit;
+              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.updateQuantity(payload).then(function (response) {
+                commit('SET_PRODUCT_QUANTITY', response.data);
+              });
+
+            case 2:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
     }))();
   }
 };

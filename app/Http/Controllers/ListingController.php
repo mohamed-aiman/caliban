@@ -310,4 +310,60 @@ class ListingController extends Controller
             'product' => $product,
         ], 200);
     }
+
+    public function decrementQuantity(Request $request)
+    {
+        $product = $this->product
+            ->where('id', $request->product_id)
+            ->where('seller_id', $this->getSelectedStore()->id) //
+            ->firstOrFail();
+
+        $product->update([
+            'quantity' => ($product->quantity == 0) ? 0 : $product->quantity - 1
+        ]);
+
+        return response()->json([
+            'message' => 'Listing updated successfully',
+            'product' => $product,
+        ], 200);
+    }
+
+    public function incrementQuantity(Request $request)
+    {
+        $product = $this->product
+            ->where('id', $request->product_id)
+            ->where('seller_id', $this->getSelectedStore()->id) //
+            ->firstOrFail();
+
+        $product->update([
+            'quantity' => $product->quantity + 1
+        ]);
+
+        return response()->json([
+            'message' => 'Listing updated successfully',
+            'product' => $product,
+        ], 200);
+    }
+
+    public function updateQuantity(Request $request)
+    {
+        $request->validate([
+            'quantity' => 'required|integer',
+            'product_id' => 'required|integer',
+        ]);
+
+        $product = $this->product
+            ->where('id', $request->product_id)
+            ->where('seller_id', $this->getSelectedStore()->id) //
+            ->firstOrFail();
+
+        $product->update([
+            'quantity' => ($request->quantity < 0) ? 0 : $request->quantity
+        ]);
+
+        return response()->json([
+            'message' => 'Listing updated successfullyx',
+            'product' => $product,
+        ], 200);
+    }
 }

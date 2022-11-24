@@ -50,6 +50,9 @@ Route::group(['middleware' => ['auth'], 'prefix'=>'api', 'as'=>'user.'], functio
     Route::get('listings', [ListingController::class, 'index'])->name('listings.index');
     Route::get('listings/{productSlug}/form-data', [ListingController::class, 'productFormData'])->name('listings.product-form-data');
     Route::patch('listings/is-active-toggle', [ListingController::class, 'isActiveToggle'])->name('listings.is-active-toggle');
+    Route::patch('listings/decrement-quantity', [ListingController::class, 'decrementQuantity'])->name('listings.decrement-quantity');
+    Route::patch('listings/increment-quantity', [ListingController::class, 'incrementQuantity'])->name('listings.increment-quantity');
+    Route::patch('listings/update-quantity', [ListingController::class, 'updateQuantity'])->name('listings.update-quantity');
     Route::patch('listings/{productSlug}', [ListingController::class, 'update'])->name('listings.update');
     Route::post('listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('listings/{productSlug}', [ListingController::class, 'show'])->name('listings.show');

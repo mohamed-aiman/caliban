@@ -18,6 +18,22 @@ const toggleIsActive = async (product) => {
     ProductService.toggleIsActive(product.id)
 }
 
+const decrementQuantity = async (product) => {
+    store.dispatch('product/decrementQuantity', product.id)
+}
+
+const incrementQuantity = async (product) => {
+    store.dispatch('product/incrementQuantity', product.id)
+}
+
+const updateQuantity = async (event, product) => {
+    console.log('updateQuantity',event.target.value)
+    store.dispatch('product/updateQuantity', {
+        product_id: product.id,
+        quantity: event.target.value
+    })
+}
+
 </script>
 
 <template>
@@ -56,6 +72,9 @@ const toggleIsActive = async (product) => {
                                             </th>
                                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 Active
+                                            </th>
+                                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                                Quantity
                                             </th>
                                             <th scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -99,6 +118,37 @@ const toggleIsActive = async (product) => {
                                                     </div>
                                                     <!-- <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Publish</span> -->
                                                 </label>
+                                            </td>
+                                            <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                <div class="flex items-center space-x-3">
+                                                    <button
+                                                        @click="decrementQuantity(product)"
+                                                        class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white rounded-full border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                                        type="button">
+                                                        <span class="sr-only">Quantity button</span>
+                                                        <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                                        </svg>
+                                                    </button>
+                                                    <div>
+                                                        <input type="number" :value="product.quantity" @input="updateQuantity($event, product)"
+                                                            class="bg-gray-50 w-24 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                            placeholder="1" required>
+                                                    </div>
+                                                    <button
+                                                        @click="incrementQuantity(product)"
+                                                        class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white rounded-full border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                                        type="button">
+                                                        <span class="sr-only">Quantity button</span>
+                                                        <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd"
+                                                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                                                clip-rule="evenodd"></path>
+                                                        </svg>
+                                                    </button>
+                                                </div>
                                             </td>
                                             <td
                                                 class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">

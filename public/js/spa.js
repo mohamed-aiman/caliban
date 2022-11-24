@@ -22848,6 +22848,127 @@ var ProductService = /*#__PURE__*/function (_BaseService) {
 
       return toggleIsActive;
     }()
+  }, {
+    key: "decrementQuantity",
+    value: function () {
+      var _decrementQuantity = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(productId) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.prev = 0;
+                _context7.next = 3;
+                return this.request({
+                  auth: false
+                }).patch("/api/listings/decrement-quantity", {
+                  product_id: productId
+                });
+
+              case 3:
+                response = _context7.sent;
+                return _context7.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context7.prev = 7;
+                _context7.t0 = _context7["catch"](0);
+                message = _context7.t0.response.data ? _context7.t0.response.data.error : _context7.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context7.t0, message);
+
+              case 11:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this, [[0, 7]]);
+      }));
+
+      function decrementQuantity(_x8) {
+        return _decrementQuantity.apply(this, arguments);
+      }
+
+      return decrementQuantity;
+    }()
+  }, {
+    key: "incrementQuantity",
+    value: function () {
+      var _incrementQuantity = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(productId) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                _context8.prev = 0;
+                _context8.next = 3;
+                return this.request({
+                  auth: false
+                }).patch("/api/listings/increment-quantity", {
+                  product_id: productId
+                });
+
+              case 3:
+                response = _context8.sent;
+                return _context8.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context8.prev = 7;
+                _context8.t0 = _context8["catch"](0);
+                message = _context8.t0.response.data ? _context8.t0.response.data.error : _context8.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context8.t0, message);
+
+              case 11:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8, this, [[0, 7]]);
+      }));
+
+      function incrementQuantity(_x9) {
+        return _incrementQuantity.apply(this, arguments);
+      }
+
+      return incrementQuantity;
+    }()
+  }, {
+    key: "updateQuantity",
+    value: function () {
+      var _updateQuantity = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(payload) {
+        var response, message;
+        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                _context9.prev = 0;
+                _context9.next = 3;
+                return this.request({
+                  auth: false
+                }).patch("/api/listings/update-quantity", payload);
+
+              case 3:
+                response = _context9.sent;
+                return _context9.abrupt("return", new _services_util__WEBPACK_IMPORTED_MODULE_1__.ResponseWrapper(response, response.data));
+
+              case 7:
+                _context9.prev = 7;
+                _context9.t0 = _context9["catch"](0);
+                message = _context9.t0.response.data ? _context9.t0.response.data.error : _context9.t0.response.statusText;
+                throw new _services_util__WEBPACK_IMPORTED_MODULE_1__.ErrorWrapper(_context9.t0, message);
+
+              case 11:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this, [[0, 7]]);
+      }));
+
+      function updateQuantity(_x10) {
+        return _updateQuantity.apply(this, arguments);
+      }
+
+      return updateQuantity;
+    }()
   }]);
 
   return ProductService;
@@ -23439,6 +23560,13 @@ var mutations = {
   },
   SET_QUERY_MESSAGE: function SET_QUERY_MESSAGE(state, data) {
     state.queryMessage = data;
+  },
+  SET_PRODUCT_QUANTITY: function SET_PRODUCT_QUANTITY(state, data) {
+    console.log('data', data.product.id, data.product.quantity); //find the item from products array
+
+    state.products.data.find(function (product) {
+      return product.id === data.product.id;
+    }).quantity = data.product.quantity;
   }
 };
 var actions = {
@@ -23529,6 +23657,66 @@ var actions = {
           }
         }
       }, _callee4);
+    }))();
+  },
+  decrementQuantity: function decrementQuantity(_ref5, productId) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+      var commit;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.decrementQuantity(productId).then(function (response) {
+                commit('SET_PRODUCT_QUANTITY', response.data);
+              });
+
+            case 2:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
+  },
+  incrementQuantity: function incrementQuantity(_ref6, productId) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+      var commit;
+      return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              commit = _ref6.commit;
+              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.incrementQuantity(productId).then(function (response) {
+                commit('SET_PRODUCT_QUANTITY', response.data);
+              });
+
+            case 2:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }))();
+  },
+  updateQuantity: function updateQuantity(_ref7, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+      var commit;
+      return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              commit = _ref7.commit;
+              _services_ProductService__WEBPACK_IMPORTED_MODULE_0__.ProductService.updateQuantity(payload).then(function (response) {
+                commit('SET_PRODUCT_QUANTITY', response.data);
+              });
+
+            case 2:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
     }))();
   }
 };

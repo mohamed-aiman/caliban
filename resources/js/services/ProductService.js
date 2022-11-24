@@ -74,4 +74,38 @@ export class ProductService extends BaseService {
     }
   }
 
+  static async decrementQuantity (productId) {
+    try {
+      const response = await this.request({ auth: false }).patch(`/api/listings/decrement-quantity`, {
+        product_id: productId
+      })
+      return new ResponseWrapper(response, response.data)
+    } catch (error) {
+      const message = error.response.data ? error.response.data.error : error.response.statusText
+      throw new ErrorWrapper(error, message)
+    }
+  }
+
+  static async incrementQuantity (productId) {
+    try {
+      const response = await this.request({ auth: false }).patch(`/api/listings/increment-quantity`, {
+        product_id: productId
+      })
+      return new ResponseWrapper(response, response.data)
+    } catch (error) {
+      const message = error.response.data ? error.response.data.error : error.response.statusText
+      throw new ErrorWrapper(error, message)
+    }
+  }
+
+  static async updateQuantity (payload) {
+    try {
+      const response = await this.request({ auth: false }).patch(`/api/listings/update-quantity`, payload)
+      return new ResponseWrapper(response, response.data)
+    } catch (error) {
+      const message = error.response.data ? error.response.data.error : error.response.statusText
+      throw new ErrorWrapper(error, message)
+    }
+  }
+
 }

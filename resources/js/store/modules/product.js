@@ -62,6 +62,12 @@ const mutations = {
   },
   SET_QUERY_MESSAGE (state, data) {
     state.queryMessage = data
+  },
+  SET_PRODUCT_QUANTITY (state, data) {
+    console.log('data', data.product.id, data.product.quantity);
+    //find the item from products array
+    state.products.data.find(product => product.id === data.product.id)
+      .quantity = data.product.quantity;
   }
 }
 
@@ -100,7 +106,29 @@ const actions = {
     .then(response => {
       commit('SET_PRODUCTS', response.data)
     })
+  },
+
+  async decrementQuantity ({ commit }, productId) {
+    ProductService.decrementQuantity(productId)
+    .then(response => {
+      commit('SET_PRODUCT_QUANTITY', response.data)
+    })
+  },
+
+  async incrementQuantity ({ commit }, productId) {
+    ProductService.incrementQuantity(productId)
+    .then(response => {
+      commit('SET_PRODUCT_QUANTITY', response.data)
+    })
+  },
+
+  async updateQuantity ({ commit }, payload) {
+    ProductService.updateQuantity(payload)
+    .then(response => {
+      commit('SET_PRODUCT_QUANTITY', response.data)
+    })
   }
+
 }
 
 export default {
