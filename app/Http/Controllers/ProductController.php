@@ -115,9 +115,11 @@ class ProductController extends Controller
         $query = $this->product->where('slug', $slug);
 
         //show if seller or is_active
-        $query = $query->where(function ($q) {
-            $q->where('is_active', true)
-                ->orWhere('seller_id', $this->getSelectedStore()->id);
+        $query = $query->where(function ($q) use ($request) {
+            $q->where('is_active', true);
+            if ($request->user()) {
+                $q->orWhere('seller_id', $this->getSelectedStore()->id);
+            }
         });
 
         $product = $query->firstOrFail();
