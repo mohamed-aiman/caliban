@@ -23,6 +23,9 @@ use App\Http\Controllers\CategoryProductController;
 
 #DELETE THESE ROUTES LATER
 Route::get('/test', [HomeController::class, 'test'])->name('home.test');
+Route::get('/design', function() {
+    return view('design');
+})->name('design');
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/{slug}/products', [CategoryProductController::class, 'index'])->name('categories.products.index');
 
