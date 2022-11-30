@@ -21,6 +21,12 @@ use App\Http\Controllers\CategoryProductController;
 |
 */
 
+// BLOG GUEST ROUTES
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
+
+
 #DELETE THESE ROUTES LATER
 Route::get('/test', [HomeController::class, 'test'])->name('home.test');
 Route::get('/design', function() {
