@@ -22,6 +22,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 #DELETE THESE ROUTES LATER
 Route::get('/test', [HomeController::class, 'test'])->name('home.test');
+Route::get('/posts/{slug}', function() {
+    return view('design');
+})->name('posts.show');
 Route::get('/design', function() {
     return view('design');
 })->name('design');
